@@ -2,3 +2,4 @@
 /static
 *.pyc
 /myproject/settings/local.py
+/.idea/
