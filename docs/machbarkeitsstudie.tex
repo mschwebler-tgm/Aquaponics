@@ -64,14 +64,36 @@ Aquaponic Systeme sind haupts\"achlich im gr\"o{\ss}eren Ma{\ss}stab bei der Auf
 Beide dieser Systeme sind in \"Osterreich kaum brauchbar bzw. nicht erh\"altlich. Bei Home Aquaponics wird Wert darauf gelegt, dass das fertige Produkt f\"ur jeden leistbar ist, indem Features weggelassen werden, welche nicht unbeding ben\"otigt werden. Au{\ss}erdem wird \"au{\ss}erst stromsparende Hardware verwendet, um so wenig monatliche Kosten wie m\"oglich zu verursachen.
 
 \section{Aquaponic System}
+Ahoi mate! \textbackslash o/\\
 
 \section{Sensoren}
-
+Es gibt eine Reihe von m\"oglichen Sensoren, die verbaut werden k\"onnen. Da das System aber f\"ur den durchschnittlichen B\"urger erh\"altlich sein soll, sind finanzielle Limits gesetzt, welche die Zahl der Sensoren begr\"anzt.
+\subsection{Temperatur}
+Lorem Ipsum
+\subsection{Wasserstand}
+Lorem Ipsum
+\subsection{PH-Wert}
+Lorem Ipsum
+\newpage
 \section{Aktoren}
-
+\newpage
 \section{Single Board Computer}
+Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messgeräte, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat. 
 
-\section{\"Ubermittlung u. Verwaltung der Daten}
+\subsection{Arduino}
+Der Arduino Uno ist ein SBC, welcher im Bereich von 20 - 25 \euro zu erhalten ist. Er hat einen internen Speicher der gro{\ss} genug ist, um einen Netzwerkausfall \"uberbr\"ucken zu k\"onnen. Da er aber selbst keine Netzwerkschnittstelle hat, muss er mit einem WiFi-Shield (\euro 88) ausgestattet werden. Ein Shield ist eine Hardware-erweiterung, die dem Arduino situationsbezogene Funktionen hinzuf\"ugen kann. F\"ur dieses Projekt ist das "Open Aquarium Board" (\euro 50) optimal, da es speziell entwickelt wurde um ein Aquarium zu \"uberwachen bzw. zu steuern und eine Open Source API an-bietet. \\
+Das Problem dabei ist, dass nur ein Shield auf dem Arduino angebracht werden kann. Das hei{\ss}t, entweder das Open Aquarium Board wird verwendet, oder ein WLAN Shield zur Daten\"ubermittlung. Er m\"usste mit einem anderen SBC, welcher Netzwerktauglich ist, verbunden werden um die Daten auf einem zentralen Server zu persisiteren. 
+\subsection{Raspberry Pi B}
+Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V im Leerlauf). Er bietet ebenso wie der Arduino einen adäquaten Speicher, kann aber einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen extremen Arbeitsaufwand. 
+\newpage
+\subsection{Raspberry Pi Zero}
+Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf). 
+\subsection{L\"osung}
+Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Der optimale Weg ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt (Art der \"Ubertragung: Siehe Kapitel 8). 
+\newpage
+\section{Art der Daten\"ubermittlung}
+
+\section{Datenbanksystem}
 
 \section{Webframework}
 \end{document}
