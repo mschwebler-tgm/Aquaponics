@@ -33,7 +33,7 @@
 \end{titlepage}
 
 \section{Einf\"uhrung}
-Aquaponik ist ein Verfahren, welches die Aufzucht von Fischen mit der Aufzucht von Nutzpflanzen verbindet. Im Wesentlichen handelt es sich dabei um einen geschlossenen Wasserkreislauf, in dem die entsprechenden Nährstoffe „automatisch“ erzeugt werden; d.h. die Ausscheidungen der Fische werden durch Bakterien in N\"ahrstoffe f\"ur die Pflanzen umgewandelt. Es soll eine vollautomatisierte L\"osung f\"ur ein Aquaponik-System f\"ur kleine Haushalte als Prototyp geschaffen werden. Diese beinhaltet einerseits eine geeignete Konstruktion die sowohl das Aquarium enth\"alt als auch die entsprechende \"Uberwachung und Regelung des Systems.
+Aquaponik ist ein Verfahren, welches die Aufzucht von Fischen mit der Aufzucht von Nutzpflanzen verbindet. Im Wesentlichen handelt es sich dabei um einen geschlossenen Wasserkreislauf, in dem die entsprechenden N\"ahrstoffe „automatisch“ erzeugt werden; d.h. die Ausscheidungen der Fische werden durch Bakterien in N\"ahrstoffe f\"ur die Pflanzen umgewandelt. Es soll eine vollautomatisierte L\"osung f\"ur ein Aquaponik-System f\"ur kleine Haushalte als Prototyp geschaffen werden. Diese beinhaltet einerseits eine geeignete Konstruktion die sowohl das Aquarium enth\"alt als auch die ent-sprechende \"Uberwachung und Regelung des Systems.
 
 
 \section{Projektdaten}
@@ -49,14 +49,14 @@ E-Mail: rbahadoorifar@student.tgm.ac.at \\
 E-Mail: kkelc@student.tgm.ac.at
 
 \subsection{Projektbeschreibung}
-Im Rahmen des Projekts wird ein Tool zur \"Uberwachung und Steuerung von Metadaten eines Aquaponic Systems, entwickelt und mit entsprechender Hardware realisiert. Dabei werden Sensoren von einem Raspbery Pi angesprochen und die Ergebnisse lokal gespeichert, welche sp\"ater \"uber eine Webseite eingesehen werden k\"onnen (M\"ogliche Methoden der \"Ubertragung werden im Kapitel X.x erleutert - TODO). Des Weiteren kann der Benutzer \"uber die Weboberfl\"ache die Wassertemperatur sowie die Belichtungsdauer der Pflanzen regeln. Zusätzlich erh\"alt der Benutzer Vorschl\"age f\"ur einen sinnvollen Besatz des Aquariums sowie f\"ur die Pflanzenwahl und deren Bed\"urfnisse.
+Im Rahmen des Projekts wird ein Tool zur \"Uberwachung und Steuerung von Metadaten eines Aquaponic Systems, entwickelt und mit entsprechender Hardware realisiert. Dabei werden Sensoren von einem Raspbery Pi angesprochen und die Ergebnisse lokal gespeichert, welche sp\"ater \"uber eine Webseite eingesehen werden k\"onnen (M\"ogliche Methoden der \"Ubertragung werden im Kapitel X.x erleutert - TODO). Des Weiteren kann der Benutzer \"uber die Weboberfl\"ache die Wassertemperatur sowie die Belichtungsdauer der Pflanzen regeln. Zus\"atzlich erh\"alt der Benutzer Vorschl\"age f\"ur einen sinnvollen Besatz des Aquariums sowie f\"ur die Pflanzenwahl und deren Bed\"urfnisse.
 
 \section{Voruntersuchung des Projekts}
 \subsection{Ist-Erhebung}
 Aquaponic Systeme sind haupts\"achlich im gr\"o{\ss}eren Ma{\ss}stab bei der Aufzucht von Nutzpflanzen im Einsatz. F\"ur den normalen Haushalt gibt es allerdings bis jetzt keine Marktf\"ahige L\"osung. Die gr\"o{\ss}ten zwei Crowdfunding Projekte sind:
 \begin{itemize}
 	\item \textbf{EcoQube C}\\
-		Der EcoQube C vereint ein Handliches Aquaponics System mit elegantem Design, jedoch mangelt es an Konfigurierbarkeit. Es steht lediglich eine Fernbedienung zur verfügung, mit der die Farbe der LEDs gesteuert werden kann. Des Weiteren liegt das Fassungsvermögen des Aquariums weit unter 50 Liter, was zur Folge hat, dass in \"Osterreich maximal ein einziger Fisch darin gehalten werden kann. Daraus resultiert ein sehr kleines, ineffizientes Aquaponics System mit Mangel an Konfigurationsm\"oglichkeiten. \\
+		Der EcoQube C vereint ein Handliches Aquaponics System mit elegantem Design, jedoch mangelt es an Konfigurierbarkeit. Es steht lediglich eine Fernbedienung zur verf\"ugung, mit der die Farbe der LEDs gesteuert werden kann. Des Weiteren liegt das Fassungsverm\"ogen des Aquariums weit unter 50 Liter, was zur Folge hat, dass in \"Osterreich maximal ein einziger Fisch darin gehalten werden kann. Daraus resultiert ein sehr kleines, ineffizientes Aquaponics System mit Mangel an Konfigurationsm\"oglichkeiten. \\
 	\item \textbf{Grove Ecosystem}\\
 	Das Grove Ecosystem ist das "Non Plus Ultra", wenn es um Aquaponic Systeme im Haushalt geht. Es bietet alle m\"oglchen Sensoren (Luftfeuchtigkeit und -temperatur sowie Wasserstand und -temperatur), welche \"uber eine App abgefragt werden k\"onnen. Diese bietet zus\"atzlich eine gro{\ss}e Ansammlung an Daten und daher Empfehlungen f\"ur m\"ogliche Fische und die dazu passenden Pflanzen. \\
 	Dieses Paket ist allerdings nur in den USA und Kanada, mit einem Einstiegspreis von $>$ 4000\euro\hspace{0.5em}erh\"altlich.
@@ -78,13 +78,13 @@ Lorem Ipsum
 \section{Aktoren}
 \newpage
 \section{Single Board Computer}
-Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messgeräte, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat. 
+Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat. 
 
 \subsection{Arduino}
 Der Arduino Uno ist ein SBC, welcher im Bereich von 20 - 25 \euro zu erhalten ist. Er hat einen internen Speicher der gro{\ss} genug ist, um einen Netzwerkausfall \"uberbr\"ucken zu k\"onnen. Da er aber selbst keine Netzwerkschnittstelle hat, muss er mit einem WiFi-Shield (\euro 88) ausgestattet werden. Ein Shield ist eine Hardware-erweiterung, die dem Arduino situationsbezogene Funktionen hinzuf\"ugen kann. F\"ur dieses Projekt ist das "Open Aquarium Board" (\euro 50) optimal, da es speziell entwickelt wurde um ein Aquarium zu \"uberwachen bzw. zu steuern und eine Open Source API an-bietet. \\
 Das Problem dabei ist, dass nur ein Shield auf dem Arduino angebracht werden kann. Das hei{\ss}t, entweder das Open Aquarium Board wird verwendet, oder ein WLAN Shield zur Daten\"ubermittlung. Er m\"usste mit einem anderen SBC, welcher Netzwerktauglich ist, verbunden werden um die Daten auf einem zentralen Server zu persisiteren. 
 \subsection{Raspberry Pi B}
-Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V im Leerlauf). Er bietet ebenso wie der Arduino einen adäquaten Speicher, kann aber einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen extremen Arbeitsaufwand. 
+Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V im Leerlauf). Er bietet ebenso wie der Arduino einen ad\"aquaten Speicher, kann aber einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen extremen Arbeitsaufwand. 
 \newpage
 \subsection{Raspberry Pi Zero}
 Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf). 
@@ -93,7 +93,22 @@ Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"u
 \newpage
 \section{Art der Daten\"ubermittlung}
 
+
 \section{Datenbanksystem}
 
-\section{Webframework}
+\section{Web Framework}
+Bei Web Frameworks, werden durch vordefinierte und vorgefertigte Klassen, h\"aufig gebrauchte Funktionen wie Mailversand, sichere Authentifizierung, Sicherheitsfunktionen, Lokalisierung, Performance (z.B. HTTP Caching) oder grundlegende Funktionen f\"ur Webformulare vereinfacht. \\
+Web Frameworks sind darauf ausgelegt, sehr schnell Ergebnisse zu erzielen und lauff\"ahige Webanwendungen zu erstellen. Dazu bieten sie einen Datenbankzugriff, Templating-Mechanismen, eine saubere Trennung von Pr\"asen-tation und Code durch Verwendung des Model-View-Controllers. \\
+Da eine eigenst\"andige Implementierung all dieser Mechanismen den Arbeitsaufwand \"ubersteigen w\"urde, ist eine Verwendung eines solchen Web Frameworks unabdinglich. Welches Framework dabei gew\"ahlt wird h\"angt von folgenden Komponenten ab:
+\begin{itemize}
+\item Schwierigkeitsgrad
+\item Lernkurve
+\item Sicherheit
+\item Core Library
+\item Dokumentation
+\end{itemize}
+\subsection{Django}
+
+\subsection{Node JS}
+\subsection{Laravel}
 \end{document}
