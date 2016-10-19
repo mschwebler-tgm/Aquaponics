@@ -1,11 +1,33 @@
 \documentclass[11pt]{article}
 %Gummi|065|=)
+
 \usepackage{eurosym}
+\usepackage{listings}
+\usepackage{color}
+
+%for code snippets
+\lstset{
+  language=C,                % choose the language of the code
+  numbers=left,                   % where to put the line-numbers
+  stepnumber=1,                   % the step between two line-numbers.        
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+}
+
 \title{\textbf{Home Aquaponics System}}
 
 \author{Samuel Schober, Konrad Kelc\\
 		Matthias Schwebler, Ramin Bahadoorifar\\}
 \date{}
+
 \begin{document}
 
 \maketitle
@@ -90,6 +112,34 @@ Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V
 Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf). 
 \subsection{L\"osung}
 Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Der optimale Weg ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt (Art der \"Ubertragung: Siehe Kapitel 8). 
+\newpage
+\section{Sensoren}
+F\"ur die Entwicklung, des Codes, zum Ansprechen der Sensoren, wird "Arduino IDE" verwendet. Diese IDE bietet die M\"oglichkeit, den Code auf einem rechenstarken PC zu kompilieren und ihn dann auf dem Arduino auszuf\"uhren. Zus\"atzlich kann sie verwendet werden, um alle eingehenden Daten des Arduinos zu \"uberwachen.
+Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.
+\subsection{Temperatur}
+
+
+\begin{lstlisting} [frame=single]
+float temperature;
+
+void setup() {
+  OpenAquarium.init();   //Initialize board
+  Serial.begin(115200);
+}
+
+void loop() {
+
+  temperature = OpenAquarium.readtemperature();
+  
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println("'C");
+  delay(2000); //Wait 2 seconds
+
+}
+\end{lstlisting}
+
+
 \newpage
 \section{Art der Daten\"ubermittlung}
 
