@@ -1,10 +1,10 @@
 Automated Home Aquaponics
 =======================
 
-Setup
------
+Setup for Django
+----------------
     * Clone repository
-    * cd myproject
+    * cd django/myproject
     * vagrant up
     * vagrant ssh
     * ./manage.py runserver 0.0.0.0:8000
