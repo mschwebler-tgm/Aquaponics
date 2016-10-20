@@ -1,0 +1,584 @@
+body {
+    position: relative;
+    font-family: 'Quicksand', sans-serif;
+    display: none;
+    font-size: 12px;
+}
+
+#frontpage {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+    box-shadow: inset 0px 0px 100px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+@keyframes ug-section-to-left {
+    100% {
+        width: 50%;
+    }
+}
+
+#ug-section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: 2s ug-section-to-left ease 4s forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes ug-logo-to-left {
+    100% {
+        transform: translateX(-60%);
+    }
+}
+
+#ug-logo {
+    position: absolute;
+    width: 300px;
+    margin: auto;
+    top: 0px;
+    bottom: 100px;
+    left: 0px;
+    right: 0px;
+    animation: fade-in 3s forwards;
+}
+
+@keyframes ug-logo-title-fade-in {
+    0% {
+        top: 50%;
+        opacity: 0;
+    }
+    100% {
+        top: 52.5%;
+        opacity: 1;
+    }
+}
+
+@keyframes ug-logo-title-to-left {
+    100% {
+        width: 61%;
+    }
+}
+
+#ug-logo-title {
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    font-size: 3vh;
+    opacity: 0;
+    animation: 2s ug-logo-title-fade-in ease 2s forwards;
+}
+
+@keyframes border-animation {
+    100% {
+        height: 250px;
+    }
+}
+
+#border {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 0px;
+    width: 3px;
+    background-color: lightgrey;
+    animation: 2s border-animation ease 4.5s forwards;
+    border-radius: 130px;
+}
+
+#ps-section {
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+}
+
+@keyframes ps-logo-to-right {
+    0% {
+        transform: translateX(-13%);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+#ps-logo-title {
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    font-size: 2vh;
+    opacity: 0;
+    top: 43%;
+    animation: 2s ps-logo-to-right ease 6s forwards;
+}
+
+#ps-logo {
+    position: absolute;
+    width: 370px;
+    margin: auto;
+    top: 8%;
+    bottom: 100px;
+    left: 0px;
+    right: 0px;
+    opacity: 0;
+    animation: 2s ps-logo-to-right ease 7s forwards;
+}
+
+#home {
+    padding: 20px 50px;
+    background: linear-gradient(45deg, rgba(46, 161, 255, 1) 0%, rgba(77, 255, 97, 1) 100%);
+    box-shadow: inset 0 -260px 660px -200px rgba(0, 0, 0, 1), inset 0 260px 140px -100px rgba(0, 0, 0, .5);
+    background-color: transparent;
+    color: white;
+}
+
+#header {
+    display: none;
+    position: absolute;
+    width: calc(100% - 50px);
+    top: 20px;
+}
+
+#logo {
+    width: 100px;
+}
+
+#title {
+    position: absolute;
+}
+
+#navigation {
+    list-style-type: none;
+    text-align: right;
+    position: absolute;
+    display: -webkit-inline-box;
+    right: 20px;
+}
+
+#navigation li {
+    padding: 10px;
+    border-right: 1px solid whitesmoke;
+    display: inline-flex;
+    line-height: 30px;
+    height: 30px;
+    font-size: 25px;
+}
+
+#navigation li:last-child {
+    border-right: initial;
+}
+
+#navigation a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#motto {
+    text-align: center;
+    font-size: 40px;
+}
+
+#motto2 {
+    text-align: center;
+    font-size: 25px;
+}
+
+#scroll-button {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    margin-left: -24px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    box-sizing: border-box;
+}
+
+#ueberuns {
+    background-image: linear-gradient(to bottom, rgb(22, 34, 42), rgb(43, 143, 76));
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+#ueberuns .fp-tableCell {
+    vertical-align: top;
+}
+
+.person {
+    text-align: left;
+    padding-bottom: 1px;
+}
+
+.person img {
+    border-radius: 100%;
+    width: 80px;
+    float: left;
+    padding-right: 10px;
+}
+
+.person h2, p {
+    margin-left: 90px;
+}
+
+
+/*.person:nth-child(2n){
+    text-align: right;
+}
+
+.person:nth-child(2n) img{
+    float: right;
+    padding-left: 10px;
+}
+
+.person:nth-child(2n) p{
+    margin-left: 0px;
+    margin-right: 100px;
+}*/
+
+#aquaponicsystem {
+    background-image: linear-gradient(to bottom, rgb(43, 142, 76), rgb(28, 100, 140));
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+#aquaponicsystem .fp-tableCell {
+    vertical-align: top;
+}
+
+#diagramm-container {
+    position: relative;
+}
+
+#next {
+    position: absolute;
+    top: 50%;
+    left: 92%;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    -webkit-transform: rotate(225deg);
+    transform: rotate(225deg);
+    box-sizing: border-box;
+}
+
+#scroll-to-left {
+    position: absolute;
+    top: 47%;
+    left: 8%;
+    width: 48px;
+    height: 48px;
+    margin-left: -24px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    box-sizing: border-box;
+}
+
+@keyframes diagram-start {
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes diagram-step1 {
+    0% {
+        background-size: 62% 100%;
+        background-position: 50% 50%;
+    }
+    100% {
+        background-size: 100% 160%;
+        background-position: 50% 130%;
+    }
+}
+
+@keyframes diagram-step2 {
+    0% {
+        background-size: 100% 160%;
+        background-position: 50% 130%;
+    }
+    100% {
+        background-size: 105% 165%;
+        background-position: 50% -31%;
+    }
+}
+
+@keyframes diagram-step3 {
+    0% {
+        background-size: 105% 165%;
+        background-position: 50% -31%;
+    }
+    100% {
+        background-size: 62% 100%;
+        background-position: 50% 50%;
+    }
+}
+
+#diagramm {
+    background: url(images/AquaponicSystem.png);
+    background-size: 62% 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 88%;
+    height: 30%;
+    max-height: 600px;
+    margin: auto;
+    opacity: 1;
+}
+
+.start {
+    -webkit-animation: diagram-start 2s forwards;
+}
+
+.step1 {
+    -webkit-animation: diagram-step1 3s forwards;
+}
+
+.step2 {
+    -webkit-animation: diagram-step2 3s forwards;
+}
+
+.step3 {
+    -webkit-animation: diagram-step3 3s forwards;
+}
+
+#unserkonzept {
+    background-image: linear-gradient(to bottom, rgb(29, 103, 135), rgb(167, 102, 83));
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+#unserkonzept .fp-tableCell {
+    vertical-align: top;
+}
+
+#kontakt {
+    background-image: linear-gradient(to bottom, rgb(160, 102, 86), rgb(123, 83, 167));
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+
+/* Small devices (landscape phones, 544px and up) */
+
+@media (min-width: 530px) {
+    body {
+        font-size: 16px;
+    }
+    #motto {
+        text-align: center;
+        font-size: 50px;
+        margin: 12px
+    }
+    #scroll-button {
+        display: none;
+    }
+    #diagramm {
+        width: 65%;
+    }
+}
+
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+    body {
+        font-size: 20px;
+    }
+    .person img {
+        width: 120px;
+    }
+    .person h2, p {
+        margin-left: 130px;
+    }
+    #scroll-button {
+        display: inherit;
+    }
+    #diagramm {
+        width: 50%;
+    }
+    #next {
+        left: 95%;
+        width: 48px;
+        height: 48px;
+        margin-left: -24px;
+    }
+}
+
+
+/* Large devices (desktops, 992px and up) */
+
+@media (min-width: 992px) {
+    body {
+        font-size: 20px;
+    }
+    #motto {
+        font-size: 100px;
+    }
+    #motto2 {
+        font-size: 50px;
+    }
+    #diagramm {
+        width: 40%;
+        height: 500px;
+    }
+}
+
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {
+    @keyframes ug-section-to-left {
+        100% {
+            width: 75%;
+        }
+    }
+    #ug-logo {
+        position: absolute;
+        width: 300px;
+        margin: auto;
+        top: 0px;
+        bottom: 100px;
+        left: 0px;
+        right: 0px;
+        animation: fade-in 3s forwards;
+    }
+    @keyframes ug-logo-title-fade-in {
+        0% {
+            top: 51%;
+            opacity: 0;
+        }
+        100% {
+            top: 54.5%;
+            opacity: 1;
+        }
+    }
+    #ug-logo-title {
+        position: absolute;
+        text-align: center;
+        margin: auto;
+        width: 100%;
+        font-size: 47px;
+        opacity: 0;
+        animation: 2s ug-logo-title-fade-in ease 2s forwards;
+    }
+    @keyframes border-animation {
+        100% {
+            height: 300px;
+        }
+    }
+    #border {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 0px;
+        width: 3px;
+        background-color: lightgrey;
+        animation: 2s border-animation ease 4.5s forwards;
+        border-radius: 130px;
+    }
+    #ps-section {
+        position: absolute;
+        left: 40%;
+        width: 50%;
+        height: 100%;
+    }
+    @keyframes ps-logo-to-right {
+        0% {
+            transform: translateX(-13%);
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+    #ps-logo-title {
+        position: absolute;
+        text-align: center;
+        margin: auto;
+        width: 100%;
+        font-size: 30px;
+        opacity: 0;
+        top: 37%;
+        animation: 2s ps-logo-to-right ease 6s forwards;
+    }
+    #ps-logo {
+        position: absolute;
+        width: 370px;
+        margin: auto;
+        top: 12%;
+        bottom: 100px;
+        left: 0px;
+        right: 0px;
+        opacity: 0;
+        animation: 2s ps-logo-to-right ease 7.5s forwards;
+    }
+    .person {
+        text-align: left;
+        padding-bottom: 1px;
+        width: 50%;
+        display: inline-block;
+    }
+    .person img {
+        border-radius: 100%;
+        width: 160px;
+        float: left;
+        padding-right: 10px;
+    }
+    .person h2, p {
+        margin-left: 170px;
+    }
+    .person:nth-child(2n) {
+        text-align: right;
+    }
+    .person:nth-child(2n) img {
+        float: right;
+        padding-left: 10px;
+    }
+    .person:nth-child(2n) h2, p {
+        margin-left: 0px;
+        margin-right: 170px;
+    }
+    #diagramm {
+        width: 40%;
+    }
+}

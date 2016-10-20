@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#40d9a2">
+    <link rel="stylesheet" type="text/css" href="js/fullpage/jquery.fullPage.css" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+    <div id="frontpage">
+        <div id="ug-section">
+            <img id="ug-logo" src="images/urbangreen.png" />
+            <div id="ug-logo-title">urban green</div>
+        </div>
+        <div id="border"></div>
+        <div id="ps-section">
+            <div id="ps-logo-title">IN KOOPERATION MIT</div>
+            <img id="ps-logo" src="images/ponixsystems.png" />
+        </div>
+    </div>
+    <div id="fullpage">
+        <!-- First section (home), which will be shown -->
+        <div id="home" class="section fp-noscroll">
+            <div id="header">
+                <img id="logo" src="images/urbangreen.png" />
+                <div id="title">urban green</div>
+                <ul id="navigation">
+                    <li><a href="#home">Über uns</a></li>
+                    <li><a href="#team">Aquaponic-System</a></li>
+                    <li><a href="#funktionen">Unser Konzept</a></li>
+                    <li><a href="#meilensteine">Kontakt</a></li>
+                </ul>
+            </div>
+            <h1 id="motto">urban green</h1>
+            <h2 id="motto2">Weil Baum...</h2>
+            <span id="scroll-button"></span>
+        </div>
+
+        <!-- aboutus section -->
+        <div id="ueberuns" class="section">
+            <h1>Über uns</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <br>
+            <div class="person">
+                <img src="http://previews.123rf.com/images/ostill/ostill0812/ostill081200162/3999540-expressive-portraits-on-isolated-white-background-of-a-handsome-man-Stock-Photo.jpg" />
+                <h2>Samuel Schober</h2>
+                <p>Product Owner<br> Zuständig für alles.</p>
+            </div>
+            <div class="person">
+                <img src="http://previews.123rf.com/images/ostill/ostill0812/ostill081200162/3999540-expressive-portraits-on-isolated-white-background-of-a-handsome-man-Stock-Photo.jpg" />
+                <h2>Matthias Schwebler</h2>
+                <p>Product Owner<br> Zuständig für Hardware.</p>
+            </div>
+            <div class="person">
+                <img src="http://previews.123rf.com/images/ostill/ostill0812/ostill081200162/3999540-expressive-portraits-on-isolated-white-background-of-a-handsome-man-Stock-Photo.jpg" />
+                <h2>Ramin Bahadoorifar</h2>
+                <p>Product Owner<br> Zuständig für Webapp.</p>
+            </div>
+            <div class="person">
+                <img src="http://previews.123rf.com/images/ostill/ostill0812/ostill081200162/3999540-expressive-portraits-on-isolated-white-background-of-a-handsome-man-Stock-Photo.jpg" />
+                <h2>Konrad Kelc</h2>
+                <p>UNGEspielt<br> Zuständig für nichts. Wirklich nichts. Rein garnichts. Absolut NICHTS.</p>
+            </div>
+            <br><br>
+        </div>
+
+        <!-- aquaponic section -->
+        <div id="aquaponicsystem" class="section">
+            <h1>Was ist ein Aquaponic-System?</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <br><br>
+            <div id="diagramm-container">
+                <div id="diagramm" class="start"></div>
+                <span id="next"></span>
+            </div>
+            <br><br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <!-- concept section -->
+        <div id="unserkonzept" class="section">
+            <h1>Was ist unser Konzept dazu? KA EINFACH ERKLÄREN WAS WIR MACHEN WOLLEN UND PONIX SYSTEMS ERWÄHNEN!</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <br><br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+
+        <!-- contact section -->
+        <div id="kontakt" class="section">
+            <h1>Sie wollen uns kontaktieren?IMPRESSUM NICHT VERGESSEN ABER ICH GLAUB EH WURST</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="js/fullpage/vendors/jquery.easings.min.js"></script>
+    <script src="js/fullpage/vendors/scrolloverflow.js"></script>
+    <script src="js/fullpage/jquery.fullPage.min.js"></script>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
