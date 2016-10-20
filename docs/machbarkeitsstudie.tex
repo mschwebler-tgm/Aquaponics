@@ -19,7 +19,7 @@
   captionpos=b,                   % sets the caption-position to bottom
   breaklines=true,                % sets automatic line breaking
   breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
-  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+  title=\lstname,                 % show the filename of files included with \
 }
 
 \title{\textbf{Home Aquaponics System}}
@@ -115,17 +115,32 @@ Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"u
 \newpage
 \section{Sensoren}
 F\"ur die Entwicklung, des Codes, zum Ansprechen der Sensoren, wird "Arduino IDE" verwendet. Diese IDE bietet die M\"oglichkeit, den Code auf einem rechenstarken PC zu kompilieren und ihn dann auf dem Arduino auszuf\"uhren. Zus\"atzlich kann sie verwendet werden, um alle eingehenden Daten des Arduinos zu \"uberwachen.
-Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.
-\subsection{Temperatur}
-
+Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.\\
+Es werden Libraries verwendet, die von Arduino bereitgestellt werden, jedoch nicht direkt angesprochen. Diese Aufgabe übernimmt die API des Open Aquarium Boards. Es müssen lediglich zwei Aufrufe getätigt werden um den Arduino mit dem Open Aquarium Board zu initialisieren und eine \"Ubertragung zu starten.\\
 
 \begin{lstlisting} [frame=single]
-float temperature;
+#include <RemoteSwitch.h>
+#include <OpenAquarium.h>
+#include <OneWire.h>
+#include <DS1307.h>
+#include <filter.h>
+#include <RemoteReceiver.h>
+#include <RTClib.h>
+#include <Wire.h>
 
 void setup() {
   OpenAquarium.init();   //Initialize board
   Serial.begin(115200);
 }
+\end{lstlisting}
+
+\newpage
+\subsection{Temperatur}
+
+Dieser Code basiert darauf, dass der oben stehende Code (setup) bereits implementiert wurde.
+
+\begin{lstlisting} [frame=single]
+float temperature;
 
 void loop() {
 
