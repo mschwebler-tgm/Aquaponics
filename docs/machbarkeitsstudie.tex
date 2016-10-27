@@ -4,11 +4,14 @@
 \usepackage{eurosym}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{graphicx}
+\graphicspath{ {.} }
+\usepackage{upgreek}
 
 %for code snippets
 \lstset{
   language=C,                % choose the language of the code
-  numbers=left,                   % where to put the line-numbers
+  %numbers=left,                   % where to put the line-numbers
   stepnumber=1,                   % the step between two line-numbers.        
   numbersep=5pt,                  % how far the line-numbers are from the code
   backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
@@ -116,44 +119,32 @@ Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"u
 \section{Sensoren}
 F\"ur die Entwicklung, des Codes, zum Ansprechen der Sensoren, wird "Arduino IDE" verwendet. Diese IDE bietet die M\"oglichkeit, den Code auf einem rechenstarken PC zu kompilieren und ihn dann auf dem Arduino auszuf\"uhren. Zus\"atzlich kann sie verwendet werden, um alle eingehenden Daten des Arduinos zu \"uberwachen.
 Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.\\
-Es werden Libraries verwendet, die von Arduino bereitgestellt werden, jedoch nicht direkt angesprochen. Diese Aufgabe übernimmt die API des Open Aquarium Boards. Es müssen lediglich zwei Aufrufe getätigt werden um den Arduino mit dem Open Aquarium Board zu initialisieren und eine \"Ubertragung zu starten.\\
+Es werden Libraries verwendet, die von Arduino bereitgestellt werden, jedoch nicht direkt angesprochen. Diese Aufgabe übernimmt die API des Open Aquarium Boards.
 
-\begin{lstlisting} [frame=single]
-#include <RemoteSwitch.h>
-#include <OpenAquarium.h>
-#include <OneWire.h>
-#include <DS1307.h>
-#include <filter.h>
-#include <RemoteReceiver.h>
-#include <RTClib.h>
-#include <Wire.h>
-
-void setup() {
-  OpenAquarium.init();   //Initialize board
-  Serial.begin(115200);
-}
-\end{lstlisting}
-
-\newpage
 \subsection{Temperatur}
+Die Temperatur kann mit nur einem Befehl abgelesen werden. Dieser liefert einen Wert in Grad Celsius zur\"uck.
+\begin{lstlisting} [frame=single]
+OpenAquarium.init();
+float temperature = OpenAquarium.readtemperature();
+\end{lstlisting}
+Die Testergebnisse des Temperatur Sensors stimmten mit denen eines handelsüblichen Thermometers \"uberein. 
 
-Dieser Code basiert darauf, dass der oben stehende Code (setup) bereits implementiert wurde.
+\subsection{EC Wert}
+Der EC Wert gibt Aufschluss dar\"uber, wie viele Salze jeglicher Art im Wasser gel\"ost sind. Desto mehr N\"ahrstoffe also im Wasser vorhanden sind, umso h\"oher ist auch der EC Wert. 
 
 \begin{lstlisting} [frame=single]
-float temperature;
-
-void loop() {
-
-  temperature = OpenAquarium.readtemperature();
-  
-  Serial.print("Temperature: ");
-  Serial.print(temperature);
-  Serial.println("'C");
-  delay(2000); //Wait 2 seconds
-
-}
+OpenAquarium.init();
+OpenAquarium.calibrateEC(point_1_cond,point_1_cal,
+                         point_2_cond,point_2_cal);
+                         
+float resistanceEC = OpenAquarium.readResistanceEC(); //EC Value in resistance
+float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value in uS/cm
 \end{lstlisting}
-
+Die Tests beim Eintauchen des Sensors in Leitungswasser ergaben folgende Ergebnisse: \\ \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=3.25in]{ec_tests}}
+\end{minipage}
 
 \newpage
 \section{Art der Daten\"ubermittlung}
