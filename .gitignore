@@ -2,4 +2,5 @@
 /static
 *.pyc
 /myproject/settings/local.py
-/.idea/
+.idea
+node_modules
