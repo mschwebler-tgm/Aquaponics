@@ -244,14 +244,11 @@ Die einfache Struktur der Datenbank eignet sich weniger f\"ur komplexe Datenstru
 Redis bietet Persistenz durch automatisiertes regelm\"a{\ss}iges Abspeichern oder per Protokolldatei, wodurch bei entsprechender Konfiguration auch eine ACID-konforme Dauerhaftigkeit erreichbar ist.
 
 \subsubsection{Fazit}
-Da Redis bei den Kriterien, wie z.B. der Performance und den einfachen Zugriff auf Daten durch
-seine Kompaktheit, besser als MongoDB abschneidet, haben wir uns entschieden Redis als DBMS zur
-Datenverwaltung zu verwenden.
+Redis schneidet bei den Kriterien, wie z.B. der Performance und den einfachen Zugriff auf Daten durch
+seine Kompaktheit, besser als MongoDB ab, hat jedoch den großen Nachteil, dass es bei serverseitiger Verwendung, extrem viel Arbeitsspeicher verbraucht, wenn einige Aquaponik Systeme ihre Daten über den Server persistieren.
 
 \subsection{Gesamtfazit}
-Am Anfang wurde entschieden, dass ein NoSQl DBMS verwendet wird. Dann wurden die Systeme
-MongoDB und Redis evaluiert und aufgrund der angef\"uhrten Kriterien wird das DBMS Redis zur
-Datenverwaltung verwendet.
+Es müssen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzeitdaten vorhanden sein, um einerseits auf dem Touchdisplay eine Übersicht anzuzeigen und andererseits über den Browser alle Daten zu betrachten. Da auf dem Raspberry Pi allerdings nicht viel Speicherplatz vorhanden ist, wird dafür Redis verwendet und für die serverseitige Persistierung MongoDB.
 
 
 \section{Web Framework}
