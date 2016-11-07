@@ -128,7 +128,7 @@ Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"u
 \section{Sensoren}
 F\"ur die Entwicklung, des Codes, zum Ansprechen der Sensoren, wird "Arduino IDE" verwendet. Diese IDE bietet die M\"oglichkeit, den Code auf einem rechenstarken PC zu kompilieren und ihn dann auf dem Arduino auszuf\"uhren. Zus\"atzlich kann sie verwendet werden, um alle eingehenden Daten des Arduinos zu \"uberwachen.
 Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.\\
-Es werden Libraries verwendet, die von Arduino bereitgestellt werden, jedoch nicht direkt angesprochen. Diese Aufgabe übernimmt die API des Open Aquarium Boards.
+Es werden Libraries verwendet, die von Arduino bereitgestellt werden, jedoch nicht direkt angesprochen. Diese Aufgabe \"ubernimmt die API des Open Aquarium Boards.
 
 \subsection{Temperatur}
 Die Temperatur kann mit nur einem Befehl abgelesen werden. Dieser liefert einen Wert in Grad Celsius zur\"uck.
@@ -136,7 +136,7 @@ Die Temperatur kann mit nur einem Befehl abgelesen werden. Dieser liefert einen 
 OpenAquarium.init();
 float temperature = OpenAquarium.readtemperature();
 \end{lstlisting}
-Die Testergebnisse des Temperatur Sensors stimmten mit denen eines handelsüblichen Thermometers \"uberein. 
+Die Testergebnisse des Temperatur Sensors stimmten mit denen eines handels\"ublichen Thermometers \"uberein. 
 
 \subsection{EC Wert}
 Der EC Wert gibt Aufschluss dar\"uber, wie viele Salze jeglicher Art im Wasser gel\"ost sind. Desto mehr N\"ahrstoffe also im Wasser vorhanden sind, umso h\"oher ist auch der EC Wert. 
@@ -152,9 +152,25 @@ float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value in uS/cm
 Die Tests beim Eintauchen des Sensors in Leitungswasser ergaben folgende Ergebnisse: \\ \\
 \begin{minipage}{5in}
   \centering
-  \raisebox{-0.5\height}{\includegraphics[height=3.25in]{ec_tests}}
+  \raisebox{-0.5\height}{\includegraphics[height=3.0in]{ec_tests}}
 \end{minipage}
+\vskip0.5cm
+Wie erwartet, steigt der EC Wert beim Eintauchen ins Wasser, da es nat\"urlich um einiges leitf\"ahiger ist, als Luft.
 
+\subsection{PH Wert}
+\subsubsection{Allgemein}
+Der PH Wert ist einer der wichtigsten Werte, wenn es um das \"Uberwachen eines Aquaponik Systems geht. Daf\"ur gibt es ein gro{\ss}es Spektrum an erh\"altlichen Sensoren. Die der unteren Preisklasse, benötigen eine regelm\"a{\ss}ige Wartung. Die der oberen Preisklasse heben den Preis des Produktes, \"uber die Zielgruppe hinaus, und sind deshalb unmbrauchbar. \\
+Da der Sensor ein analoges Signal liefert, muss die gemessene Spannung erst umgerechnet werden. Dies \"ubernimmt die Klasse OpenAquarium.
+
+\begin{lstlisting} [frame=single]
+OpenAquarium.calibratepH(cp4,cp7,cp10);
+int mvpH = OpenAquarium.readpH(); //Value in mV of pH
+float pH = OpenAquarium.pHConversion(mvpH); 
+\end{lstlisting}
+cp4, cp7, cp7 ... Calibrationpoints (Konstanten)
+
+\subsubsection{Calibrationpoints}
+Calibrationpoints (Kalibrierungswerte), werden angepasst, wenn der gemessene PH Wert zu stark vom eigentlichen Wert abweicht. Um die Abweichung des Sensors zu beheben, sind Kalibrierungskits vorgesehen, die allerdings bis zu ein mal im Monat verwendet werden m\"ussen. Dies belastet den Kunden mit zus\"atzlichen Kosten und Aufwand und soll daher umgangen werden.
 \newpage
 \section{Art der Daten\"ubermittlung}
 
@@ -245,10 +261,10 @@ Redis bietet Persistenz durch automatisiertes regelm\"a{\ss}iges Abspeichern ode
 
 \subsubsection{Fazit}
 Redis schneidet bei den Kriterien, wie z.B. der Performance und den einfachen Zugriff auf Daten durch
-seine Kompaktheit, besser als MongoDB ab, hat jedoch den großen Nachteil, dass es bei serverseitiger Verwendung, extrem viel Arbeitsspeicher verbraucht, wenn einige Aquaponik Systeme ihre Daten über den Server persistieren.
+seine Kompaktheit, besser als MongoDB ab, hat jedoch den gro{\ss}en Nachteil, dass es bei serverseitiger Verwendung, extrem viel Arbeitsspeicher verbraucht, wenn einige Aquaponik Systeme ihre Daten \"uber den Server persistieren.
 
 \subsection{Gesamtfazit}
-Es müssen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzeitdaten vorhanden sein, um einerseits auf dem Touchdisplay eine Übersicht anzuzeigen und andererseits über den Browser alle Daten zu betrachten. Da auf dem Raspberry Pi allerdings nicht viel Speicherplatz vorhanden ist, wird dafür Redis verwendet und für die serverseitige Persistierung MongoDB.
+Es m\"ussen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzeitdaten vorhanden sein, um einerseits auf dem Touchdisplay eine \"Ubersicht anzuzeigen und andererseits \"uber den Browser alle Daten zu betrachten. Da auf dem Raspberry Pi allerdings nicht viel Speicherplatz vorhanden ist, wird daf\"ur Redis verwendet und f\"ur die serverseitige Persistierung MongoDB.
 
 
 \section{Web Framework}
