@@ -177,7 +177,7 @@ Die Tests beim Eintauchen des Sensors in Leitungswasser ergaben folgende Ergebni
 Wie erwartet, steigt der EC Wert beim Eintauchen ins Wasser, da es nat\"urlich um einiges leitf\"ahiger ist, als Luft.
 
 \subsection{PH Wert}
-\subsubsection{Allgemein}
+\paragraph{Allgemein} \mbox{} \\
 Der PH Wert ist einer der wichtigsten Werte, wenn es um das \"Uberwachen eines Aquaponik Systems geht. Daf\"ur gibt es ein gro{\ss}es Spektrum an erh\"altlichen Sensoren. Die der unteren Preisklasse, ben\"otigen eine regelm\"a{\ss}ige Wartung. Die der oberen Preisklasse heben den Preis des Produktes, \"uber die Zielgruppe hinaus, und sind deshalb unmbrauchbar. \\
 Da der Sensor ein analoges Signal liefert, muss die gemessene Spannung erst umgerechnet werden. Dies \"ubernimmt die Klasse OpenAquarium.
 
@@ -188,8 +188,18 @@ float pH = OpenAquarium.pHConversion(mvpH);
 \end{lstlisting}
 cp4, cp7, cp7 ... Calibrationpoints (Konstanten)
 
-\subsubsection{Calibrationpoints}
+\paragraph{Calibrationpoints} \mbox{} \\
 Calibrationpoints (Kalibrierungswerte), werden angepasst, wenn der gemessene PH Wert zu stark vom eigentlichen Wert abweicht. Um die Abweichung des Sensors zu beheben, sind Kalibrierungskits vorgesehen, die allerdings bis zu ein mal im Monat verwendet werden m\"ussen. Dies belastet den Kunden mit zus\"atzlichen Kosten und Aufwand und soll daher umgangen werden.
+\paragraph{Tests} \mbox{} \\
+Beim testen eines bereits l\"anger in Betrieb gewesenem PH Sensor brachte dieser folgende Ergebnisse: \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=3.0in]{ph_tests}}
+\end{minipage}
+Wie zusehen ist, weicht der gemessene Wert bereits stark von dem eigentlichen Wert ab. In einem Aquaponik System hat eine Abweichung dieser gr\"o{\ss}e, starke Auswirkungen auf das Gleichgewicht des Ecosystems. \\
+\paragraph{Fazit} \mbox{} \\
+Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warungsaufwand aufweisen, wird je nach M\"oglichkeiten versucht eine eigene L\"osung zu etablieren. Dies soll mithilfe einiger Teststreifen und einer Kamera passieren, bei der, der Benutzer per Knopfdruck \"uber die Website den PH Wert messen kann. Die Vorteile bei dieser L\"osung sind, dass solch ein System einzigartig auf dem Markt w\"are, und dass der Benutzer selbst bestimmen kann, ob er den PH Wert messen will und wie oft. Wie genau dieses System realisiert wird, wird im n\"achsten Sprint (Sprint 2) geplant.
+
 \newpage
 \section{Art der Daten\"ubermittlung}
 Bei der Daten\"ubertragung sind mehrere Parameter zu beachten. Dazu geh\"oren haupts\"achlich das Format der Daten und das Intervall in denen diese \"ubertragen werden.
