@@ -2,8 +2,8 @@ var ioredis = require('ioredis');
 var redis = new Redis();
 
 /**
- * After receving a reply from redis, by HGETALL, the reply ( ['k1', 'v1', 'k2', 'v2'] ) will
- * be transformed into a JSON array ( { k1: 'v1', 'k2': 'v2' } )
+ * After receving a reply from redis, by HGETALL, the reply ['k1', 'v1', 'k2', 'v2'] will
+ * be transformed into { k1: 'v1', 'k2': 'v2' }
  */
 Redis.Command.setReplyTransformer('hgetall', function (result) {
 	if (Array.isArray(result)) {
@@ -15,10 +15,6 @@ Redis.Command.setReplyTransformer('hgetall', function (result) {
 	}
 	return result;
 });
-
-function set(key, value) {
-
-}
 
 function getJSON(callback) {
 
