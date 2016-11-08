@@ -197,7 +197,7 @@ Bei der Daten\"ubertragung sind mehrere Parameter zu beachten. Dazu geh\"oren ha
 Um die Sensordaten dem Raspberry Pi mitzuteilen, eignet sich am besten ein Key-Value Format. Dabei gibt es verschiedene M\"oglichkeiten, wie z.B. JSON und CSV. \\
 Das Intervall der Daten\"ubertragung kann frei, vom Benutzer gew\"ahlt werden. 
 \subsubsection{JSON}
-JSON (JavaScript Object Notation) hat den großen Vorteil, der leichten Server-seitigen Auswertung und Konvertierung in ein Javascript Object. Da die Daten aber vor\"ubergehend auf dem Raspberry Pi persistiert werden sollen, und Redis kein automatisches speichern von JSON Objekten unterst\"utzt erzeugt diese Methode der \"Ubertragung mehr Aufwand als Nutzen.
+JSON (JavaScript Object Notation) hat den gro{\ss}en Vorteil, der leichten Server-seitigen Auswertung und Konvertierung in ein Javascript Object. Da die Daten aber vor\"ubergehend auf dem Raspberry Pi persistiert werden sollen, und Redis kein automatisches speichern von JSON Objekten unterst\"utzt erzeugt diese Methode der \"Ubertragung mehr Aufwand als Nutzen.
 \subsubsection{CSV}
 \"Ahnlich wie bei JSON, m\"ussten die Daten erst bearbeitet und gefiltert werden, um in die Datenbank gespeichert werden zu k\"onnen.
 \subsubsection{Eigenes Format}
@@ -312,11 +312,37 @@ Da eine eigenst\"andige Implementierung all dieser Mechanismen den Arbeitsaufwan
 \item Schwierigkeitsgrad
 \item Lernkurve
 \item Sicherheit
-\item Core Library
 \item Dokumentation
 \end{itemize}
 \subsection{Django}
+Django ist ein in Python geschriebenes opensource Web Application Framework, das einem Model-View-Presenter-Schema folgt.
+\paragraph{Schwierigkeitsgrad/Lernkurve} \mbox{}\\
+Da Python selbst leicht zu erlernen ist, ist es keine Herausforderung sich in die Sprache einzuarbeiten. Das Framework ansich, gilt als eines der einfachereren (aber auch funktionsarmeren) seiner Art und bietet daher eine flache Lernkurve. F\"ur jemanden der bereits mit Webframeworks gearbeitet hat, ist Django schnell zu erlernen.
+\paragraph{Sicherheit} \mbox{}\\
+Django ist so konzipiert, dass die standartm\"a{\ss}ig implementierten Sicherheitsma{\ss}nahmen, f\"ur den gr\"o{\ss}ten Teil der Webentwicklung ausreicht. Da zwischen dem Raspberry Pi und dem Server wenig sicherheitsrelevante Daten ausgetauscht werden, gen\"ugt die Sicherheit von Django.
+\paragraph{Dokumentation} \mbox{}\\
+Die Dokumentation von Django ist gerade f\"ur Einsteiger optimal, da sie einige n\"utzliche Tutorials bietet. Aber auch f\"ur erfahrene Entwickler ist die Dokumentation gro{\ss}artig. 
+\newpage
 
 \subsection{Node JS}
 \subsection{Laravel}
+\subsection{Fazit}
+\paragraph{Django} \mbox{}\\
+F\"ur Einsteiger ist Django definitiv empfehlenswert. Die gute Dokumentation erm\"oglicht es jeden Entwickler mit - egal mit welchen Kenntnissen - sich einen guten \"Uberblick, was f\"ur dieses Projekt bereits ausreichend ist. 
+\paragraph{NodeJS} \mbox{}\\
+Lorem Ipsum
+\paragraph{Laravel} \mbox{}\\
+Ameno
+\\
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|c|c|l}
+\cline{1-4}
+\textbf{Framework} & \multicolumn{1}{l|}{\textbf{Schwierigkeit}} & \multicolumn{1}{l|}{\textbf{Sicherheit}} & \multicolumn{1}{l|}{\textbf{Dokumentation}} &  \\ \cline{1-4}
+\textbf{Django}    & 2/5                                         & 4/5                                      & 5/5                                         &  \\ \cline{1-4}
+\textbf{NodeJS}    & x/5                                         & x/5                                      & x/5                                         &  \\ \cline{1-4}
+\textbf{Laravel}   & x/5                                         & x/5                                      & x/5                                         &  \\ \cline{1-4}
+\end{tabular}
+\end{table}
 \end{document}
