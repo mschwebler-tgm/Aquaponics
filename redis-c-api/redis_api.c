@@ -6,9 +6,8 @@
 #include "hiredis/async.h"
 #include "hiredis/adapters/libevent.h"
 
-/** REDIS CONFIGURATION **/
-extern const char REDIS_HOSTNAME[] = "localhost";
-extern const int REDIS_PORT = 6379;
+/** TOPICS **/
+static const char HASH_SYSTEM[] = "system";
 
 /** TOPICS **/
 extern const char TOPIC_ACTUATORS[] = "actuators";
@@ -27,12 +26,12 @@ extern const char ACTUATOR_LIGHTCOLOR[] = "lightcolor";
 //################
 
 /**
- * Creates a connection to redis, which can send SET- or GET-commands.
+ * Creates a connection to redis with the given hostname and port, which can send HMSET- or HGET-commands.
  * Returns the context, which then may be passed as parameter to the commands.
 **/
-redisContext * create_connection() {
+redisContext * create_connection(const char redis_hostname[], const int redis_port) {
 	//TODO: ERROR HANDLING
-	return redisConnect(REDIS_HOSTNAME, REDIS_PORT);
+	return redisConnect(redis_hostname, redis_port);
 }
 
 /**
@@ -44,19 +43,19 @@ void disconnect_connection(redisContext *c) {
 }
 
 /**
- * Sends a SET-Command through the given connection and stores the given data (key:value).
+ * Sends a HMSET-Command through the given connection and stores the given data (key1 value1 key2 value2 key3 value3 ...).
 **/
-void set (redisContext *c, const char key[], const char value[]) {
+void set (redisContext *c,  const char keys_and_values[]) {
 	//TODO: ERROR HANDLING
-	redisCommand(c, "SET %s %s", key, value);
+	redisCommand(c, "HMSET %s %s", HASH_SYSTEM, keys_and_values);
 }
 
 /**
- * Sends a GET-Command through the given connection and asks the value of the given key.
+ * Sends a HGET-Command through the given connection and asks the value of the given key.
 **/
 const char * get (redisContext *c, const char key[]) {
 	//TODO: ERROR HANDLING
-	redisReply *reply = redisCommand(c, "GET %s", key);
+	redisReply *reply = redisCommand(c, "HGET %s %s", HASH_SYSTEM, key);
 	return reply->str;
 }
 
@@ -72,7 +71,7 @@ void __on_message(redisAsyncContext *c, void *reply, void *privdata) {
     if (reply == NULL)
 		return;
 
-	if(r->element[2]->str == NULL) {
+	if(r->element[2]->str != NULL) {
 		void (*callback)(char*, char*) = privdata;
 		char *key = strtok(r->element[2]->str, ":");;
 		char *value = strtok(NULL, ":");
@@ -110,5 +109,3 @@ redisAsyncContext * subscribe_to_topic (const char topic[], void* callback) {
 void disconnect_async_connection (redisAsyncContext *ac) {
 	redisAsyncDisconnect(ac);
 }
-
-
