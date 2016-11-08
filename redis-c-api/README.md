@@ -10,30 +10,36 @@ The hiredis API of redis uses libevent. Install the library with:
 
     * apt-get install libevent-dev
 
+After that run the following command in the redis-c-api folder:
+
+    * make install
+
+
 ## Synchronous connection
-To send SET and GET commands to the REDIS-server, you have to use synchronous connections.
+To send HMSET and HGET commands to the REDIS-server, you have to use synchronous connections.
 
 ### Create a connection
-The `create_connection` function creates a connection to the server and returns a `redisContext`, which stores the connection. The context is used to send SET and GET commands, which you can see in the following sections.
+The `create_connection` function creates a connection to the server and returns a `redisContext`, which stores the connection. The context is used to send HSET and HGET commands, which you can see in the following sections.
 
 ```c
-redisContext *context = create_connection();
+//Creates a connection to localhost at port 6379
+redisContext *context = create_connection("localhost", 6379);
 ```
 
-### Send a SET command
-The SET command stores a key with a value in the redis database.
-To send a SET command you have to use the `set` function. The first parameter takes the context, which has to be created through `create_function`. The other two parameters are taking the key and value.
+### Send a HMSET command
+The HMSET command stores multiple keys with values in the redis database to a hash key, which is internally set to 'system'.
+To send a HMSET command you have to use the `set` function. The first parameter takes the context, which has to be created through `create_function`. The other one is taking the keys and values.
 
 ```c
 // create a connection to redis
 redisContext *context = create_function();
 // use the context to send the set command
-set(context, "key", "value");
+set(context, "key1 value1 key2 value2 key3 value3");
 ```
 
-### Send a GET command
-The GET command asks the database the value of the given key.
-To send a GET command you have to use the `get` function.
+### Send a HGET command
+The HGET command asks the database the value of the given key in hash key, which is internally set to 'system'.
+To send a HGET command you have to use the `get` function.
 The first parameter takes the context, which has to be created through `created_function`. The second parameter takes the key.
 The function returns the value of the key as `char*`.
 
@@ -41,7 +47,7 @@ The function returns the value of the key as `char*`.
 // create a connection to redis
 redisContext *context = create_function();
 // use the context to send the get command
-const char* temp = get(context, "key");
+const char* temp = get(context, "key1");
 ```
 
 ### Disconnect
@@ -85,4 +91,6 @@ disconnect_async_connection(ac);
 ```
 
 ## Try the example
-Ask Ramin Bahadoorifar in the school anytime you want, no bock this zu schreiben :D
+To try the example run 'make' in the redis-c-api folder and start the example by
+
+    * ./example.out
