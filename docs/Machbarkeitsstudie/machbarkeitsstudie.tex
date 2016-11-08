@@ -1,17 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\gdef\version{0.1}
+\gdef\doctype{Evaluation Sprint}
+
 \documentclass[11pt]{article}
 %Gummi|065|=)
 
 \usepackage{eurosym}
 \usepackage{listings}
 \usepackage{color}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{graphicx}
 \graphicspath{ {.} }
 \usepackage{upgreek}
 \usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabulary}
+\usepackage{lastpage}
 
 %for code snippets
 \lstset{
-  language=C,                % choose the language of the code
+  language=C,                	  % choose the language of the code
   %numbers=left,                   % where to put the line-numbers
   stepnumber=1,                   % the step between two line-numbers.        
   numbersep=5pt,                  % how far the line-numbers are from the code
@@ -26,43 +36,60 @@
   title=\lstname,                 % show the filename of files included with \
 }
 
-\setcounter{secnumdepth}{4}
 
-\titleformat{\paragraph}
-{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}
-{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Header                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\arraystretch}{1.4}
+\fancyhead{}
+\fancyfoot{}
+\pagestyle{fancy}
+\lhead{{\doctype}}
+\rhead{{\fontfamily{phv}\selectfont \textcolor{gray}{Urban Green}} \includegraphics[height=0.8cm]{logo}}
+\lfoot{Version \version}
+\rfoot{\thepage\ von \pageref{LastPage}}
+\setlength{\headheight}{30pt}
 
 
-\title{\textbf{Home Aquaponics System}}
-
-\author{Samuel Schober, Konrad Kelc\\
-		Matthias Schwebler, Ramin Bahadoorifar\\}
-\date{}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Start                                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
-\maketitle
 \begin{titlepage}
+    \centering
+    \vfill
+    {
+        \Huge\textbf{Evaluation Sprint}\\
+        \vskip2cm
+        \includegraphics[width=4cm]{logo} \\
+        \Large
+        {\fontfamily{phv}\selectfont
+			\textcolor{gray}{Urban Green}
+		}
+        \vskip3cm
+        Matthias Schwebler\\
+        Ramin Bahadoorifar\\
+        Samuel Schober\\
+        Konrad Kelc\\
+    }
+    \vfill
     \begin{center}
-        \vspace*{1cm}
-		\title{\textbf{Home Aquaponics System}}
+    \begin{table}[ht]
+    	\centering
+    	\begin{tabular}{lllll}
+    		\cline{1-4}
+    		\multicolumn{1}{|c|}{\textbf{\rule{0pt}{3ex} }} & \multicolumn{1}{c|}{\textbf{Name}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Unterschrift}} &  \\ \cline{1-4}
 
-        \vspace{2.5cm}
+    		\multicolumn{1}{|l|}{\textbf{\rule{0pt}{3ex} Erstellt:}} & \multicolumn{1}{l|}{M. Schwebler, R. Bahadoorifar} & \multicolumn{1}{l|}{2.11.2016} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
 
-        2016 - 5BHIT
-
-        \vspace*{5mm}
-
-        \small{Samuel Schober, Konrad Kelc\\Matthias Schwebler, Ramin Bahadoorifar}
-
-        \vspace*{2cm}
-
-        \vfill
-
-        \begin{center}
-        \end{center}
-
+    		\multicolumn{1}{|l|}{\textbf{\rule{0pt}{3ex} Gepr\"uft:}} & \multicolumn{1}{l|}{S. Schober, K. Kelc} & \multicolumn{1}{l|}{2.11.2016} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
+    		&  &  &  &  \\
+    		&  &  &  &  \\
+    		&  &  &  &  \\
+    	\end{tabular}
+    \end{table}
     \end{center}
 \end{titlepage}
 
@@ -83,7 +110,7 @@ E-Mail: rbahadoorifar@student.tgm.ac.at \\
 E-Mail: kkelc@student.tgm.ac.at
 
 \subsection{Projektbeschreibung}
-Im Rahmen des Projekts wird ein Tool zur \"Uberwachung und Steuerung von Metadaten eines Aquaponic Systems, entwickelt und mit entsprechender Hardware realisiert. Dabei werden Sensoren von einem Raspbery Pi angesprochen und die Ergebnisse lokal gespeichert, welche sp\"ater \"uber eine Webseite eingesehen werden k\"onnen (M\"ogliche Methoden der \"Ubertragung werden im Kapitel X.x erleutert - TODO). Des Weiteren kann der Benutzer \"uber die Weboberfl\"ache die Wassertemperatur sowie die Belichtungsdauer der Pflanzen regeln. Zus\"atzlich erh\"alt der Benutzer Vorschl\"age f\"ur einen sinnvollen Besatz des Aquariums sowie f\"ur die Pflanzenwahl und deren Bed\"urfnisse.
+Im Rahmen des Projekts wird ein Tool zur \"Uberwachung und Steuerung von Metadaten eines Aquaponic Systems, entwickelt und mit entsprechender Hardware realisiert. Dabei werden Sensoren von einem Raspbery Pi angesprochen und die Ergebnisse lokal gespeichert, welche sp\"ater \"uber eine Webseite bzw. einen Touchscreen auf dem Raspberry Pi eingesehen werden k\"onnen. Des Weiteren kann der Benutzer \"uber die Weboberfl\"ache die Wassertemperatur sowie die Belichtungsdauer der Pflanzen regeln. Zus\"atzlich erh\"alt der Benutzer Vorschl\"age f\"ur einen sinnvollen Besatz des Aquariums sowie f\"ur die Pflanzenwahl und deren Bed\"urfnisse.
 
 \section{Voruntersuchung des Projekts}
 \subsection{Ist-Erhebung}
@@ -100,14 +127,6 @@ Beide dieser Systeme sind in \"Osterreich kaum brauchbar bzw. nicht erh\"altlich
 \section{Aquaponic System}
 Ahoi mate! \textbackslash o/\\
 
-\section{Sensoren}
-Es gibt eine Reihe von m\"oglichen Sensoren, die verbaut werden k\"onnen. Da das System aber f\"ur den durchschnittlichen B\"urger erh\"altlich sein soll, sind finanzielle Limits gesetzt, welche die Zahl der Sensoren begr\"anzt.
-\subsection{Temperatur}
-Lorem Ipsum
-\subsection{Wasserstand}
-Lorem Ipsum
-\subsection{PH-Wert}
-Lorem Ipsum
 \newpage
 \section{Aktoren}
 \newpage
@@ -159,7 +178,7 @@ Wie erwartet, steigt der EC Wert beim Eintauchen ins Wasser, da es nat\"urlich u
 
 \subsection{PH Wert}
 \subsubsection{Allgemein}
-Der PH Wert ist einer der wichtigsten Werte, wenn es um das \"Uberwachen eines Aquaponik Systems geht. Daf\"ur gibt es ein gro{\ss}es Spektrum an erh\"altlichen Sensoren. Die der unteren Preisklasse, benötigen eine regelm\"a{\ss}ige Wartung. Die der oberen Preisklasse heben den Preis des Produktes, \"uber die Zielgruppe hinaus, und sind deshalb unmbrauchbar. \\
+Der PH Wert ist einer der wichtigsten Werte, wenn es um das \"Uberwachen eines Aquaponik Systems geht. Daf\"ur gibt es ein gro{\ss}es Spektrum an erh\"altlichen Sensoren. Die der unteren Preisklasse, ben\"otigen eine regelm\"a{\ss}ige Wartung. Die der oberen Preisklasse heben den Preis des Produktes, \"uber die Zielgruppe hinaus, und sind deshalb unmbrauchbar. \\
 Da der Sensor ein analoges Signal liefert, muss die gemessene Spannung erst umgerechnet werden. Dies \"ubernimmt die Klasse OpenAquarium.
 
 \begin{lstlisting} [frame=single]
@@ -174,6 +193,10 @@ Calibrationpoints (Kalibrierungswerte), werden angepasst, wenn der gemessene PH 
 \newpage
 \section{Art der Daten\"ubermittlung}
 
+
+\subsection{Raspberry Pi zu Server}
+
+\newpage
 \section{Datenbankmanagementsystem}
 
 \subsection{Evaluierung RDBMS vs. NoSQL}
