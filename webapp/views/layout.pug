@@ -1,10 +1,12 @@
 doctype html
 html
-    head
-      title= title
-      block defaultStylesheets
-          link(rel='stylesheet', href='/stylesheets/style.css')
-    body
-      block content
-      block defaultScripts
-          script(src='/javascript/index.js')
+	head
+		title= title
+		block defaultStylesheets
+			link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		block content
+		block defaultScripts
+			script(type='text/javascript' src='https://cdn.socket.io/socket.io-1.4.5.js')
+			script(type='text/javascript' src='https://code.jquery.com/jquery-3.1.1.js')
+			script(type='text/javascript' src='/javascripts/index.js')
