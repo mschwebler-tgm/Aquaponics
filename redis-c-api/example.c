@@ -20,6 +20,6 @@ int main (int argc, char **argv) {
 	//############################
 	//ASYNC EXAMPLE
 	//############################
-	redisAsyncContext *ac = subscribe_to_topic(TOPIC_ACTUATORS, callback_example);
+	redisAsyncContext *ac = subscribe_to_topic("localhost", 6379, TOPIC_ACTUATORS, callback_example);
 	return 0;
 }

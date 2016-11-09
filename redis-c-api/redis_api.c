@@ -6,7 +6,7 @@
 #include "hiredis/async.h"
 #include "hiredis/adapters/libevent.h"
 
-/** TOPICS **/
+/** HASH NAME **/
 static const char HASH_SYSTEM[] = "system";
 
 /** TOPICS **/
@@ -48,6 +48,7 @@ void disconnect_connection(redisContext *c) {
 void set (redisContext *c,  const char keys_and_values[]) {
 	//TODO: ERROR HANDLING
 	redisCommand(c, "HMSET %s %s", HASH_SYSTEM, keys_and_values);
+	redisCommand(c, "PUBLISH %s newdata", HASH_SYSTEM);
 }
 
 /**
@@ -85,11 +86,11 @@ void __on_message(redisAsyncContext *c, void *reply, void *privdata) {
  *
  * Callback[param 2]: callback (char key[], char value[]){...}
 **/
-redisAsyncContext * subscribe_to_topic (const char topic[], void* callback) {
+redisAsyncContext * subscribe_to_topic (const char redis_hostname[], const int redis_port, const char topic[], void* callback) {
 	//signal(SIGPIPE, SIG_IGN);
 	struct event_base *base = event_base_new();
 	//establish connection to redis-server
-	redisAsyncContext *ac = redisAsyncConnect(REDIS_HOSTNAME, REDIS_PORT);
+	redisAsyncContext *ac = redisAsyncConnect(redis_hostname, redis_port);
 	//error handler
 	if (ac->err) {
 		printf("error: %s\n", ac->errstr);
