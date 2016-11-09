@@ -128,8 +128,6 @@ Beide dieser Systeme sind in \"Osterreich kaum brauchbar bzw. nicht erh\"altlich
 Ahoi mate! \textbackslash o/\\
 
 \newpage
-\section{Aktoren}
-\newpage
 \section{Single Board Computer}
 Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat. 
 
@@ -142,12 +140,13 @@ Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V
 \subsection{Raspberry Pi Zero}
 Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf). 
 \subsection{L\"osung}
-Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Der optimale Weg ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt (Art der \"Ubertragung: Siehe Kapitel 8). 
+Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Der optimale Weg ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt.
 \newpage
 \section{Sensoren}
+Die Sensoren für den Prototypen, werden von der Firma Ponix Systems zur verfügung gestellt. Diese müssen allerdings erst auf Funktionalität unterucht werden. \\
 F\"ur die Entwicklung, des Codes, zum Ansprechen der Sensoren, wird "Arduino IDE" verwendet. Diese IDE bietet die M\"oglichkeit, den Code auf einem rechenstarken PC zu kompilieren und ihn dann auf dem Arduino auszuf\"uhren. Zus\"atzlich kann sie verwendet werden, um alle eingehenden Daten des Arduinos zu \"uberwachen.
 Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.\\
-Es werden Libraries verwendet, die von Arduino bereitgestellt werden, jedoch nicht direkt angesprochen. Diese Aufgabe \"ubernimmt die API des Open Aquarium Boards.
+Es werden Libraries von Arduino indirekt über die API von OpenAquarium verwendet.
 
 \subsection{Temperatur}
 Die Temperatur kann mit nur einem Befehl abgelesen werden. Dieser liefert einen Wert in Grad Celsius zur\"uck.
@@ -165,7 +164,7 @@ OpenAquarium.init();
 OpenAquarium.calibrateEC(point_1_cond,point_1_cal,
                          point_2_cond,point_2_cal);
                          
-float resistanceEC = OpenAquarium.readResistanceEC(); //EC Value in resistance
+float resistanceEC = OpenAquarium.readResistanceEC();
 float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value in uS/cm
 \end{lstlisting}
 Die Tests beim Eintauchen des Sensors in Leitungswasser ergaben folgende Ergebnisse: \\ \\
@@ -198,7 +197,21 @@ Beim testen eines bereits l\"anger in Betrieb gewesenem PH Sensor brachte dieser
 \end{minipage}
 Wie zusehen ist, weicht der gemessene Wert bereits stark von dem eigentlichen Wert ab. In einem Aquaponik System hat eine Abweichung dieser gr\"o{\ss}e, starke Auswirkungen auf das Gleichgewicht des Ecosystems. \\
 \paragraph{Fazit} \mbox{} \\
-Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warungsaufwand aufweisen, wird je nach M\"oglichkeiten versucht eine eigene L\"osung zu etablieren. Dies soll mithilfe einiger Teststreifen und einer Kamera passieren, bei der, der Benutzer per Knopfdruck \"uber die Website den PH Wert messen kann. Die Vorteile bei dieser L\"osung sind, dass solch ein System einzigartig auf dem Markt w\"are, und dass der Benutzer selbst bestimmen kann, ob er den PH Wert messen will und wie oft. Wie genau dieses System realisiert wird, wird im n\"achsten Sprint (Sprint 2) geplant.
+Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warungsaufwand aufweisen, wird je nach M\"oglichkeiten versucht eine eigene L\"osung zu etablieren. Dies soll mithilfe einiger Teststreifen und einer Kamera passieren, bei der, der Benutzer per Knopfdruck \"uber die Website den PH Wert messen kann. Die Vorteile bei dieser L\"osung sind, dass solch ein System einzigartig auf dem Markt w\"are, und dass der Benutzer selbst bestimmen kann, ob er den PH Wert messen will und wie oft. Wie genau dieses System realisiert wird, wird im n\"achsten Sprint (Sprint 1) geplant.
+
+\newpage
+\section{Aktoren}
+Es werden insgesamt vier Aktoren von Ponix Systems zur Verfügung gestellt. Darunter befinden sich: 2 Pumpen (Wasser/Mineralien), 1 Futterautomat und eine Pflanzenbeleuchtung. \\
+Um dem Kunden die Arbeit abzunehmen die Zimmertemperatur so zu regulieren um ein Klima für die Fische zu schaffen, wird zusätzlich ein Hitzestrahler verbaut. Dieser wird im nächsten Sprint (Sprint 1) geplant und eingesetzt. 
+\subsection{Pumpe}
+\paragraph{Wasser}\mbox{} \\
+Lorem
+\paragraph{Mineralien}\mbox{} \\
+Ipsum
+\subsection{Futterautomat}
+Um den Wartungsaufwand zu minimieren, ist ein Futterautomat notwendig, der über eine Weboberfläche konfiguriert werden kann. Es kann entweder ein teurer Futterautomat gekauft werden, der diese Option anbietet, oder ein durchschnittlicher Futterautomat wird so bearbeitet, dass er auf ein Stromsignal reagiert indem er Futter ausgibt. \\
+Der Futterautomat von Ponix Systems gehört zur letzteren Art. Sobald 5 Volt angelegt wird, gibt er Futter aus. So kann später über die WebApp das Intervall und die Menge gesteuert werden. 
+\subsection{Pflanzenbeleuchtung}
 
 \newpage
 \section{Art der Daten\"ubermittlung}
