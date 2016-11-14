@@ -17,13 +17,14 @@
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{tabulary}
+\usepackage[utf8]{inputenc}
 \usepackage{lastpage}
 
 %for code snippets
 \lstset{
   language=C,                	  % choose the language of the code
   %numbers=left,                   % where to put the line-numbers
-  stepnumber=1,                   % the step between two line-numbers.        
+  stepnumber=1,                   % the step between two line-numbers.
   numbersep=5pt,                  % how far the line-numbers are from the code
   backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
   showspaces=false,               % show spaces adding particular underscores
@@ -129,16 +130,16 @@ Ahoi mate! \textbackslash o/\\
 
 \newpage
 \section{Single Board Computer}
-Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat. 
+Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat.
 
 \subsection{Arduino}
 Der Arduino Uno ist ein SBC, welcher im Bereich von 20 - 25 \euro zu erhalten ist. Er hat einen internen Speicher der gro{\ss} genug ist, um einen Netzwerkausfall \"uberbr\"ucken zu k\"onnen. Da er aber selbst keine Netzwerkschnittstelle hat, muss er mit einem WiFi-Shield (\euro 88) ausgestattet werden. Ein Shield ist eine Hardware-erweiterung, die dem Arduino situationsbezogene Funktionen hinzuf\"ugen kann. F\"ur dieses Projekt ist das "Open Aquarium Board" (\euro 50) optimal, da es speziell entwickelt wurde um ein Aquarium zu \"uberwachen bzw. zu steuern und eine Open Source API an-bietet. \\
-Das Problem dabei ist, dass nur ein Shield auf dem Arduino angebracht werden kann. Das hei{\ss}t, entweder das Open Aquarium Board wird verwendet, oder ein WLAN Shield zur Daten\"ubermittlung. Er m\"usste mit einem anderen SBC, welcher Netzwerktauglich ist, verbunden werden um die Daten auf einem zentralen Server zu persisiteren. 
+Das Problem dabei ist, dass nur ein Shield auf dem Arduino angebracht werden kann. Das hei{\ss}t, entweder das Open Aquarium Board wird verwendet, oder ein WLAN Shield zur Daten\"ubermittlung. Er m\"usste mit einem anderen SBC, welcher Netzwerktauglich ist, verbunden werden um die Daten auf einem zentralen Server zu persisiteren.
 \subsection{Raspberry Pi B}
-Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V im Leerlauf). Er bietet ebenso wie der Arduino einen ad\"aquaten Speicher, kann aber einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen extremen Arbeitsaufwand. 
+Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V im Leerlauf). Er bietet ebenso wie der Arduino einen ad\"aquaten Speicher, kann aber einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen extremen Arbeitsaufwand.
 \newpage
 \subsection{Raspberry Pi Zero}
-Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf). 
+Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf).
 \subsection{L\"osung}
 Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Der optimale Weg ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt.
 \newpage
@@ -154,16 +155,16 @@ Die Temperatur kann mit nur einem Befehl abgelesen werden. Dieser liefert einen 
 OpenAquarium.init();
 float temperature = OpenAquarium.readtemperature();
 \end{lstlisting}
-Die Testergebnisse des Temperatur Sensors stimmten mit denen eines handels\"ublichen Thermometers \"uberein. 
+Die Testergebnisse des Temperatur Sensors stimmten mit denen eines handels\"ublichen Thermometers \"uberein.
 
 \subsection{EC Wert}
-Der EC Wert gibt Aufschluss dar\"uber, wie viele Salze jeglicher Art im Wasser gel\"ost sind. Desto mehr N\"ahrstoffe also im Wasser vorhanden sind, umso h\"oher ist auch der EC Wert. 
+Der EC Wert gibt Aufschluss dar\"uber, wie viele Salze jeglicher Art im Wasser gel\"ost sind. Desto mehr N\"ahrstoffe also im Wasser vorhanden sind, umso h\"oher ist auch der EC Wert.
 
 \begin{lstlisting} [frame=single]
 OpenAquarium.init();
 OpenAquarium.calibrateEC(point_1_cond,point_1_cal,
                          point_2_cond,point_2_cal);
-                         
+
 float resistanceEC = OpenAquarium.readResistanceEC();
 float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value in uS/cm
 \end{lstlisting}
@@ -183,7 +184,7 @@ Da der Sensor ein analoges Signal liefert, muss die gemessene Spannung erst umge
 \begin{lstlisting} [frame=single]
 OpenAquarium.calibratepH(cp4,cp7,cp10);
 int mvpH = OpenAquarium.readpH(); //Value in mV of pH
-float pH = OpenAquarium.pHConversion(mvpH); 
+float pH = OpenAquarium.pHConversion(mvpH);
 \end{lstlisting}
 cp4, cp7, cp7 ... Calibrationpoints (Konstanten)
 
@@ -202,7 +203,7 @@ Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warun
 \newpage
 \section{Aktoren}
 Es werden insgesamt vier Aktoren von Ponix Systems zur Verfügung gestellt. Darunter befinden sich: 2 Pumpen (Wasser/Mineralien), 1 Futterautomat und eine Pflanzenbeleuchtung. \\
-Um dem Kunden die Arbeit abzunehmen die Zimmertemperatur so zu regulieren um ein Klima für die Fische zu schaffen, wird zusätzlich ein Hitzestrahler verbaut. Dieser wird im nächsten Sprint (Sprint 1) geplant und eingesetzt. 
+Um dem Kunden die Arbeit abzunehmen die Zimmertemperatur so zu regulieren um ein Klima für die Fische zu schaffen, wird zusätzlich ein Hitzestrahler verbaut. Dieser wird im nächsten Sprint (Sprint 1) geplant und eingesetzt.
 \subsection{Pumpe}
 \paragraph{Wasser}\mbox{} \\
 Lorem
@@ -210,7 +211,7 @@ Lorem
 Ipsum
 \subsection{Futterautomat}
 Um den Wartungsaufwand zu minimieren, ist ein Futterautomat notwendig, der über eine Weboberfläche konfiguriert werden kann. Es kann entweder ein teurer Futterautomat gekauft werden, der diese Option anbietet, oder ein durchschnittlicher Futterautomat wird so bearbeitet, dass er auf ein Stromsignal reagiert indem er Futter ausgibt. \\
-Der Futterautomat von Ponix Systems gehört zur letzteren Art. Sobald 5 Volt angelegt wird, gibt er Futter aus. So kann später über die WebApp das Intervall und die Menge gesteuert werden. 
+Der Futterautomat von Ponix Systems gehört zur letzteren Art. Sobald 5 Volt angelegt wird, gibt er Futter aus. So kann später über die WebApp das Intervall und die Menge gesteuert werden.
 \subsection{Pflanzenbeleuchtung}
 
 \newpage
@@ -218,13 +219,13 @@ Der Futterautomat von Ponix Systems gehört zur letzteren Art. Sobald 5 Volt ang
 Bei der Daten\"ubertragung sind mehrere Parameter zu beachten. Dazu geh\"oren haupts\"achlich das Format der Daten und das Intervall in denen diese \"ubertragen werden.
 \subsection{Arduino zu Raspberry Pi}
 Um die Sensordaten dem Raspberry Pi mitzuteilen, eignet sich am besten ein Key-Value Format. Dabei gibt es verschiedene M\"oglichkeiten, wie z.B. JSON und CSV. \\
-Das Intervall der Daten\"ubertragung kann frei, vom Benutzer gew\"ahlt werden. 
+Das Intervall der Daten\"ubertragung kann frei, vom Benutzer gew\"ahlt werden.
 \subsubsection{JSON}
 JSON (JavaScript Object Notation) hat den gro{\ss}en Vorteil, der leichten Server-seitigen Auswertung und Konvertierung in ein Javascript Object. Da die Daten aber vor\"ubergehend auf dem Raspberry Pi persistiert werden sollen, und Redis kein automatisches speichern von JSON Objekten unterst\"utzt erzeugt diese Methode der \"Ubertragung mehr Aufwand als Nutzen.
 \subsubsection{CSV}
 \"Ahnlich wie bei JSON, m\"ussten die Daten erst bearbeitet und gefiltert werden, um in die Datenbank gespeichert werden zu k\"onnen.
 \subsubsection{Eigenes Format}
-Um die Daten mit Redis zu persistieren wird folgende Syntax verwendet: "Key1:Value1 Key2:Value2 ...". Um Mehraufwand durch Verwendung eines standartisierten Datenformats zu vermeiden, k\"onnen die Daten gleich so gesendet werden, dass sie ohne Bearbeitung in die Datenbank gespeichert werden k\"onnen. 
+Um die Daten mit Redis zu persistieren wird folgende Syntax verwendet: "Key1:Value1 Key2:Value2 ...". Um Mehraufwand durch Verwendung eines standartisierten Datenformats zu vermeiden, k\"onnen die Daten gleich so gesendet werden, dass sie ohne Bearbeitung in die Datenbank gespeichert werden k\"onnen.
 \subsubsection{Fazit}
 Der Datenaustausch wird in folgendem Format stattfinden:
 \begin{lstlisting} [frame=single]
@@ -246,7 +247,7 @@ Zur Speicherung der Sensordaten soll ein geeignetes Datenbankmanagement-\\ syste
 \begin{itemize}
 	\item Performance: \\Gibt an, wie schnell die Lese- und Schreibleistung ist.
 	\item Konsistenz: \\Gibt an, wie gut das DBMS Ma{\ss}nahmen zur Konsistenzerhaltung umsetzt.
-	\item einfacher Zugriff auf Daten: \\Gibt an, wie Umfangreich die API des DBMS ist. 
+	\item einfacher Zugriff auf Daten: \\Gibt an, wie Umfangreich die API des DBMS ist.
 \end{itemize}
 
 \subsubsection{Optionen}
@@ -264,13 +265,13 @@ DML(Data Manipulation Language) und DCL (Data Control Language) aufgeteilt.
 \end{itemize}
 \textbf{Konsistenz}\\\\
 SQL-Datenbanken verwenden das ACID Prinzip, daher besitzen sie eine bessere Konsistenz als
-NoSQL-Datenbanken. NoSQL Datenbanken verwenden das BASE Prinzip, die Daten hier sind daher 
-nur "schlussendlich" konsistent. Dadurch kann es passieren das nach einem Update nicht immer 
+NoSQL-Datenbanken. NoSQL Datenbanken verwenden das BASE Prinzip, die Daten hier sind daher
+nur "schlussendlich" konsistent. Dadurch kann es passieren das nach einem Update nicht immer
 die selben Werte zur\"uckgeliefert werden.
 
 \paragraph{NoSQl-Datenbanken}
 NoSQL-Datenbanken besitzen wegen ihres einfachen Schemas eine hohe Skalierbarkeit, welche trotz eines
-hohen Datenvolumens gew\"ahrt wird. 
+hohen Datenvolumens gew\"ahrt wird.
 
 \subsubsection{Fazit}
 SQL-Datenbanken weisen eine bessere Konsistenz auf, jedoch besitzen NoSQL-Datenbanken
@@ -291,7 +292,7 @@ Die Folgenden Datebankmanagementsysteme wurden evaluiert:
 
 \begin{itemize}
 	\item Performance: \\Gibt an, wie schnell die Lese- und Schreibleistung ist.
-	\item einfacher Zugriff auf Daten: \\Gibt an, wie Umfangreich die API des DBMS ist. 
+	\item einfacher Zugriff auf Daten: \\Gibt an, wie Umfangreich die API des DBMS ist.
 	\item Dokumentation:\\ Gibt an, wie gut das DBMS dokumentiert ist.
 	\item Verbreitung:\\ Gibt an, wie weit das DBMS verbreitet ist.
 \end{itemize}
@@ -324,7 +325,7 @@ Redis schneidet bei den Kriterien, wie z.B. der Performance und den einfachen Zu
 seine Kompaktheit, besser als MongoDB ab, hat jedoch den gro{\ss}en Nachteil, dass es bei serverseitiger Verwendung, extrem viel Arbeitsspeicher verbraucht, wenn einige Aquaponik Systeme ihre Daten \"uber den Server persistieren.
 
 \subsection{Gesamtfazit}
-Es m\"ussen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzeitdaten vorhanden sein, um einerseits auf dem Touchdisplay eine \"Ubersicht anzuzeigen und andererseits \"uber den Browser alle Daten zu betrachten. Da auf dem Raspberry Pi allerdings nicht viel Speicherplatz vorhanden ist, wird daf\"ur Redis verwendet und f\"ur die serverseitige Persistierung MongoDB.
+Es m\"ussen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzeitdaten vorhanden sein, um einerseits auf dem Touchdisplay eine \"Ubersicht anzuzeigen und andererseits \"uber den Browser alle Daten zu betrachten. Da auf dem Raspberry Pi allerdings nicht viel Speicherplatz aber genügend Arbeitsspeicher vorhanden ist, wird daf\"ur Redis verwendet und f\"ur die serverseitige Persistierung MongoDB.
 
 
 \section{Web Framework}
@@ -344,28 +345,48 @@ Da Python selbst leicht zu erlernen ist, ist es keine Herausforderung sich in di
 \paragraph{Sicherheit} \mbox{}\\
 Django ist so konzipiert, dass die standartm\"a{\ss}ig implementierten Sicherheitsma{\ss}nahmen, f\"ur den gr\"o{\ss}ten Teil der Webentwicklung ausreicht. Da zwischen dem Raspberry Pi und dem Server wenig sicherheitsrelevante Daten ausgetauscht werden, gen\"ugt die Sicherheit von Django.
 \paragraph{Dokumentation} \mbox{}\\
-Die Dokumentation von Django ist gerade f\"ur Einsteiger optimal, da sie einige n\"utzliche Tutorials bietet. Aber auch f\"ur erfahrene Entwickler ist die Dokumentation gro{\ss}artig. 
+Die Dokumentation von Django ist gerade f\"ur Einsteiger optimal, da sie einige n\"utzliche Tutorials bietet. Aber auch f\"ur erfahrene Entwickler ist die Dokumentation gro{\ss}artig.
 \newpage
 
-\subsection{Node JS}
+\subsection{Node.js}
+Node.js ist eine Event-basierte Plattform, welche nicht blockierend ist. Das bedeutet, dass der Server nicht wartet bis ein Ereignis vollendet wurde, um mit den nächsten Aufgaben fortfahren zu können. Stattdessen werden Callbacks verwendet, welche dann erst aufgerufen werden, wenn ein bestimmtes Ereignis fertig ausgeführt wurde, bei dem von einer längeren Dauer ausgegangen wird. Währenddessen kann der Server andere Aufgaben bearbeiten.
+
+An sich läuft Node.js nicht Multi-Threaded, wie man vielleicht erwartet, sondern bearbeitet jede eingehende Verbindung mit einem Thread. Jedoch werden bestimmte Funktionen, wie das Auslesen einer Datenbank oder das Rendern von Templates, intern durch mehrere Threads erledigt, welche dann bei Vollendung den zugewiesenen Callback aufrufen. Durch diese Architektur ist Node.js in vielen Bereichen viel schneller als andere Webserver, die für jede Verbindung einen Prozess erstellen würden.
+
+Node.js ist sehr abhängig durch Third-Party Module, welche durch NPM (Node Package Manager) verwaltet und installiert werden können. Diese Module machen das Entwickeln von Applikationen viel einfacher oder geben auch mehr Funktionen. Für uns interessante Module wären zum Beispiel: Express.js oder Socket.io. Ersteres gibt uns die Möglichkeit die Applikation im MVC-Pattern zu entwickeln.
+Mit Socket.io könnte man Daten dem Client senden und gleichzeitig empfangen, ohne dabei davor eine Anfrage vom Client erwarten zu müssen. Es genügt damit nur noch eine Anfrage vom Client bei dem eine Verbindung (Socket) zum Server geöffnet wird, sodass man Daten bidirektional senden kann.
+
+\paragraph{Schwierigkeitsgrad/Lernkurve} \mbox{}\\
+Wie der Name schon verrät verwendet Node.js JavaScript als Programmiersprache. Falls man die Sprache schon kann, wie in unserem Fall, ist eine Lernkurve jeweils in den einzeln verwendeten Modulen sichtbar, die sehr unterschiedlich sind. Somit ist der Schwierigkeitsgrad nicht wirklich einschätzbar. Der Schwierigkeitsgrad in den oben genannten Modulen liegt im mittleren Bereich.
+
+\paragraph{Sicherheit} \mbox{}\\
+Node.js hat eine relativ große Community. Das ist insofern wichtig, da Sicherheitslücken dadurch schneller gefunden und behoben werden können. Jedoch unterscheidet sich die Sicherheit auch in diesem Punkt in den einzelnen Modulen. Somit muss beachtet werden, dass der zu verwendende Modul eine hohe Bekanntheit hat.
+
+\paragraph{Dokumentation} \mbox{}\\
+Node.js ist an sich sehr gut dokumentiert und bietet durch eine Vielzahl von Tutorials einen einfachen Einstieg. Von den bekannten Modulen, wissen wir, dass die Dokumentation sehr gut ist, wie bei Socket.io oder Express.js. Außerdem wird der Einstieg in diesen Modulen mit verschiedenen Tutorials, die im Internet zu finden sind, sehr einfach gemacht.
+
 \subsection{Laravel}
 \subsection{Fazit}
 \paragraph{Django} \mbox{}\\
-F\"ur Einsteiger ist Django definitiv empfehlenswert. Die gute Dokumentation erm\"oglicht es jeden Entwickler mit - egal mit welchen Kenntnissen - sich einen guten \"Uberblick, was f\"ur dieses Projekt bereits ausreichend ist. 
-\paragraph{NodeJS} \mbox{}\\
-Lorem Ipsum
+F\"ur Einsteiger ist Django definitiv empfehlenswert. Die gute Dokumentation erm\"oglicht es jeden Entwickler mit - egal mit welchen Kenntnissen - sich einen guten \"Uberblick, was f\"ur dieses Projekt bereits ausreichend ist.
+\paragraph{Node.js} \mbox{}\\
+Node.js kann mit seinen Modulen innovative Lösungen bieten, wie das schon erwähnte Socket.io-Modul. Außerdem besitzt Node.js eine sehr große Community, die ständig wächst, wie auch der derzeitige Trend zeigt. Große Unternehmen, wie Netflix oder Paypal, basieren auf Node.js, aufgrund seiner Schnelligkeit und hohen Skalierbarkeit.
 \paragraph{Laravel} \mbox{}\\
 Ameno
 \\
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{|l|c|c|c|l}
-\cline{1-4}
-\textbf{Framework} & \multicolumn{1}{l|}{\textbf{Schwierigkeit}} & \multicolumn{1}{l|}{\textbf{Sicherheit}} & \multicolumn{1}{l|}{\textbf{Dokumentation}} &  \\ \cline{1-4}
-\textbf{Django}    & 2/5                                         & 4/5                                      & 5/5                                         &  \\ \cline{1-4}
-\textbf{NodeJS}    & x/5                                         & x/5                                      & x/5                                         &  \\ \cline{1-4}
-\textbf{Laravel}   & x/5                                         & x/5                                      & x/5                                         &  \\ \cline{1-4}
+\begin{tabular}{|l|c|c|c|c|l}
+\cline{1-5}
+\textbf{Framework} & \multicolumn{1}{l|}{\textbf{Schwierigkeit}} & \multicolumn{1}{l|}{\textbf{Sicherheit}} & \multicolumn{1}{l|}{\textbf{Dokumentation}} & \multicolumn{1}{l|}{\textbf{Erfahrung}} & \\ \cline{1-5}
+\textbf{Django}    & 2/5                                         & 4/5                                      & 5/5                                         & 1/5                                     & \\ \cline{1-5}
+\textbf{NodeJS}    & 1/5                                         & 5/5                                      & x/5                                         & 4/5                                     & \\ \cline{1-5}
+\textbf{Laravel}   & x/5                                         & x/5                                      & x/5                                         & x/5                                     & \\ \cline{1-5}
 \end{tabular}
 \end{table}
+
+\newpage
+\section{Fazit des kompletten Systems}
+\includegraphics[height=5.3in]{complete_system}
 \end{document}
