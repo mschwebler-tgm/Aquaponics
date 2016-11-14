@@ -55,7 +55,7 @@ app.use(function(err, req, res, next) {
 var http = require('http');
 var server = http.createServer(app).listen(8080);
 var io = require('socket.io')(server);
-var authentication = require('./authentication')(io);
+var authentication = require('./authentication')(io, app);
 
 // connect to database
 var dbConfig = require('./models/conf.js');
