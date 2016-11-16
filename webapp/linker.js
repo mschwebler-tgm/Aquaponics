@@ -4,25 +4,29 @@ function Linker () {
 }
 
 Linker.prototype.addIOClient = function(id, object) {
-    this.IOCLIENTS.add(id,object);
+    this.IOCLIENTS[id] = object;
 }
 
 Linker.prototype.removeIOClient = function(id) {
-    this.IOCLIENTS.remove(id);
+    delete this.IOCLIENTS[id];
 }
 
 Linker.prototype.addNETClient = function(id, object) {
-    this.NETCLIENTS.add(id,object);
+    this.NETCLIENTS[id] = object;
 }
 
 Linker.prototype.removeNETClient = function(id) {
-    this.NETCLIENTS.remove(id);
+    delete this.NETCLIENTS[id];
 }
 
 Linker.prototype.publishToNETClient = function(id, key, value) {
-    NETCLIENTS.id.write(key+ ':' + value);
+    //TODO: CHECK IF CONNECTION IS AVAILABLE
+    this.NETCLIENTS[id].write(key+ ':' + value);
 }
 
 Linker.prototype.publishToIOClient = function(id, json) {
-    IOCLIENTS.id.emit('updateJSON', json);
+    //TODO: CHECK IF CONNECTION IS AVAILABLE
+    this.IOCLIENTS[id].emit('updateJSON', json);
 }
+
+module.exports = new Linker();
