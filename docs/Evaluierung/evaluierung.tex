@@ -321,14 +321,65 @@ Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warun
 Es werden insgesamt vier Aktoren von Ponix Systems zur Verf\"ugung gestellt. Darunter befinden sich: 2 Pumpen (Wasser/Mineralien), 1 Futterautomat und eine Pflanzenbeleuchtung. \\
 Um dem Kunden die Arbeit abzunehmen die Zimmertemperatur so zu regulieren um ein Klima f\"ur die Fische zu schaffen, wird zus\"atzlich ein Hitzestrahler verbaut. Dieser wird im n\"achsten Sprint (Sprint 1) geplant und eingesetzt.
 \subsection{Pumpe}
-\paragraph{Wasser}\mbox{} \\
-Lorem
+\paragraph{Wasser} \mbox{} \\
+Die Wasserpumpe kann mit einer Zeile Code ein bzw. ausgeschalten werden. Die Steuerung, die kontrolliert wann genau die Pumpe eingeschalten wird, muss erst implementiert werden (Sprint 1).
+
+\begin{lstlisting} [frame=single]
+OpenAquarium.pumpON(1); 
+OpenAquarium.pumpOFF(1);
+\end{lstlisting}
+Zum Anschlie{\ss}en der Pumpe sind auf dem AquariumBoard Steckplätze vorgesehen. \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=2.3in]{water_pump_connection}}
+\end{minipage}
+Pumpleistung: 100-350 L/H \\
+Spannung: 3.5-12 DC \\
+Leistungsbereich: 0.5W-5W \\
+\newpage
+
 \paragraph{Mineralien}\mbox{} \\
-Ipsum
+Wie bei der Wasserpumpe ist der Code zum Aktivieren und Deaktivieren der Pumpe kurz.
+\begin{lstlisting} [frame=single]
+OpenAquarium.perpumpON(1); 
+OpenAquarium.perpumpOFF(1);
+\end{lstlisting}
+Die Dosierung der Mineralien muss nicht manuell vorgenommen werden sondern kann über das OpenAquarium.h File angepasst werden.
+\begin{lstlisting} [frame=single]
+#define dosingdrop1 5
+#define dosingdrop1 10
+#define dosingdrop1 15
+\end{lstlisting}
+Zum Anschließen der Pumpe sind wieder Steckplätze vorhanden. \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=2.3in]{mineral_pump_connection}}
+\end{minipage} 
+12V DC input voltage \\
+Flow: 20-60 ml/min
+\newpage
+
 \subsection{Futterautomat}
 Um den Wartungsaufwand zu minimieren, ist ein Futterautomat notwendig, der \"uber eine Weboberfl\"ache konfiguriert werden kann. Es kann entweder ein teurer Futterautomat gekauft werden, der diese Option anbietet, oder ein durchschnittlicher Futterautomat wird so bearbeitet, dass er auf ein Stromsignal reagiert indem er Futter ausgibt. \\
 Der Futterautomat von Ponix Systems geh\"ort zur letzteren Art. Sobald 5 Volt angelegt wird, gibt er Futter aus. So kann sp\"ater \"uber die WebApp das Intervall und die Menge gesteuert werden.
 \subsection{Pflanzenbeleuchtung}
+Die Beleuchtung wird mit einem LED Streifen realisiert von www.cooking-hacks.com (bzw. von Ponix Systems gesponsort) realisiert. Er besteht aus 72 LEDs (60 Weiße und 12 Blaue) mit einer Leuchtkraft von 500 Lumen. Der Streifen kann mit Hilfe der OpenAquarium Klasse der aktuellen Zeit automatisch angepasst werden.
+\begin{lstlisting} [frame=single]
+now = OpenAquarium.getTime();
+OpenAquarium.printTime(now);
+OpenAquarium.lighting(now);
+\end{lstlisting}
+Wie bei den beiden Pumpen kann der LED Streifen am OpenAquarium Board angeschlossen werden. \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=2.2in]{led_connection}}
+\end{minipage} 
+Leistung: 5.5 watts \\
+Beleuchtung: 72 LEDs \\
+Farbe: 60 Weiße + 12 Blaue) \\
+
+
+
 \subsection{Abnahme}
 \begin{table}[ht]
   \centering
