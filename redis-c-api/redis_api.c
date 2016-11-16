@@ -47,7 +47,11 @@ void disconnect_connection(redisContext *c) {
 **/
 void set (redisContext *c,  const char keys_and_values[]) {
 	//TODO: ERROR HANDLING
-	redisCommand(c, "HMSET %s %s", HASH_SYSTEM, keys_and_values);
+	printf("KEYS AND VALUES: %s \n", keys_and_values);
+	char * command = (char *) malloc(strlen("HMSET system ") + strlen(keys_and_values) + 1);
+	strcpy(command, "HMSET system ");
+	strcat(command, keys_and_values);
+	redisCommand(c, command);
 	redisCommand(c, "PUBLISH %s newdata", HASH_SYSTEM);
 }
 
@@ -68,13 +72,13 @@ const char * get (redisContext *c, const char key[]) {
  * Is executed after a message was received. Parses the message and returns the results as parameters to callback(key, value).
 **/
 void __on_message(redisAsyncContext *c, void *reply, void *privdata) {
-    redisReply *r = reply;
-    if (reply == NULL)
+	redisReply *r = reply;
+	if (reply == NULL)
 		return;
 
 	if(r->element[2]->str != NULL) {
 		void (*callback)(char*, char*) = privdata;
-		char *key = strtok(r->element[2]->str, ":");;
+		char *key = strtok(r->element[2]->str, ":");
 		char *value = strtok(NULL, ":");
 		callback(key, value);
 	}
