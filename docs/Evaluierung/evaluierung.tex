@@ -98,6 +98,18 @@
 \tableofcontents	%Inhaltsverzeichnis
 
 \newpage
+% Versionierung
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|l|l|l}
+\cline{1-4}
+\multicolumn{1}{|c|}{\textbf{Datum}} & \multicolumn{1}{c|}{\textbf{Version}} & \multicolumn{1}{c|}{\textbf{Autor}}                                                                               & \multicolumn{1}{c|}{\textbf{Status}} &  \\ \cline{1-4}
+26.10.2016                           & 0.1                                   & \begin{tabular}[c]{@{}l@{}}Matthias Schwebler,\\ Ramin Bahadoorifar,\\ Konrad Kelc,\\ Samuel Schober\end{tabular} & Erstentwurf                          &  \\ \cline{1-4}
+2.11.2016                            & 0.2                                   & Matthias Schwebler                                                                                                & Überarbeitung                        &  \\ \cline{1-4}
+16.11.2016                           & 1.0                                   & \begin{tabular}[c]{@{}l@{}}Matthias Schwebler,\\ Ramin Bahadoorifar\end{tabular}                                  & Fertigstellung                       &  \\ \cline{1-4}
+\end{tabular}
+\end{table}
+\newpage
 \section{Einf\"uhrung}
 Aquaponik ist ein Verfahren, welches die Aufzucht von Fischen mit der Aufzucht von Nutzpflanzen verbindet. Im Wesentlichen handelt es sich dabei um einen geschlossenen Wasserkreislauf, in dem die entsprechenden N\"ahrstoffe automatisch erzeugt werden; d.h. die Ausscheidungen der Fische werden durch Bakterien in N\"ahrstoffe f\"ur die Pflanzen umgewandelt. Es soll eine vollautomatisierte L\"osung f\"ur ein Aquaponik-System f\"ur kleine Haushalte als Prototyp geschaffen werden. Diese beinhaltet einerseits eine geeignete Konstruktion die sowohl das Aquarium enth\"alt als auch die ent-sprechende \"Uberwachung und Regelung des Systems.
 
@@ -485,20 +497,20 @@ Node.js hat eine relativ gro{\ss}e Community. Das ist insofern wichtig, da Siche
 Node.js ist an sich sehr gut dokumentiert und bietet durch eine Vielzahl von Tutorials einen einfachen Einstieg. Von den bekannten Modulen, wissen wir, dass die Dokumentation sehr gut ist, wie bei Socket.io oder Express.js. Au{\ss}erdem wird der Einstieg in diesen Modulen mit verschiedenen Tutorials, die im Internet zu finden sind, sehr einfach gemacht.
 
 \subsection{Laravel}
-Laravel ist ein PHP-Framework und wird von vielen Entwickler derzeit als eines der besten Frameworks für PHP bezeichnet.
+Laravel ist ein PHP-Framework und wird von vielen Entwickler derzeit als eines der besten Frameworks f\"ur PHP bezeichnet.
 Laravel bietet viele Funktionen an, wie Routing, Templating, Unit Testing, usw.
 
 Die Architektur von PHP unterscheidet sich von Node.js sehr stark:
 \begin{itemize}
     \item Pro Verbindung wird ein neuer Prozess erstellt. Dies hat bei hoher Nutzzahl zur Folge, dass der Arbeitsspeicher des Servers sehr schnell voll werden kann.
-    Node.js verwendet nur einen Thread und erstellt, falls erforderlich, mehrere Threads für eine jeweilige Aufgabe, welche dann bei erfolgreicher Ausführung (also Aufrufen des Callbacks) beendet werden. Wird aber ein Fehler hervorgerufen stürzt Node.js komplett ab, wogegen bei PHP nur der Prozess abstürzt.
-    \item Jedesmal, wenn ein PHP-Skript ausgeführt wird, wird das Skript neu interpretiert. Dies hat den Vorteil, dass bei einer Codeänderung nicht der Server neugestartet werden muss. Der Nachteil liegt jedoch in der Performance.
-    Bei Node.js wird der Code beim Starten kompiliert. Eine Codeänderung wirkt sich jedoch solange nicht am Server aus bis Node.js neugestartet wurde. Dies dauert deutlich länger als ein PHP-Server. Dagegen ist die Performance in der Laufzeit deutlich schneller als bei PHP.
-    \item Der Code in PHP läuft, anders als in Node.js, synchron ab. So muss zum Beispiel für eine Datenbankverbindung solange gewartet werden, bis diese auch erfolgreich erstellt worden ist. Dies würde die Antwortzeit einer Anfrage sehr beeinträchtigen.
+    Node.js verwendet nur einen Thread und erstellt, falls erforderlich, mehrere Threads f\"ur eine jeweilige Aufgabe, welche dann bei erfolgreicher Ausf\"uhrung (also Aufrufen des Callbacks) beendet werden. Wird aber ein Fehler hervorgerufen st\"urzt Node.js komplett ab, wogegen bei PHP nur der Prozess abst\"urzt.
+    \item Jedesmal, wenn ein PHP-Skript ausgef\"uhrt wird, wird das Skript neu interpretiert. Dies hat den Vorteil, dass bei einer Code\"anderung nicht der Server neugestartet werden muss. Der Nachteil liegt jedoch in der Performance.
+    Bei Node.js wird der Code beim Starten kompiliert. Eine Code\"anderung wirkt sich jedoch solange nicht am Server aus bis Node.js neugestartet wurde. Dies dauert deutlich l\"anger als ein PHP-Server. Dagegen ist die Performance in der Laufzeit deutlich schneller als bei PHP.
+    \item Der Code in PHP l\"auft, anders als in Node.js, synchron ab. So muss zum Beispiel f\"ur eine Datenbankverbindung solange gewartet werden, bis diese auch erfolgreich erstellt worden ist. Dies w\"urde die Antwortzeit einer Anfrage sehr beeintr\"achtigen.
 \end{itemize}
 
 \paragraph{Schwierigkeitsgrad/Lernkurve} \mbox{}\\
-Die Skriptsprache PHP ist sehr einfach zu lernen, genauso wie das Framework Laravel. Jedoch haben die Teammitglieder nicht viel Erfahrung mit PHP, sodass etwas Zeit für das Lernen vergehen würde.
+Die Skriptsprache PHP ist sehr einfach zu lernen, genauso wie das Framework Laravel. Jedoch haben die Teammitglieder nicht viel Erfahrung mit PHP, sodass etwas Zeit f\"ur das Lernen vergehen w\"urde.
 
 \paragraph{Sicherheit} \mbox{}\\
 HALPPP
@@ -513,10 +525,10 @@ F\"ur Einsteiger ist Django definitiv empfehlenswert. Die gute Dokumentation erm
 Node.js kann mit seinen Modulen innovative L\"osungen bieten, wie das schon erw\"ahnte Socket.io-Modul. Au{\ss}erdem besitzt Node.js eine sehr gro{\ss}e Community, die st\"andig w\"achst, wie auch der derzeitige Trend zeigt. Gro{\ss}e Unternehmen, wie Netflix oder Paypal, basieren auf Node.js, aufgrund seiner Schnelligkeit und hohen Skalierbarkeit.
 \paragraph{Laravel} \mbox{}\\
 \paragraph{Laravel} \mbox{}\\
-PHP bzw. Laravel ist für unsere Anforderungen nicht besonders gut geeignet, da unser Produkt ein schnelles System erfordert, sowie eine hohe Zahl von Verbindungen. Dies würden wir mit PHP nicht erreichen können.
+PHP bzw. Laravel ist f\"ur unsere Anforderungen nicht besonders gut geeignet, da unser Produkt ein schnelles System erfordert, sowie eine hohe Zahl von Verbindungen. Dies w\"urden wir mit PHP nicht erreichen k\"onnen.
 \\
 
-Bewertung der Frameworks nach Schulnoten (1 - Sehr gut bis Nicht genügend - 5)
+Bewertung der Frameworks nach Schulnoten (1 - Sehr gut bis Nicht gen\"ugend - 5)
 \begin{table}[ht]
 \centering
 \begin{tabular}{|l|c|c|c|c|l}
@@ -564,7 +576,7 @@ Der Datenaustausch wird in folgendem Format stattfinden:
 \end{lstlisting}
 
 \subsection{Raspberry Pi zu Server und vice versa}
-Wenn die Daten in Redis gespeichert worden sind, müssen diese dem Zentralserver gesendet werden. Der Sender auf dem Raspberry Pi ist Node.js, wie auf dem Empfänger bzw. Server.
+Wenn die Daten in Redis gespeichert worden sind, m\"ussen diese dem Zentralserver gesendet werden. Der Sender auf dem Raspberry Pi ist Node.js, wie auf dem Empf\"anger bzw. Server.
 
 Die Daten schauen bei Auslesen der Datenbank wie folgt aus:
 \begin{lstlisting} [frame=single]
@@ -574,11 +586,11 @@ Die Daten schauen bei Auslesen der Datenbank wie folgt aus:
 	4) 285.7
 \end{lstlisting}
 
-Wie wir in Kapitel 10.1 festgestellt haben, offenbart sich die Übertragung in JSON nicht nur wegen der Einfachheit der Konvertierung zu einem Javascript Objekt als Vorteil, sondern auch aus drei anderen Gründen:
+Wie wir in Kapitel 10.1 festgestellt haben, offenbart sich die \"Ubertragung in JSON nicht nur wegen der Einfachheit der Konvertierung zu einem Javascript Objekt als Vorteil, sondern auch aus drei anderen Gr\"unden:
 \begin{itemize}
-    \item \textbf{Einfache Speicherung in MongoDB:} Da MongoDB JSON als Speicherformat verwendet, ist es deswegen für uns einfacher JSON-Objekte in die Datenbank zu speichern.
-    \item \textbf{Übertragung der Daten durch Socket.io:} Daten werden standardmäßig in Socket.io als JSON-Objekt gesendet.
-    \item \textbf{Oberfläche der Webapplikation durch Angular:} Angular bietet Funktionen an, JSON-Objekte in der Weboberfläche anzeigen zu lassen. Falls sich das JSON-Objekt verändert, wird automatisch auch die Oberfläche dementsprechend angepasst.
+    \item \textbf{Einfache Speicherung in MongoDB:} Da MongoDB JSON als Speicherformat verwendet, ist es deswegen f\"ur uns einfacher JSON-Objekte in die Datenbank zu speichern.
+    \item \textbf{\"Ubertragung der Daten durch Socket.io:} Daten werden standardm\"a{\ss}ig in Socket.io als JSON-Objekt gesendet.
+    \item \textbf{Oberfl\"ache der Webapplikation durch Angular:} Angular bietet Funktionen an, JSON-Objekte in der Weboberfl\"ache anzeigen zu lassen. Falls sich das JSON-Objekt ver\"andert, wird automatisch auch die Oberfl\"ache dementsprechend angepasst.
 \end{itemize}
 
 Deswegen werden die Daten wie folgt ausschauen:
@@ -588,6 +600,7 @@ Deswegen werden die Daten wie folgt ausschauen:
 	  ec: "285.7"
 	}
 \end{lstlisting}
+\newpage
 \subsection{Abnahme}
 \begin{table}[ht]
   \centering
