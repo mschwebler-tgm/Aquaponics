@@ -19,7 +19,9 @@ $(document).ready(function () {
 
     socket.on('updateJSON', function (json) {
         console.log('json updated');
+        var json = JSON.parse(json);
         console.log(json);
+        $('#temperature').text("" + json.temperature);
     });
 
     $('#register').on('click', function () {

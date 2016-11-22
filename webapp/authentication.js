@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var bCrypt = require('bcrypt-nodejs');
 var Account = require('./models/account');
 
-module.exports = function(io, app){
+module.exports = function(io, app, linker){
 
 	// compares the provided password with the encrypted password
 	this.checkPassword = function(account, password){
@@ -50,6 +50,9 @@ module.exports = function(io, app){
 				socket.emit('failure', {message: 'Unauthorized.'});
 				return next();
 			}
+            //TODO: DELETE THIS CODELINE AFTER YOU SHOWED TO MR. ALAVARO
+            socket._id = decoded.id;
+            linker.addIOClient(decoded.id, socket);
 			return next();
 		});
 	});
@@ -92,8 +95,6 @@ module.exports = function(io, app){
 		});
 
 		socket.on('login', function(username, password) {
-			//TODO: DELETE THIS CODELINE AFTER YOU SHOWED TO MR. ALAVARO
-
 			// trying to find account with provided username in database
 			Account.findOne({'username': username}, function (err, account) {
 					// catch errors of database
@@ -109,6 +110,9 @@ module.exports = function(io, app){
 					io.emit('success');
 					jwt.sign({id: account._id, username: account.username}, 'secretKey', {algorithm: 'HS256'}, function(err, token) {
 						socket.emit('jwt', {token: token});
+                        //TODO: DELETE THIS CODELINE AFTER YOU SHOWED TO MR. ALAVARO
+                        socket._id = account._id;
+                        linker.addIOClient(account._id, socket);
 					});
 				}
 			);
