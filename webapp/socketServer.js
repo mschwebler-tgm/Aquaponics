@@ -16,7 +16,7 @@ module.exports = function(linker, authentication) {
 				var json = data.substring(data.indexOf('=')+1);
 				console.log("CLIENT: " + socket._id + "\nSAYS: " + json);
 				if(socket._id != undefined) {
-					//linker.publishToIOClient(socket._id, json);
+					linker.publishToIOClient(socket._id, json);
 				}
 			}
 			else if (data.indexOf(EVENT_AUTHENTICATION) != -1) {

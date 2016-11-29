@@ -1,9 +1,64 @@
 extends layout
 
-block content
-	h1= title
-	p Welcome to #{title}
-	input(id='username' type='text')
-	input(id='password' type='password')
-	button(id='login') Login
-	button(id='register') Sign Up
+block append content
+    div(id='workplace')
+        div(id='workplace-container')
+            div(id='workplace-items')
+                //img(src='images/logo.png')
+                h1 urban green
+                div(class='ug-card-panel' id='login-panel')
+                    div(class='header')
+                        h2 Anmeldung
+                    div(class='content')
+                        label(for='login-email') E-Mail
+                            br
+                            input(class='ug-input' id='login-email')
+                        label(for='login-password') Passwort
+                            br
+                            input(class='ug-input password' id='login-password' type='password')
+                        br
+                    div(class='main-action')
+                        button(id='login') Anmelden
+                    div(class='sub-actions')
+                        button(class='left') Passwort vergessen
+                        button(class='right' id='open-register-screen') Registrieren
+
+            div(id='register-screen')
+                h1.
+                    Registrieren Sie sich jetzt,<br>
+                    um die Vorteile der Webapp genießen zu können!
+                span(id='close-register-screen') &#10006;
+                div(class='left')
+                    h2 Die Vorteile der Urban Green Webapp auf einem Blick:
+                div(class='right')
+                    h2.
+                        Die Registrierung ist in 2 Schritten unterteilt,<br>
+                        und wird nicht länger als 2 Minuten dauern!
+                    p Beachten Sie, dass bei der Registrierung das Aquaponik-System erreichbar sein muss.
+                    div(class='ug-card-panel' id='register-panel')
+                        div(class='header')
+                            h2 Registrierung
+                        div(class='content')
+                            label(for='register-forename') Vorname
+                                br
+                                input(class='ug-input' id='register-forename')
+                            label(for='register-lastname') Nachname
+                                br
+                                input(class='ug-input' id='register-lastname')
+                            label(for='register-email') E-Mail
+                                br
+                                input(class='ug-input' id='register-email')
+                            label(for='register-password') Passwort
+                                br
+                                input(class='ug-input password' type='password' id='register-password')
+                            label(for='register-confirm') Passwort bestätigen
+                                br
+                                input(class='ug-input password' type='password' id='register-confirm')
+                            p.
+                                Ihre Daten werden sicher bei uns gespeichert und werden nicht an Dritte weitergegeben.
+                        div(class='main-action')
+                            button(id='register') Weiter
+
+
+    h1 TEMPERATUR:
+    h1(id='temperature') N/E

@@ -48,7 +48,7 @@ var linker = require('./linker');
 
 // init of authentication
 var Authentication = require('./authentication');
-var authentication = new Authentication(io,app)
+var authentication = new Authentication(io, app, linker)
 
 var socketServer = require('./socketServer')(linker, authentication);
 
