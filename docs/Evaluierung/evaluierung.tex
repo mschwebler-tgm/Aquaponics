@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definitions                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\gdef\version{1.0}
+\gdef\version{1.1}
 \gdef\doctype{Evaluation Sprint}
 
 \documentclass[11pt]{article}
@@ -19,6 +19,8 @@
 \usepackage{tabulary}
 \usepackage[utf8]{inputenc}
 \usepackage{lastpage}
+\usepackage{tikz}
+\usepackage{gensymb}
 
 
 %for code snippets
@@ -107,6 +109,7 @@
 26.10.2016                           & 0.1                                   & \begin{tabular}[c]{@{}l@{}}Matthias Schwebler,\\ Ramin Bahadoorifar,\\ Konrad Kelc,\\ Samuel Schober\end{tabular} & Erstentwurf                          &  \\ \cline{1-4}
 2.11.2016                            & 0.2                                   & Matthias Schwebler                                                                                                & Überarbeitung                        &  \\ \cline{1-4}
 16.11.2016                           & 1.0                                   & \begin{tabular}[c]{@{}l@{}}Matthias Schwebler,\\ Ramin Bahadoorifar\end{tabular}                                  & Fertigstellung                       &  \\ \cline{1-4}
+28.11.2016                           & 1.1                                  & \begin{tabular}[c]{@{}l@{}}Matthias Schwebler,\\ Ramin Bahadoorifar,\\ Konrad Kelc,\\ Samuel Schober\end{tabular}                                  & \"Uberarbeitung                       &  \\ \cline{1-4}
 \end{tabular}
 \end{table}
 \newpage
@@ -134,13 +137,17 @@ Im Rahmen des Projekts wird ein Tool zur \"Uberwachung und Steuerung von Metadat
 Aquaponic Systeme sind haupts\"achlich im gr\"o{\ss}eren Ma{\ss}stab bei der Aufzucht von Nutzpflanzen im Einsatz. F\"ur den normalen Haushalt gibt es allerdings bis jetzt keine Marktf\"ahige L\"osung. Die gr\"o{\ss}ten zwei Crowdfunding Projekte sind:
 \begin{itemize}
 	\item \textbf{EcoQube C}\\
-		Der EcoQube C vereint ein Handliches Aquaponics System mit elegantem Design, jedoch mangelt es an Konfigurierbarkeit. Es steht lediglich eine Fernbedienung zur verf\"ugung, mit der die Farbe der LEDs gesteuert werden kann. Des Weiteren liegt das Fassungsverm\"ogen des Aquariums weit unter 50 Liter, was zur Folge hat, dass in \"Osterreich maximal ein einziger Fisch darin gehalten werden kann. Daraus resultiert ein sehr kleines, ineffizientes Aquaponics System mit Mangel an Konfigurationsm\"oglichkeiten. \\
+		Der EcoQube C vereint ein handliches Aquaponics System mit elegantem Design, jedoch mangelt es an Konfigurierbarkeit. Es steht lediglich eine Fernbedienung zur Verf\"ugung, mit der die Farbe der LEDs gesteuert werden kann. Des Weiteren liegt das Fassungsverm\"ogen des Aquariums unter 50 Liter, was zur Folge hat, dass in \"Osterreich maximal ein einziger Fisch darin gehalten werden kann. Dies ist im Tierschutzgesetz § 7 Abs 9 spezifiziert: "... Eine dauerhafte Haltung auch kleiner Arten in Aquarien unter 54 Liter ist verboten". Daraus resultiert ein sehr kleines, ineffizientes Aquaponics System mit Mangel an Konfigurationsm\"oglichkeiten. \\
 	\item \textbf{Grove Ecosystem}\\
-	Das Grove Ecosystem ist das "Non Plus Ultra", wenn es um Aquaponic Systeme im Haushalt geht. Es bietet alle m\"oglchen Sensoren (Luftfeuchtigkeit und -temperatur sowie Wasserstand und -temperatur), welche \"uber eine App abgefragt werden k\"onnen. Diese bietet zus\"atzlich eine gro{\ss}e Ansammlung an Daten und daher Empfehlungen f\"ur m\"ogliche Fische und die dazu passenden Pflanzen. \\
+	Das Grove Ecosystem ist das "Non Plus Ultra", wenn es um Aquaponic Systeme im Haushalt geht. Es bietet  Sensoren (Luftfeuchtigkeit und -temperatur sowie Wasserstand und -temperatur), welche \"uber eine App abgefragt werden k\"onnen. Diese bietet zus\"atzlich eine gro{\ss}e Ansammlung an Daten und daher Empfehlungen f\"ur m\"ogliche Fische und die dazu passenden Pflanzen. \\
 	Dieses Paket ist allerdings nur in den USA und Kanada, mit einem Einstiegspreis von $>$ 4000\euro\hspace{0.5em}erh\"altlich.
 \end{itemize}
-Beide dieser Systeme sind in \"Osterreich kaum brauchbar bzw. nicht erh\"altlich. Bei Home Aquaponics wird Wert darauf gelegt, dass das fertige Produkt f\"ur jeden leistbar ist, indem Features weggelassen werden, welche nicht unbeding ben\"otigt werden. Au{\ss}erdem wird \"au{\ss}erst stromsparende Hardware verwendet, um so wenig monatliche Kosten wie m\"oglich zu verursachen.
+Beide dieser Systeme sind in \"Osterreich kaum brauchbar bzw. nicht erh\"altlich. Bei Urban Green wird Wert darauf gelegt, dass das fertige Produkt f\"ur jeden leistbar ist, indem Features weggelassen werden, welche nicht unbeding ben\"otigt werden. Au{\ss}erdem wird \"au{\ss}erst stromsparende Hardware verwendet, um so wenig monatliche Kosten wie m\"oglich zu verursachen.
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         Aquaponic System          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Aquaponic System}
 F\"ur die Verwendung unseres Systems, wird auch eine geeignete Konstruktion
 ben\"otigt, in welcher unsere Hardware gen\"ugend Platz hat und wir die Testung aller Funktionalit\"aten durchf\"uhren k\"onnen. Weiters soll die Aufbau-Art so kosteneffizient wie nur m\"oglich gestalltet sein und nicht lange brauchen damit das vollst\"andige System aufgebaut ist.
@@ -209,21 +216,25 @@ Die Verwendung des bereitgestellten Systems ist die empfehlenswerter Wahl der be
     &                                    &                                            &           &
   \end{tabular}
 \end{table}
-
 \newpage
-\section{Single Board Computer}
-Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Die Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlng hat.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      Single Board Computer        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Single Board Computer - User Story 1817}
+Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Aufgrund der Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlusng hat. Des Weiteren sollte er einen internen Speicher bieten (zusätzlich zum Betriebssystem ~200MB für Redis Datenbank + Daten) um im Falle eines Netzwerkausfalles, f\"ur einige Stunden alle Daten zwischenspeichern zu k\"onnen. 
 
 \subsection{Arduino}
-Der Arduino Uno ist ein SBC, welcher im Bereich von 20 - 25 \euro zu erhalten ist. Er hat einen internen Speicher der gro{\ss} genug ist, um einen Netzwerkausfall \"uberbr\"ucken zu k\"onnen. Da er aber selbst keine Netzwerkschnittstelle hat, muss er mit einem WiFi-Shield (\euro 88) ausgestattet werden. Ein Shield ist eine Hardware-erweiterung, die dem Arduino situationsbezogene Funktionen hinzuf\"ugen kann. F\"ur dieses Projekt ist das "Open Aquarium Board" (\euro 50) optimal, da es speziell entwickelt wurde um ein Aquarium zu \"uberwachen bzw. zu steuern und eine Open Source API an-bietet. \\
+Der Arduino Uno ist ein SBC, welcher im Bereich von \euro20 - \euro25 zu erhalten ist. Er hat einen internen Speicher der gro{\ss} genug ist, um einen Netzwerkausfall \"uberbr\"ucken zu k\"onnen. Da er aber selbst keine Netzwerkschnittstelle hat, muss er mit einem WiFi-Shield (\euro 90) ausgestattet werden. Ein Shield ist eine Hardware-erweiterung, die dem Arduino situationsbezogene Funktionen hinzuf\"ugen kann. F\"ur dieses Projekt ist das "Open Aquarium Board" (\euro 50) optimal, da es speziell entwickelt wurde um ein Aquarium zu \"uberwachen bzw. zu steuern und eine Open Source API an-bietet. \\
 Das Problem dabei ist, dass nur ein Shield auf dem Arduino angebracht werden kann. Das hei{\ss}t, entweder das Open Aquarium Board wird verwendet, oder ein WLAN Shield zur Daten\"ubermittlung. Er m\"usste mit einem anderen SBC, welcher Netzwerktauglich ist, verbunden werden um die Daten auf einem zentralen Server zu persisiteren.
 \subsection{Raspberry Pi B}
-Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (1.8V im Leerlauf). Er bietet ebenso wie der Arduino einen ad\"aquaten Speicher, kann aber einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen extremen Arbeitsaufwand.
+Der Raspberry Pi B, ist einer der energieeffizienteren Computer seiner Art (240mA im Leerlauf). Er kann mithilfe einer SD Karte mit einem ad\"aquaten Speicher ausgestattet und einfach mit der eingebauten RJ45 Buchse bzw. einem WLAN-Stick mit dem Internet verbunden werden. Ein solcher WLAN-Stick ist mit \euro 10 im Vergleich zu dem WiFi-Shield billiger. Da aber der Raspberry Pi B keine API f\"ur jegliche Sensoren und Aktoren bietet, erfordert die Implementierung der \"Uberwachung bzw. Steuerung des Aquaponic Systems einen Arbeitsaufwand der mit anderer Hardware umgangen werden kann.
 \newpage
 \subsection{Raspberry Pi Zero}
-Ebenso wie der Raspberry Pi B, hat der Pi Zero einen internen Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er extrem wenig Strom verbraucht (0.45V im Leerlauf).
+Ebenso wie der Raspberry Pi B, hat der Pi Zero einen erweiterbaren Speicher und kann mit einem WLAN-Stick mit einem Lokalen Netzwerk verbunden werden. Der Unterschied ist, dass er keine RJ45 Buchse besitzt und um einiges weniger Rechnleistung. Der Vorteil dabei ist, dass er sehr wenig Strom verbraucht (65mA im Leerlauf).
 \subsection{L\"osung}
-Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Der optimale Weg ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt.
+Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"ur den Arduino unabdinglich. Die optimale L\"osung ist also, ein Arduino mit entsprechendem Shield, der die Daten an einen Raspberry Pi \"ubermittel, welcher diese dann an einen Server schickt.
 \subsection{Abnahme}
 \begin{table}[ht]
   \centering
@@ -242,22 +253,38 @@ Aus Erfahrungswerten der Firma "Ponix Systems", ist das Open Aquarium Board f\"u
   \end{tabular}
 \end{table}
 \newpage
-\section{Sensoren}
-Die Sensoren f\"ur den Prototypen, werden von der Firma Ponix Systems zur verf\"ugung gestellt. Diese m\"ussen allerdings erst auf Funktionalit\"at unterucht werden. \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             Sensoren              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sensoren - User Story 1975}
+Die Sensoren f\"ur den Prototypen, werden von der Firma Ponix Systems zur verf\"ugung gestellt. Diese m\"ussen allerdings erst auf Funktionalit\"at untersucht werden. \\
 F\"ur die Entwicklung, des Codes, zum Ansprechen der Sensoren, wird "Arduino IDE" verwendet. Diese IDE bietet die M\"oglichkeit, den Code auf einem rechenstarken PC zu kompilieren und ihn dann auf dem Arduino auszuf\"uhren. Zus\"atzlich kann sie verwendet werden, um alle eingehenden Daten des Arduinos zu \"uberwachen.
-Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten, \"uber die USB Schnittstelle, an den Raspberry Pi.\\
+Der kompilierte Code wird beim Endprodukt auf dem Arduino gespeichert und sendet kontinuierlich Daten \"uber die USB Schnittstelle an den Raspberry Pi.\\
 Es werden Libraries von Arduino indirekt \"uber die API von OpenAquarium verwendet.
 
 \subsection{Temperatur}
+Zum Messen der Temperatur wird der Sensor von www.cooking-hacks.com verwendet (DS18B20): \\
+Input: 3.0-5.5V  \\
+Arbeitsbereich: -55\degree C bis +125\degree C  \\
+Genauigkeit: $\pm$ 0.5\degree C von -10\degree C bis +85\degree C \\ \mbox{}\\
 Die Temperatur kann mit nur einem Befehl abgelesen werden. Dieser liefert einen Wert in Grad Celsius zur\"uck.
 \begin{lstlisting} [frame=single]
 OpenAquarium.init();
 float temperature = OpenAquarium.readtemperature();
 \end{lstlisting}
-Die Testergebnisse des Temperatur Sensors stimmten mit denen eines handels\"ublichen Thermometers \"uberein.
+Die Testergebnisse des Temperatur Sensors stimmten im Bereich von 24\degree C, unter Ber\"ucksichtigung der Abweichung, mit denen eines handels\"ublichen Thermometers \"uberein.
+\newpage \mbox{} \\
+Angeschlossen werden die Sensoren bzw. der Temperatursensor auf dem OpenAquarium Board: \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=1.0in]{temp_sensor_connection_detail}}
+  \raisebox{-0.5\height}{\includegraphics[height=2.3in]{temp_sensor_connection}}
+\end{minipage}
 
 \subsection{EC Wert}
-Der EC Wert gibt Aufschluss dar\"uber, wie viele Salze jeglicher Art im Wasser gel\"ost sind. Desto mehr N\"ahrstoffe also im Wasser vorhanden sind, umso h\"oher ist auch der EC Wert.
+Der EC Wert (Electrical Conductivity) gibt über die Leitfähigkeit des Wassers auskunft. Mit diesem Wert kann auf die Menge der im Wasser gelösten Minerale/Salze geschlossen werden. Desto mehr N\"ahrstoffe also im Wasser vorhanden sind, umso h\"oher ist auch der EC Wert. \\
+Um diesen zu Messen wird der Sensor von www.cooking-hacks.com verwendet.
 
 \begin{lstlisting} [frame=single]
 OpenAquarium.init();
@@ -267,13 +294,20 @@ OpenAquarium.calibrateEC(point_1_cond,point_1_cal,
 float resistanceEC = OpenAquarium.readResistanceEC();
 float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value in uS/cm
 \end{lstlisting}
+\newpage \mbox{} \\
 Die Tests beim Eintauchen des Sensors in Leitungswasser ergaben folgende Ergebnisse: \\ \\
 \begin{minipage}{5in}
   \centering
   \raisebox{-0.5\height}{\includegraphics[height=3.0in]{ec_tests}}
 \end{minipage}
-\vskip0.5cm
+\vskip0.5cm \mbox{} \\
 Wie erwartet, steigt der EC Wert beim Eintauchen ins Wasser, da es nat\"urlich um einiges leitf\"ahiger ist, als Luft.
+Angeschlossen wird der Sensor auf dem OpenAquarium Board: \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=2.0in]{ec_sensor_connection}}
+\end{minipage}
+\newpage
 
 \subsection{PH Wert}
 \paragraph{Allgemein} \mbox{} \\
@@ -288,16 +322,24 @@ float pH = OpenAquarium.pHConversion(mvpH);
 cp4, cp7, cp7 ... Calibrationpoints (Konstanten)
 
 \paragraph{Calibrationpoints} \mbox{} \\
-Calibrationpoints (Kalibrierungswerte), werden angepasst, wenn der gemessene PH Wert zu stark vom eigentlichen Wert abweicht. Um die Abweichung des Sensors zu beheben, sind Kalibrierungskits vorgesehen, die allerdings bis zu ein mal im Monat verwendet werden m\"ussen. Dies belastet den Kunden mit zus\"atzlichen Kosten und Aufwand und soll daher umgangen werden.
+Calibrationpoints (Kalibrierungswerte), werden angepasst, wenn der gemessene PH Wert zu stark vom eigentlichen Wert abweicht. Um die Abweichung des Sensors zu beheben, sind Kalibrierungskits vorgesehen, die allerdings bis zu ein mal im Monat verwendet werden m\"ussen. Dies belastet den Kunden mit zus\"atzlichen Kosten und Aufwand und soll daher umgangen werden. \\ \mbox{} \\
+Angeschlossen wird der Sensor auf dem OpenAquarium Board. \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=2.0in]{ph_sensor_connection}}
+\end{minipage}
+
+\newpage
 \paragraph{Tests} \mbox{} \\
-Beim testen eines bereits l\"anger in Betrieb gewesenem PH Sensor brachte dieser folgende Ergebnisse: \\
+Beim testen eines bereits l\"anger in Betrieb (2 Monate) gewesenem PH Sensor brachte dieser folgende Ergebnisse: \\
 \begin{minipage}{5in}
   \centering
   \raisebox{-0.5\height}{\includegraphics[height=3.0in]{ph_tests}}
 \end{minipage}
-Wie zusehen ist, weicht der gemessene Wert bereits stark von dem eigentlichen Wert ab. In einem Aquaponik System hat eine Abweichung dieser gr\"o{\ss}e, starke Auswirkungen auf das Gleichgewicht des Ecosystems. \\
+Wie zu sehen ist, weicht der gemessene Wert bereits stark von dem eigentlichen Wert ab. In einem Aquaponik System hat eine Abweichung dieser gr\"o{\ss}e, starke Auswirkungen auf das Gleichgewicht des Ecosystems. \\
 \paragraph{Fazit} \mbox{} \\
 Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warungsaufwand aufweisen, wird je nach M\"oglichkeiten versucht eine eigene L\"osung zu etablieren. Dies soll mithilfe einiger Teststreifen und einer Kamera passieren, bei der, der Benutzer per Knopfdruck \"uber die Website den PH Wert messen kann. Die Vorteile bei dieser L\"osung sind, dass solch ein System einzigartig auf dem Markt w\"are, und dass der Benutzer selbst bestimmen kann, ob er den PH Wert messen will und wie oft. Wie genau dieses System realisiert wird, wird im n\"achsten Sprint (Sprint 1) geplant.
+\newpage
 \subsection{Abnahme}
 \begin{table}[ht]
   \centering
@@ -317,7 +359,11 @@ Da es keine PH Sensoren gibt, die billig sind und zugleich einen niedrigen Warun
 \end{table}
 \newpage
 \newpage
-\section{Aktoren}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              Aktoren              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aktoren - User Story 1979}
 Es werden insgesamt vier Aktoren von Ponix Systems zur Verf\"ugung gestellt. Darunter befinden sich: 2 Pumpen (Wasser/Mineralien), 1 Futterautomat und eine Pflanzenbeleuchtung. \\
 Um dem Kunden die Arbeit abzunehmen die Zimmertemperatur so zu regulieren um ein Klima f\"ur die Fische zu schaffen, wird zus\"atzlich ein Hitzestrahler verbaut. Dieser wird im n\"achsten Sprint (Sprint 1) geplant und eingesetzt.
 \subsection{Pumpe}
@@ -333,22 +379,23 @@ Zum Anschlie{\ss}en der Pumpe sind auf dem AquariumBoard Steckplätze vorgesehen
   \centering
   \raisebox{-0.5\height}{\includegraphics[height=2.3in]{water_pump_connection}}
 \end{minipage}
-Pumpleistung: 100-350 L/H \\
-Spannung: 3.5-12 DC \\
+Pumpleistung: 100-350 l/h \\
+Spannung: 3.5-12V DC \\
 Leistungsbereich: 0.5W-5W \\
 \newpage
 
 \paragraph{Mineralien}\mbox{} \\
+Bei dieser Pumpe handelt es sich um eine Schlauchpumpe, was den Vorteil bringt genau Dosierungen mit der Anzahl an Tropfen festzulegen. 
 Wie bei der Wasserpumpe ist der Code zum Aktivieren und Deaktivieren der Pumpe kurz.
 \begin{lstlisting} [frame=single]
 OpenAquarium.perpumpON(1); 
 OpenAquarium.perpumpOFF(1);
 \end{lstlisting}
-Die Dosierung der Mineralien muss nicht manuell vorgenommen werden sondern kann über das OpenAquarium.h File angepasst werden.
+Die Dosierung der Mineralien muss nicht manuell vorgenommen werden sondern kann über das OpenAquarium.h File angepasst werden. 
 \begin{lstlisting} [frame=single]
-#define dosingdrop1 5
-#define dosingdrop1 10
-#define dosingdrop1 15
+#define dosingdrop1 5  // 5 Tropfen
+#define dosingdrop1 10 // 10 Tropfen
+#define dosingdrop1 15 // ...
 \end{lstlisting}
 Zum Anschließen der Pumpe sind wieder Steckplätze vorhanden. \\
 \begin{minipage}{5in}
@@ -363,7 +410,7 @@ Flow: 20-60 ml/min
 Um den Wartungsaufwand zu minimieren, ist ein Futterautomat notwendig, der \"uber eine Weboberfl\"ache konfiguriert werden kann. Es kann entweder ein teurer Futterautomat gekauft werden, der diese Option anbietet, oder ein durchschnittlicher Futterautomat wird so bearbeitet, dass er auf ein Stromsignal reagiert indem er Futter ausgibt. \\
 Der Futterautomat von Ponix Systems geh\"ort zur letzteren Art. Sobald 5 Volt angelegt wird, gibt er Futter aus. So kann sp\"ater \"uber die WebApp das Intervall und die Menge gesteuert werden.
 \subsection{Pflanzenbeleuchtung}
-Die Beleuchtung wird mit einem LED Streifen realisiert von www.cooking-hacks.com (bzw. von Ponix Systems gesponsort) realisiert. Er besteht aus 72 LEDs (60 Weiße und 12 Blaue) mit einer Leuchtkraft von 500 Lumen. Der Streifen kann mit Hilfe der OpenAquarium Klasse der aktuellen Zeit automatisch angepasst werden.
+Die Beleuchtung wird mit einem LED Streifen von www.cooking-hacks.com (bzw. von Ponix Systems gesponsort) realisiert. Er besteht aus 72 LEDs (60 Weiße und 12 Blaue) mit einer Leuchtkraft von 500 Lumen. Der Streifen kann mit Hilfe der OpenAquarium Klasse der aktuellen Zeit automatisch angepasst werden. Der folgende Code, steuert die Lampe so, dass sie für die Pflanze eine Sonne simuliert.
 \begin{lstlisting} [frame=single]
 now = OpenAquarium.getTime();
 OpenAquarium.printTime(now);
@@ -376,7 +423,7 @@ Wie bei den beiden Pumpen kann der LED Streifen am OpenAquarium Board angeschlos
 \end{minipage} 
 Leistung: 5.5 watts \\
 Beleuchtung: 72 LEDs \\
-Farbe: 60 Weiße + 12 Blaue) \\
+Farbe: 60 Weiße + 12 Blaue \\
 
 
 
@@ -397,8 +444,11 @@ Farbe: 60 Weiße + 12 Blaue) \\
     &                                    &                                            &           &
   \end{tabular}
 \end{table}
-
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               DBMS                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Datenbankmanagementsystem}
 
 \subsection{Evaluierung RDBMS vs. NoSQL}
@@ -509,6 +559,9 @@ Es m\"ussen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzei
 \end{table}
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Web Framework           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Web Framework}
 Bei Web Frameworks, werden durch vordefinierte und vorgefertigte Klassen, h\"aufig gebrauchte Funktionen wie Mailversand, sichere Authentifizierung, Sicherheitsfunktionen, Lokalisierung, Performance (z.B. HTTP Caching) oder grundlegende Funktionen f\"ur Webformulare vereinfacht. \\
 Web Frameworks sind darauf ausgelegt, sehr schnell Ergebnisse zu erzielen und lauff\"ahige Webanwendungen zu erstellen. Dazu bieten sie einen Datenbankzugriff, Templating-Mechanismen, eine saubere Trennung von Pr\"asen-tation und Code durch Verwendung des Model-View-Controllers. \\
@@ -607,6 +660,9 @@ Bewertung der Frameworks nach Schulnotensystem (1 - Sehr gut bis Nicht gen\"ugen
 \end{table}
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         Datenübermittlung         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Art der Daten\"ubermittlung}
 Bei der Daten\"ubertragung sind mehrere Parameter zu beachten. Dazu geh\"oren haupts\"achlich das Format der Daten und das Intervall in denen diese \"ubertragen werden.
 \subsection{Arduino zu Raspberry Pi und vice versa}
@@ -621,7 +677,8 @@ Um die Daten mit Redis zu persistieren wird folgende Syntax verwendet: "Key1 Val
 \subsubsection{Fazit}
 Der Datenaustausch wird in folgendem Format stattfinden:
 \begin{lstlisting} [frame=single]
-	temperature 23.4 ec 285.7
+	temperature 23.4 
+	ec 285.7
 \end{lstlisting}
 
 \subsection{Raspberry Pi zu Server und vice versa}
