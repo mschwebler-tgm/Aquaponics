@@ -15,5 +15,6 @@ node_modules
 webapp/**/*.js
 webapp/**/*.map
 webapp/**/*.log
+webapp/**/*.css
 !webapp/public/javascripts/*.js
 !webapp/models/conf.js
