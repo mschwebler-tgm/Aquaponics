@@ -4,3 +4,14 @@
 /myproject/settings/local.py
 .idea
 node_modules
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# webapp config
+webapp/**/*.js
+webapp/**/*.map
+!webapp/public/javascripts/*.js
