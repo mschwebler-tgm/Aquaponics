@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Urban Green | Profile</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/style/style.css">
+    <link href="assets/style/simple-sidebar.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <!-- JS -->
+    <script src="assets/js/functions.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div style="display: inline-block; vertical-align: top; width: 234px">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/img/LogoTest.svg" style="height: 45px; width: auto; position: relative; top: -13px;">
+                </a>
+                <a class="navbar-brand" href="index.html">
+                    Urban Green
+                </a>
+            </div>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="fa fa-user"></span> Sign Up</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="fa fa-sign-in"></span>Login</a></li>
+            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <!-- Login -->
+                    <div class="loginmodal-container" id="loginForm">
+                        <h1>Login to Your Account</h1><br>
+                        <form>
+                            <input type="text" name="user" placeholder="Username">
+                            <input type="password" name="pass" placeholder="Password">
+                            <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+                        </form>
+
+                        <div class="login-help">
+                            <a href="#" id="goToRegister">Sign up</a> - <a href="#">Forgot Password</a>
+                        </div>
+                    </div>
+
+                    <!-- Register -->
+                    <div class="loginmodal-container" id="registerForm">
+                        <h1>Register new Account</h1><br>
+                        <form>
+                            <input type="text" name="user" placeholder="Username">
+                            <input type="password" name="pass" placeholder="Password">
+                            <input type="password" name="pass2" placeholder="Repeat Password">
+                            <input type="text" name="email" placeholder="Email">
+                            <input type="submit" style="background-color: green" name="login" class="login loginmodal-submit" value="Register">
+                        </form>
+
+                        <div class="login-help">
+                            <a href="#" id="goToLogin">Login</a> - <a href="#">Forgot Password</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </div>
+</nav>
+
+<div id="wrapper">
+
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Menu
+                </a>
+            </li>
+            <li>
+                <a href="#">Dashboard</a>
+            </li>
+            <li>
+                <a href="#">Profile</a>
+            </li>
+            <li>
+                <a href="#">Information</a>
+            </li>
+            <li>
+                <a href="#">Events</a>
+            </li>
+            <li>
+                <a href="#">&Uuml;bersicht</a>
+            </li>
+            <li>
+                <a href="#">Services</a>
+            </li>
+            <li>
+                <a href="#">Kontakt</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <button class="btn_collapse_sidebar" id="menu-toggle"><i class="fa fa-minus"></i></button>
+        <!-- searchbar -->
+        <div class="container" style="padding: 0; width: 30%">
+            <form action="search.php" method="post" name="search">
+                <input type="text" class="form-control" style="" name="searchbar" placeholder="Suchen..." required=""
+                       autofocus=""/>
+            </form>
+        </div>
+        <!-- profiles -->
+        <div class="container">
+            <hr>
+            <div class="row">
+                <div class="col-lg-6" style="background-color: rgba(0,0,0,0.6); position: relative; right: 10px;">
+                    <div class="row">
+                        <div class="col-lg-8"><h1 style="color: #d6d6d6;">Guppy - Ruccula</h1></div>
+                        <div class="col-lg-4">
+                            <div class="row lead">
+                                <div id="stars" class="starrr fa-pull-right"
+                                     style="color: #e0df0e;padding: 10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #7a7a7a">
+                    <!-- plant data -->
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                            <table>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Pflanzentyp</b></p></td>
+                                    <td><p style="color: #d6d6d6">Gemüse</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Pflanze</b></p></td>
+                                    <td><p style="color: #d6d6d6">Ruccula</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Ernte</b></p></td>
+                                    <td><p style="color: #d6d6d6">4 Wochen</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Belichtungszeit/Tag</b></p></td>
+                                    <td><p style="color: #d6d6d6">20h</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Intensität</b></p></td>
+                                    <td><p style="color: #d6d6d6">50 lum</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Belichtungsintervall</b></p></td>
+                                    <td><p style="color: #d6d6d6">2h</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Besondere<br>Anforderung</b></p></td>
+                                    <td align="top"><p style="color: #d6d6d6">-</p></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-1"></div>
+                        <div class="col-sm-4">
+                            <div class="whiteBlurrHover" style="width: 180px; position: relative; left: -30px;border-radius: 15px;">
+                                <img src="http://www.guppyfishtank.com/wp-content/uploads/2015/10/guppy.jpg" class=""
+                                     style="width: 180px; height: auto; opacity: 0.8; border-radius: 15px">
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #7a7a7a">
+                    <!-- fish data -->
+                    <div class="row data">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                            <table>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Fisch</b></p></td>
+                                    <td><p style="color: #d6d6d6">Guppy</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Anzahl</b></p></td>
+                                    <td><p style="color: #d6d6d6">20</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Wassertemperatur</b></p></td>
+                                    <td><p style="color: #d6d6d6">23°C</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>PH Wert</b></p></td>
+                                    <td><p style="color: #d6d6d6">7,2</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Besondere<br>Anforderung</b></p></td>
+                                    <td><p style="color: #d6d6d6">-</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" style="background-color: rgba(0,0,0,0.6); position: relative; left: 10px;">
+                    <div class="row">
+                        <div class="col-lg-8"><h1 style="color: #d6d6d6;">Barsch - Weed</h1></div>
+                        <div class="col-lg-4">
+                            <div class="row lead">
+                                <div id="stars" class="starrr fa-pull-right"
+                                     style="color: #e0df0e;padding: 10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #7a7a7a">
+                    <!-- plant data -->
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                            <table>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Pflanzentyp</b></p></td>
+                                    <td><p style="color: #d6d6d6">Kräuter</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Pflanze</b></p></td>
+                                    <td><p style="color: #d6d6d6">White Russian</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Ernte</b></p></td>
+                                    <td><p style="color: #d6d6d6">4 Wochen</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Belichtungszeit/Tag</b></p></td>
+                                    <td><p style="color: #d6d6d6">18h</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Intensität</b></p></td>
+                                    <td><p style="color: #d6d6d6">70 lum</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Belichtungsintervall</b></p></td>
+                                    <td><p style="color: #d6d6d6">6h</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Besondere<br>Anforderung</b></p></td>
+                                    <td><p style="color: #d6d6d6">Viel Wasser</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-sm-4">
+                            <div class="whiteBlurrHover" style="width: 180px; position: relative; left: -30px;border-radius: 15px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/PercheCommune.jpg/300px-PercheCommune.jpg" class=""
+                                     style="width: 180px; height: auto; opacity: 0.8; border-radius: 15px">
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #7a7a7a">
+                    <!-- fish data -->
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                            <table>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Fisch</b></p></td>
+                                    <td><p style="color: #d6d6d6">Barsch</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Anzahl</b></p></td>
+                                    <td><p style="color: #d6d6d6">3</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Wassertemperatur</b></p></td>
+                                    <td><p style="color: #d6d6d6">20°C</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>PH Wert</b></p></td>
+                                    <td><p style="color: #d6d6d6">6,4</p></td>
+                                </tr>
+                                <tr>
+                                    <td align="right"><p style="color: #d6d6d6"><b>Besondere<br>Anforderung</b></p></td>
+                                    <td><p style="color: #d6d6d6">-</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+</html>
