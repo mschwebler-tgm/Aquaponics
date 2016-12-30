@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Urban Green</title>
+    <title>Urban Green | Profile</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -79,7 +79,6 @@
                     </div>
                 </div>
             </div>
-
         </ul>
     </div>
 </nav>
@@ -99,7 +98,7 @@
                 <a href="#">Dashboard</a>
             </li>
             <li>
-                <a href="profiles_choose.html">Profile</a>
+                <a href="#">Profile</a>
             </li>
             <li>
                 <a href="#">Information</a>
@@ -122,22 +121,42 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-
         <button class="btn_collapse_sidebar" id="menu-toggle"><i class="fa fa-minus"></i></button>
-        <div class="container-fluid">
-            <h1 style="color: white;"></h1>
+        <!-- searchbar -->
+        <div class="container" style="padding: 0; width: 30%">
+            <form action="search.php" method="post" name="search">
+                <input type="text" class="form-control" style="" name="searchbar" placeholder="Suchen..." required=""
+                       autofocus=""/>
+            </form>
         </div>
+        <!-- profiles -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8"> <hr> </div>
+                <div class="col-lg-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-4 text-center">
+                    <a href="profiles.html"><button class="chooseProfiles" style="width: 310px; height: 190px"><i class="fa fa-leaf fa-5x" aria-hidden="true"></i><br>Pflanzen</button></a>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <a href="profiles.html"><button class="chooseProfiles" style="width: 310px; height: 190px"><img src="assets/img/fish.png" style="width: 100px; height: auto;"> <br> Fische</button></a>
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
     </div>
-    <!-- /#page-content-wrapper -->
 
-</div>
-
-<script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
 
 </body>
 </html>

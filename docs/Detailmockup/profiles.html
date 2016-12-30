@@ -45,7 +45,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="fa fa-user"></span> Sign Up</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="fa fa-sign-in"></span>Login</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="fa fa-sign-in"></span> Login</a></li>
             <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <!-- Login -->
@@ -121,13 +121,43 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <button class="btn_collapse_sidebar" id="menu-toggle"><i class="fa fa-minus"></i></button>
+        <button class="btn_collapse_sidebar menu-toggle" id="menu-toggle"><i class="fa fa-minus"></i></button>
         <!-- searchbar -->
-        <div class="container" style="padding: 0; width: 30%">
-            <form action="search.php" method="post" name="search">
-                <input type="text" class="form-control" style="" name="searchbar" placeholder="Suchen..." required=""
-                       autofocus=""/>
-            </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6" style="position: relative; left: -5px; padding: 5px;">
+                    <form action="search.php" method="post" name="search">
+                        <input type="text" class="form-control" style="" name="searchbar" placeholder="Suchen..." required=""
+                               autofocus=""/>
+                    </form>
+                </div>
+                <div class="col-lg-6" style="position: relative; left: 10px; display: inline-block; background-color: rgba(0,0,0,0.5); color: #d6d6d6; padding: 5px;">
+                    <div class="col-lg-4" style="display: inline-block; float: left;">
+                        <input type="checkbox" class="css-checkbox" id="checkbox1" checked="checked" />
+                        <label for="checkbox1" name="checkbox19_lbl" class="css-label dark-check-green">Pflanzen</label><br>
+                        <input type="checkbox" class="css-checkbox" id="checkbox2" checked="checked" />
+                        <label for="checkbox2" name="checkbox19_lbl" class="css-label dark-check-green">Fische</label>
+                    </div>
+                    <div class="col-lg-4">
+                        Pflanzentyp: <br>
+                        <select style="background-color: rgba(0,0,0,0.4); border: 0; padding: 2px; position: relative; left: -3px;">
+                            <option value="rating" selected>Gem&uuml;se</option>
+                            <option value="difficulty">Fr&uuml;chte</option>
+                            <option value="growthTime">Kr&auml;uter</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        Sortieren nach:
+                        <select style="background-color: rgba(0,0,0,0.4); border: 0; padding: 2px; position: relative; left: -3px;">
+                            <option value="rating" selected>Bewertung</option>
+                            <option value="difficulty">Schwierigkeit</option>
+                            <option value="growthTime">Dauer</option>
+                            <option value="temperature">Wassertemperatur</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- profiles -->
         <div class="container">
@@ -135,7 +165,7 @@
             <div class="row">
                 <div class="col-lg-6" style="background-color: rgba(0,0,0,0.6); position: relative; right: 10px;">
                     <div class="row">
-                        <div class="col-lg-8"><h1 style="color: #d6d6d6;">Guppy - Ruccula</h1></div>
+                        <div class="col-lg-8"><h1 style="color: #d6d6d6;">Guppy - Rucola</h1></div>
                         <div class="col-lg-4">
                             <div class="row lead">
                                 <div id="stars" class="starrr fa-pull-right"
@@ -221,7 +251,7 @@
 
                 <div class="col-lg-6" style="background-color: rgba(0,0,0,0.6); position: relative; left: 10px;">
                     <div class="row">
-                        <div class="col-lg-8"><h1 style="color: #d6d6d6;">Barsch - Weed</h1></div>
+                        <div class="col-lg-8"><h1 style="color: #d6d6d6;">Barsch - Basilikum</h1></div>
                         <div class="col-lg-4">
                             <div class="row lead">
                                 <div id="stars" class="starrr fa-pull-right"
@@ -241,7 +271,7 @@
                                 </tr>
                                 <tr>
                                     <td align="right"><p style="color: #d6d6d6"><b>Pflanze</b></p></td>
-                                    <td><p style="color: #d6d6d6">White Russian</p></td>
+                                    <td><p style="color: #d6d6d6">WR</p></td>
                                 </tr>
                                 <tr>
                                     <td align="right"><p style="color: #d6d6d6"><b>Ernte</b></p></td>
