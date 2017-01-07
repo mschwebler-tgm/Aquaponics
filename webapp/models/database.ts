@@ -45,7 +45,7 @@ var SUserProfile = new mongoose.Schema({
 	exposureInterval: Number, 
 	exposureParameters: [SLightColors],
 	waterTemp: Number,
-	autoRegulation: boolean
+	autoRegulation: Boolean
 });
 
 export var UserProfile = mongoose.model<IUserProfile>('UserProfile', SUserProfile);
@@ -87,7 +87,7 @@ export interface IFish extends mongoose.Document{
 	reachableAge: number; //Erreichbares Alter
 	pH: number; //pH-Wert
 	speciesPool: string; //Benötigt Artenbecken (Ja/Nein)
-});
+};
 
 var SFish = new mongoose.Schema({
 	name: String,
@@ -114,7 +114,7 @@ export interface ICharacteristics extends mongoose.Document{
 	name: string; //Bezeichnung
 	cropDuration: number; //Ernte Dauer
 	specialRequirements: string; //Besondere Anforderungen
-});
+};
 
 var SCharacteristics = new mongoose.Schema({
 	name: String,
@@ -128,7 +128,7 @@ export interface IPlant extends mongoose.Document{
 	vegetables: ICharacteristics[];
 	fruits: ICharacteristics[];
 	herbage: ICharacteristics[]; 
-});
+};
 
 var SPlant = new mongoose.Schema({
 	vegetables:[SCharacteristics],
@@ -146,7 +146,7 @@ export interface IPlantSettings extends mongoose.Document{
 	exposureTime: number;
 	exposureInterval: number;
 	exposureParameters: ILightColors[];
-});
+};
 
 var SPlantSettings = new mongoose.Schema({
 	exposureTime: Number,
@@ -159,7 +159,7 @@ export var PlantSettings = mongoose.model<IPlantSettings>('PlantSettings', SPlan
 export interface IFishSettings extends mongoose.Document{
 	waterTemp: number;
 	pH: number;
-});
+};
 
 var SFishSettings = new mongoose.Schema({
 	waterTemp: Number,
@@ -171,7 +171,7 @@ export var FishSettings = mongoose.model<IFishSettings>('FishSettings', SFishSet
 export interface IStandardProfile extends mongoose.Document{
 	plantProfile: IPlantSettings[];
 	fishProfile: IFishSettings[];
-});
+};
 
 var SStandardProfile = new mongoose.Schema({
 	plantProfile: [SPlantSettings],
