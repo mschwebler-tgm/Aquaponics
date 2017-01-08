@@ -26,7 +26,7 @@
 %for code snippets
 \lstset{
   language=C,                	  % choose the language of the code
-  %numbers=left,                   % where to put the line-numbers
+  numbers=left,                   % where to put the line-numbers
   stepnumber=1,                   % the step between two line-numbers.
   numbersep=5pt,                  % how far the line-numbers are from the code
   backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
@@ -39,7 +39,6 @@
   breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
   title=\lstname,                 % show the filename of files included with \
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Header                                                                  %
@@ -112,5 +111,57 @@ TT.MM.YYYY                           & 1.1                                  & \b
 \end{tabular}
 \end{table}
 \newpage
-\section{Automatisiertes Ablesen aller Sensoren}
+\section{Datenmanagement}
+\subsection{Verwaltung der lokalen Daten - User Story 1571 u. 2097}
+Um alle Daten der Sensoren Abzulesen wird die Serielle Schnittstelle verwendet. Der C-Code der auf dem Arduino ausgef\"uhrt wird, sendet alle Informationen an den Raspberry Pi. Dieser muss lediglich auf der Schnittstelle auf eingehende Daten warten, was mit einem Python Script realisiert wird. Hierbei werden die Libraries "redis", "serial" und "time" verwendet. Damit es zu keinen Problemen beim Auslesen kommt, muss nach jedem Lesevorgang 0.1 Sekunden pausiert werden. Falls dies nicht eingehalten wird, wird beispielsweise "temperature" zu "temp" und "erature". Der folgende Code ist ein Beispiel, wie dauerhaft Daten ausgelesen und in die Datenbank gespeichert werden k\"onnen.
+\begin{lstlisting} [language=Python, frame=single]
+import redis
+import serial
+import time
+
+# init serial
+# TODO 'ttyACM0' needs to be changed to whatever the raspberry Pi's USB-port is called
+ser = serial.Serial(
+	port='/dev/ttyACM0',
+	baudrate=115200
+)
+# init redis
+r = redis.StrictRedis(host='localhost', port=6380, db=0)
+
+data = ""
+while True:
+	bytesToRead = ser.inWaiting()
+	data = ser.read(bytesToRead)
+	if data != "":
+		kv = data.split(' ',data)   # kv... KeyValue
+		r.hset('system', kv[0], kv[1])   # write data to redis
+		time.sleep(0.1)
+\end{lstlisting}
+
+\subsection{\"Ubertragung zum zentralen Server - User Story 1984}
+Um die lokal gespeicherten Daten zum zentralen Server zu \"ubertragen, wird wieder ein Python Script verwendet. Da auf dem Server MongoDB verwendet wird, muss zuerst auf dem lokalen SBC die entsprechende Library installiert werden. Dies geschieht mit folgendem Befehl:
+\begin{lstlisting} [frame=single]
+pip install pymongo	
+\end{lstlisting}
+Im Python Script muss zuerst die Verbindung zu den beiden Datenbanken hergestellt werden:
+\begin{lstlisting} [language=Python, frame=single]
+# init mongodb and redis
+mongoClient = MongoClient('vps336521.ovh.net', 27017)
+r = redis.StrictRedis(host='localhost', port=6380, db=0)
+
+# get database
+db = mongoClient.urbangreen
+
+# get collection
+collection = db['sensor-data']
+\end{lstlisting}
+Danach kann mit folgendem Code ein neuer Datensatz angelegt werden:
+\begin{lstlisting} [language=Python, frame=single]
+newData = {
+"temperature": r.hget("system", "temperature"),
+"ph": r.hget("system", "ph"),
+"ec": r.hget("system", "ec")
+}
+collection.insert_one(newData)
+\end{lstlisting}
 \end{document}
