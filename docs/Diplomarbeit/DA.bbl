@@ -1,0 +1,23 @@
+\begin{thebibliography}{BVH15}
+
+\bibitem[BVH15]{robonavgit}
+Scholz~Dominik Belinic~Vennesa, Haidn~Martin and Siegel Hannah.
+\newblock Robonav.
+\newblock https://github.com/TGM-HIT/RoboterNavigation/, 2015.
+
+\bibitem[Git15]{gitdown}
+GitHub.
+\newblock Downloading git.
+\newblock https://www.git-scm.com/download/win, 2015.
+
+\bibitem[Pro14]{antdown}
+The Apache~Ant Project.
+\newblock Current release of ant.
+\newblock http://ant.apache.org/bindownload.cgi, 2014.
+
+\bibitem[Ver15]{api2down}
+Dr.~Christian Verbeek.
+\newblock Downloads.
+\newblock http://wiki.openrobotino.org/index.php? title=Downloads\#API2, 2015.
+
+\end{thebibliography}

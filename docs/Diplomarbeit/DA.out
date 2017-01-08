@@ -1,0 +1,48 @@
+\BOOKMARK [1][-]{section.1}{Einf\374hrung}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Einleitung}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Aufgabenstellung}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Ziele und Zielgruppen}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Konzept}{section.1}% 5
+\BOOKMARK [1][-]{section.2}{Grundlagen und vorhandene Technologien}{}% 6
+\BOOKMARK [2][-]{subsection.2.1}{Methodiken zur Verbreitung}{section.2}% 7
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Citizen Science}{subsection.2.1}% 8
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Blidungssektor}{subsection.2.1}% 9
+\BOOKMARK [2][-]{subsection.2.2}{Vorhandene Aquaponiksysteme}{section.2}% 10
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Grove Ecosystem}{subsection.2.2}% 11
+\BOOKMARK [3][-]{subsubsection.2.2.2}{EcoQube C}{subsection.2.2}% 12
+\BOOKMARK [3][-]{subsubsection.2.2.3}{Ponix Systems}{subsection.2.2}% 13
+\BOOKMARK [1][-]{section.3}{Projektmanagement}{}% 14
+\BOOKMARK [2][-]{subsection.3.1}{Projektmanagement Methode}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.2}{Teamstruktur}{section.3}% 16
+\BOOKMARK [2][-]{subsection.3.3}{Aufgabenteilung}{section.3}% 17
+\BOOKMARK [2][-]{subsection.3.4}{Terminplanung}{section.3}% 18
+\BOOKMARK [2][-]{subsection.3.5}{User Stories}{section.3}% 19
+\BOOKMARK [2][-]{subsection.3.6}{Sprint Dokumentation}{section.3}% 20
+\BOOKMARK [1][-]{section.4}{Evaluierung der benötigten Technologien und Komponenten}{}% 21
+\BOOKMARK [2][-]{subsection.4.1}{Single Board Computer}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.2}{Sensoren}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.3}{Aktoren}{section.4}% 24
+\BOOKMARK [2][-]{subsection.4.4}{Datenbankmanagementsystem}{section.4}% 25
+\BOOKMARK [2][-]{subsection.4.5}{Webframework}{section.4}% 26
+\BOOKMARK [2][-]{subsection.4.6}{Daten\374bertragung}{section.4}% 27
+\BOOKMARK [1][-]{section.5}{Projekt Umsetzung - Designunterlagen}{}% 28
+\BOOKMARK [2][-]{subsection.5.1}{Use-Case Diagramm}{section.5}% 29
+\BOOKMARK [2][-]{subsection.5.2}{Datenakquisition}{section.5}% 30
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Technologie}{subsection.5.2}% 31
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Ablauf}{subsection.5.2}% 32
+\BOOKMARK [2][-]{subsection.5.3}{Datenverarbeitung}{section.5}% 33
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Technologie}{subsection.5.3}% 34
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Umsetzung des Ablaufs}{subsection.5.3}% 35
+\BOOKMARK [1][-]{section.6}{Userinterface des Aquaponik Systems}{}% 36
+\BOOKMARK [2][-]{subsection.6.1}{Frontend}{section.6}% 37
+\BOOKMARK [2][-]{subsection.6.2}{Backend}{section.6}% 38
+\BOOKMARK [1][-]{section.7}{Ausfallsicherheit und Konsistenzsicherung der Daten}{}% 39
+\BOOKMARK [2][-]{subsection.7.1}{Zwischenspeicherung beim Aquaponik System}{section.7}% 40
+\BOOKMARK [3][-]{subsubsection.7.1.1}{Ausfall der Internetverbindung}{subsection.7.1}% 41
+\BOOKMARK [3][-]{subsubsection.7.1.2}{Ausfall der Stromversorgung}{subsection.7.1}% 42
+\BOOKMARK [1][-]{section.8}{Ausblick}{}% 43
+\BOOKMARK [1][-]{section.9}{Appendix}{}% 44
+\BOOKMARK [2][-]{subsection.9.1}{Glossaries}{section.9}% 45
+\BOOKMARK [2][-]{subsection.9.2}{Figures}{section.9}% 46
+\BOOKMARK [2][-]{subsection.9.3}{Listings}{section.9}% 47
+\BOOKMARK [2][-]{subsection.9.4}{Sources}{section.9}% 48
