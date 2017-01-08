@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\gdef\version{0.1}
+\gdef\doctype{Sprint 1}
+
+\documentclass[11pt]{article}
+%Gummi|065|=)
+
+\usepackage{eurosym}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {.} }
+\usepackage{upgreek}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabulary}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage{gensymb}
+
+
+%for code snippets
+\lstset{
+  language=C,                	  % choose the language of the code
+  %numbers=left,                   % where to put the line-numbers
+  stepnumber=1,                   % the step between two line-numbers.
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Header                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\arraystretch}{1.4}
+\fancyhead{}
+\fancyfoot{}
+\pagestyle{fancy}
+\lhead{{\doctype}}
+\rhead{{\fontfamily{phv}\selectfont \textcolor{gray}{Urban Green}} \includegraphics[height=0.8cm]{logo}}
+\lfoot{Version \version}
+\rfoot{\thepage\ von \pageref{LastPage}}
+\setlength{\headheight}{30pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Start                                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vfill
+    {
+        \Huge\textbf{Sprint 1}\\
+        \vskip2cm
+        \includegraphics[width=4cm]{logo} \\
+        \Large
+        {\fontfamily{phv}\selectfont
+			\textcolor{gray}{Urban Green}
+		}
+        \vskip3cm
+        Matthias Schwebler\\
+        Ramin Bahadoorifar\\
+        Samuel Schober\\
+        Konrad Kelc\\
+    }
+    \vfill
+    \begin{center}
+    \begin{table}[ht]
+    	\centering
+    	\begin{tabular}{lllll}
+    		\cline{1-4}
+    		\multicolumn{1}{|c|}{\textbf{\rule{0pt}{3ex} }} & \multicolumn{1}{c|}{\textbf{Name}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Unterschrift}} &  \\ \cline{1-4}
+
+    		\multicolumn{1}{|l|}{\textbf{\rule{0pt}{3ex} Erstellt:}} & \multicolumn{1}{l|}{M. Schwebler, R. Bahadoorifar} & \multicolumn{1}{l|}{TT.MM.YYYY} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
+
+    		\multicolumn{1}{|l|}{\textbf{\rule{0pt}{3ex} Gepr\"uft:}} & \multicolumn{1}{l|}{S. Schober, K. Kelc} & \multicolumn{1}{l|}{TT.MM.YYYY} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
+    		&  &  &  &  \\
+    		&  &  &  &  \\
+    		&  &  &  &  \\
+    	\end{tabular}
+    \end{table}
+    \end{center}
+\end{titlepage}
+
+\tableofcontents	%Inhaltsverzeichnis
+
+\newpage
+% Versionierung
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|l|l|l}
+\cline{1-4}
+\multicolumn{1}{|c|}{\textbf{Datum}} & \multicolumn{1}{c|}{\textbf{Version}} & \multicolumn{1}{c|}{\textbf{Autor}}                                                                               & \multicolumn{1}{c|}{\textbf{Status}} &  \\ \cline{1-4}
+TT.MM.YYYY                           & 0.1                                   & \begin{tabular}[c]{@{}l@{}}Matthias Schwebler,\\ Ramin Bahadoorifar,\\ Konrad Kelc,\\ Samuel Schober\end{tabular} & Erstentwurf                          &  \\ \cline{1-4}
+TT.MM.YYYY                           & 1.0                                   & \begin{tabular}[c]{@{}l@{}}A B,\\ X Y\end{tabular}                                  & Fertigstellung                       &  \\ \cline{1-4}
+TT.MM.YYYY                           & 1.1                                  & \begin{tabular}[c]{@{}l@{}}A B,\\ X Y\end{tabular}                                  & \"Uberarbeitung                       &  \\ \cline{1-4}
+\end{tabular}
+\end{table}
+\newpage
+\section{Automatisiertes Ablesen aller Sensoren}
+\end{document}
