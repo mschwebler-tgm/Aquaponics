@@ -158,10 +158,36 @@ collection = db['sensor-data']
 Danach kann mit folgendem Code ein neuer Datensatz angelegt werden:
 \begin{lstlisting} [language=Python, frame=single]
 newData = {
-"temperature": r.hget("system", "temperature"),
-"ph": r.hget("system", "ph"),
-"ec": r.hget("system", "ec")
+	"temperature": r.hget("system", "temperature"),
+	"ph": r.hget("system", "ph"),
+	"ec": r.hget("system", "ec")
 }
 collection.insert_one(newData)
 \end{lstlisting}
+
+\newpage
+\section{Aktoren}
+\subsection{Hitestrahler}
+Um die Temperatur zu regeln, wird der Hitzestrahler von cooking-hacks.com verwendet. Er kann in einen der fünf dafür vorgesehenen Slots mit dem OpenAquarium Shield für den Arduino verbunden werden. Der Hitzestrahler kann jeweils mit einer einzigen Code Zeile ein- bzw. ausgeschaltet werden.
+\begin{lstlisting} [language=C, frame=single]
+	OpenAquarium.sendPowerStrip(on1); 
+	OpenAquarium.sendPowerStrip(off1);
+\end{lstlisting}
+"on1" und "off1" sind konstanten die von cooking-hacks.com vorgegeben sind.
+Dieser Code funktioniert, solange der Hitzestrahler auf dem ersten Socket angeschlossen ist. Angenommen er wäre mit dem zweiten Socket verbunden müsste "on2" und "off2" verwendet werden. \\
+Um beispielsweise die Temperatur zwischen 25 und 27 Grad Celsius zu halten würde folgender Code ausreichen:
+\begin{lstlisting} [language=C, frame=single]
+  if(temperature<25){ 
+    OpenAquarium.sendPowerStrip(on1)
+  }
+  if(temperature>27){ 
+    OpenAquarium.sendPowerStrip(off1);
+  }
+\end{lstlisting}
+Kenndaten des Hitzestrahlers:
+\begin{itemize}
+\item Leistung: 100W
+\item Spannung: 220/240V 50/60Hz
+\item Temperatur: 17\degree C - 23\degree C
+\end{itemize}
 \end{document}
