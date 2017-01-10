@@ -167,7 +167,7 @@ collection.insert_one(newData)
 
 \newpage
 \section{Aktoren}
-\subsection{Hitestrahler}
+\subsection{Hitestrahler - User Story 1583}
 Um die Temperatur zu regeln, wird der Hitzestrahler von cooking-hacks.com verwendet. Er kann in einen der fünf dafür vorgesehenen Slots mit dem OpenAquarium Shield für den Arduino verbunden werden. Der Hitzestrahler kann jeweils mit einer einzigen Code Zeile ein- bzw. ausgeschaltet werden.
 \begin{lstlisting} [language=C, frame=single]
 	OpenAquarium.sendPowerStrip(on1); 
@@ -190,4 +190,18 @@ Kenndaten des Hitzestrahlers:
 \item Spannung: 220/240V 50/60Hz
 \item Temperatur: 17\degree C - 23\degree C
 \end{itemize}
+
+\newpage
+\section{Sensoren}
+\subsection{Wasserstand - User Story 2083}
+Es ist wichtig den Wasserstand regelmäßig zu prüfen, da das System oft lange Zeit unbeaufsichtig bleibt. Wenn zu viel Wasser verdunstet muss es nachgefüllt werden. Hierfür wird der Wasserstandsensor von cooking-hacks.com verwendet. Er kann auf dem OpenAquarium Board angeschlossen werden und über die entsprechende Library angesprochen werden. \\
+\begin{minipage}{5in}
+  \centering
+  \raisebox{-0.5\height}{\includegraphics[height=3.0in]{waterLevel_connection}}
+\end{minipage}
+Abfragen des Wasserstands:
+\begin{lstlisting} [language=C, frame=single]
+OpenAquarium.waterlevel1();
+\end{lstlisting}
+Die Methode "waterlevel1()" testet automatisch den Wasserstand und schreibt auf die Serielle schnittstelle den aktuellen Status ("Aquarium Full"/"Aquarium Empty")
 \end{document}
