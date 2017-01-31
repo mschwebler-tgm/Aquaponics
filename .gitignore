@@ -5,6 +5,12 @@
 .idea
 node_modules
 
+*.ist
+*.log
+*.out
+*.toc
+*.aux
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
