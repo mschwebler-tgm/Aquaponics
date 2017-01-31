@@ -1,4 +1,5 @@
 \subsection{Single Board Computer - User Story 1817}
+\cfoot{Matthias Schwebler}
 Um die Sensoren und Aktoren anzusprechen wird ein SBC (Single Board Computer) verwendet. Aufgrund der Anzahl an erh\"altlichen SBCs, wird der Fokus auf popul\"are Produkte mit einer gro{\ss}en Community gelegt. Ideal w\"are ein SBC, der auf Messger\"ate, wie sie im Aquarium verwendet werden, spezialisiert ist und ein WLAN-Interface, f\"ur die Daten\"ubermittlusng hat. Des Weiteren sollte er einen internen Speicher bieten (zusätzlich zum Betriebssystem ~200MB für Redis Datenbank + Daten) um im Falle eines Netzwerkausfalles, f\"ur einige Stunden alle Daten zwischenspeichern zu k\"onnen. 
 
 \subsubsection{Arduino}
@@ -118,7 +119,7 @@ Zum Anschlie{\ss}en der Pumpe sind auf dem AquariumBoard Steckplätze vorgesehen
 \begin{minipage}{5in}
   \centering
   \raisebox{-0.5\height}{\includegraphics[height=2.3in]{images/water_pump_connection}}
-\end{minipage}
+\end{minipage} \mbox{} \\
 Pumpleistung: 100-350 l/h \\
 Spannung: 3.5-12V DC \\
 Leistungsbereich: 0.5W-5W \\
@@ -170,6 +171,7 @@ Farbe: 60 Weiße + 12 Blaue \\
 %               DBMS                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Datenbankmanagementsystem}
+\cfoot{Konrad Kelc}
 
 \subsubsection{Evaluierung RDBMS vs. NoSQL}
 
@@ -266,6 +268,7 @@ Es m\"ussen sowohl auf dem lokalen Raspberry Pi, als auch auf dem Server Echtzei
 %           Web Framework           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Web Framework}
+\cfoot{Ramin Bahadoorifar}
 Bei Web Frameworks, werden durch vordefinierte und vorgefertigte Klassen, h\"aufig gebrauchte Funktionen wie Mailversand, sichere Authentifizierung, Sicherheitsfunktionen, Lokalisierung, Performance (z.B. HTTP Caching) oder grundlegende Funktionen f\"ur Webformulare vereinfacht. \\
 Web Frameworks sind darauf ausgelegt, sehr schnell Ergebnisse zu erzielen und lauff\"ahige Webanwendungen zu erstellen. Dazu bieten sie einen Datenbankzugriff, Templating-Mechanismen, eine saubere Trennung von Pr\"asen-tation und Code durch Verwendung des Model-View-Controllers. \\
 Da eine eigenst\"andige Implementierung all dieser Mechanismen den Arbeitsaufwand \"ubersteigen w\"urde, ist eine Verwendung eines solchen Web Frameworks unabdinglich. Welches Framework dabei gew\"ahlt wird h\"angt von folgenden Komponenten ab:
