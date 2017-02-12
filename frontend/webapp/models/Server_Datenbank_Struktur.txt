@@ -1,0 +1,72 @@
+ 
+
+Benutzer:
+
+	Benutzer Account
+
+		- Benutzername
+		- Passwort
+		- Email
+		- Vorname
+		- Nachname
+		
+		- System Konfiguration
+		
+			- Drehdauer des Futterautomaten
+			- Futterintervalle
+			- Beleuchtungsdauer der Pflanzen
+			- Beleuchtungsintervall
+			- Beleuchtungsparameter (Farben)
+			- Wassertemperatur
+			- Automatische Regulierung der Wassertemperatur (Ja/Nein)
+			
+			
+Fische:
+
+	- Bezeichnung
+	- Mindestanzahl von Tieren
+	- Pflanzen
+	- Bepflanzung
+	- Herkunft
+	- Bild
+	- Besondere Anforderungen
+	- Futter
+	- Temperatur
+	- Erreichbares Alter
+	- pH-Wert
+	- Benötigt Artenbecken (Ja/Nein)
+		
+
+Pflanzen:
+	
+	Kräuter
+	Gemüse
+	Früchte
+		
+		- Bezeichnung
+		- Ernte Dauer
+		- Besondere Anforderungen
+
+			
+Vordefinierte Profile für Fische und Pflanzen:
+
+	Fische
+	
+		- Wassertemperatur
+		- pH-Wert
+		
+	Pflanzen
+	
+		- Beleuchtungsdauer
+		- Beleuchtungsintervalle
+		- Beleuchtungsparameter (Farben)
+
+		
+
+	
+		
+	
+
+
+	
+

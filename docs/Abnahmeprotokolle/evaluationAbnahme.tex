@@ -1,0 +1,99 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\gdef\version{0.1}
+\gdef\doctype{Evaluation Sprint}
+
+\documentclass[11pt]{article}
+%Gummi|065|=)
+
+\usepackage{eurosym}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {.} }
+\usepackage{upgreek}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tabulary}
+\usepackage[utf8]{inputenc}
+\usepackage{lastpage}
+
+%for code snippets
+\lstset{
+  language=C,                	  % choose the language of the code
+  %numbers=left,                   % where to put the line-numbers
+  stepnumber=1,                   % the step between two line-numbers.
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Header                                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\arraystretch}{1.4}
+\fancyhead{}
+\fancyfoot{}
+\pagestyle{fancy}
+\lhead{{\doctype}}
+\rhead{{\fontfamily{phv}\selectfont \textcolor{gray}{Urban Green}} \includegraphics[height=0.8cm]{logo}}
+\lfoot{Version \version}
+\rfoot{\thepage\ von \pageref{LastPage}}
+\setlength{\headheight}{30pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Start                                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vfill
+    {
+        \Huge\textbf{Evaluation Sprint}\\
+        \vskip2cm
+        \includegraphics[width=4cm]{logo} \\
+        \Large
+        {\fontfamily{phv}\selectfont
+			\textcolor{gray}{Urban Green}
+		}
+        \vskip3cm
+        Matthias Schwebler\\
+        Ramin Bahadoorifar\\
+        Samuel Schober\\
+        Konrad Kelc\\
+    }
+    \vfill
+    \begin{center}
+    \begin{table}[ht]
+    	\centering
+    	\begin{tabular}{lllll}
+    		\cline{1-4}
+    		\multicolumn{1}{|c|}{\textbf{\rule{0pt}{3ex} }} & \multicolumn{1}{c|}{\textbf{Name}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Unterschrift}} &  \\ \cline{1-4}
+
+    		\multicolumn{1}{|l|}{\textbf{\rule{0pt}{3ex} Erstellt:}} & \multicolumn{1}{l|}{M. Schwebler, R. Bahadoorifar} & \multicolumn{1}{l|}{2.11.2016} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
+
+    		\multicolumn{1}{|l|}{\textbf{\rule{0pt}{3ex} Gepr\"uft:}} & \multicolumn{1}{l|}{S. Schober, K. Kelc} & \multicolumn{1}{l|}{2.11.2016} & \multicolumn{1}{l|}{} &  \\ \cline{1-4}
+    		&  &  &  &  \\
+    		&  &  &  &  \\
+    		&  &  &  &  \\
+    	\end{tabular}
+    \end{table}
+    \end{center}
+\end{titlepage}
+
+\section{Einf\"uhrung}
+Aquaponik ist ein Verfahren, welches die Aufzucht von Fischen mit der Aufzucht von Nutzpflanzen verbindet. Im Wesentlichen handelt es sich dabei um einen geschlossenen Wasserkreislauf, in dem die entsprechenden N\"ahrstoffe automatisch erzeugt werden; d.h. die Ausscheidungen der Fische werden durch Bakterien in N\"ahrstoffe f\"ur die Pflanzen umgewandelt. Es soll eine vollautomatisierte L\"osung f\"ur ein Aquaponik-System f\"ur kleine Haushalte als Prototyp geschaffen werden. Diese beinhaltet einerseits eine geeignete Konstruktion die sowohl das Aquarium enth\"alt als auch die ent-sprechende \"Uberwachung und Regelung des Systems.
+\end{document}
