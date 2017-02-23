@@ -8,6 +8,7 @@
 #include <RTClib.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include <Wire.h>
 
@@ -34,21 +35,21 @@ void setup() {
 void loop() {
   // temperature
   temperature = OpenAquarium.readtemperature(); //Read the sensor
-  Serial.print(F("temperature "));
+  Serial.print("tp "); // tp... temperature
   Serial.println(temperature);
-
+  
   // ph
   int mvpH = OpenAquarium.readpH(); //Value in mV of pH
   float pH = OpenAquarium.pHConversion(mvpH); //Calculate pH value
-  Serial.print(F("ph "));
+  Serial.print("ph ");
   Serial.println(pH);
 
   // ec
   float resistanceEC = OpenAquarium.readResistanceEC(); //EC Value in resistance
   float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value in µS/cm
-  Serial.print(F("ec "));
+  Serial.print("ec ");
   Serial.println(EC);
 
-  delay(2000); //Wait 2 seconds
+  delay(1000);
 
 }
