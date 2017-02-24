@@ -27,19 +27,23 @@ def getKeyValue(data):
 # compile and upload .c file (execute commands from cli)
 # TODO
 
-try:
-    # init serial
-    ser = serial.Serial(
-        port='/dev/ttyACM0',
-        baudrate=115200
-    )
+# init serial
 
-    # get redis
-    r = redis.StrictRedis(host='localhost', port=6380, db=0)
+ser = serial.Serial(
+    port='/dev/ttyACM0',
+    baudrate=115200
+)
 
+# get redis
+r = redis.StrictRedis(host='localhost', port=6380, db=0)
 
-    cachingStarted = 0
-    while True:
+cachingStarted = 0
+errors = ''
+
+while True:
+    try:
+        r.hset('system', 'error', errors)
+        errors = ''
         # read from serial port
         bytesToRead = ser.inWaiting()
         data = str(ser.read(bytesToRead))
@@ -63,15 +67,18 @@ try:
         # save to redisDB with timestamp
         r.hmset(timestamp, {kv_1[0]: kv_1[1], kv_2[0]: kv_2[1], kv_3[0]: kv_3[1]})
         r.publish('system', 'newData')
-except serial.SerialException as err:
-    print("Serial connection interface broken")
-    print(err)
-    # TODO set error message (redis) 1
-except redis.ConnectionError as err:
-    print('Redis server not reachable')
-    print(err)
-    # TODO set error message (redis) 2
-except Exception as err:
-    print("Unknown exception")
-    print(err)
-    # TODO set error message (redis) 3
+    except serial.SerialException as err:
+        print("Serial connection interface broken")
+        print(err)
+        errors += 'No connection to sensors/actuators;'
+        continue
+    except redis.ConnectionError as err:
+        print('Redis server not reachable')
+        print(err)
+        errors += 'No connection to local database;'
+        continue
+    except Exception as err:
+        print("Unknown exception")
+        print(err)
+        errors += 'Unknown error: ' + str(err) + ';'
+        continue
