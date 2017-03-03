@@ -36,14 +36,17 @@ ser = serial.Serial(
 
 # get redis
 r = redis.StrictRedis(host='localhost', port=6380, db=0)
+p = r.pubsub()
 
 cachingStarted = 0
 errors = ''
 
 while True:
     try:
+        # save new errors to redis
         r.hset('system', 'error', errors)
         errors = ''
+
         # read from serial port
         bytesToRead = ser.inWaiting()
         data = str(ser.read(bytesToRead))
@@ -67,6 +70,17 @@ while True:
         # save to redisDB with timestamp
         r.hmset(timestamp, {kv_1[0]: kv_1[1], kv_2[0]: kv_2[1], kv_3[0]: kv_3[1]})
         r.publish('system', 'newData')
+
+
+
+        # control actuators
+        # get published config
+        message = p.get_message()
+        if message:
+            if str(message.get('data')).startswith('light'):
+                pass
+            elif str(message.get('data')).startswith('feeder'):
+                pass
     except serial.SerialException as err:
         print("Serial connection interface broken")
         print(err)
