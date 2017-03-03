@@ -37,6 +37,7 @@ ser = serial.Serial(
 # get redis
 r = redis.StrictRedis(host='localhost', port=6380, db=0)
 p = r.pubsub()
+p.subscribe('system')
 
 cachingStarted = 0
 errors = ''
