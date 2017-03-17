@@ -23,7 +23,15 @@
 #define point_2_cond 10500   // Write here your EC calibration value of the solution 2 in µS/cm
 #define point_2_cal 120      // Write here your EC value measured in resistance with solution 2
 
-float temperature;
+void drops(int amount) {
+  OpenAquarium.perpumpON(1);
+  OpenAquarium.perpumpON(2);
+  OpenAquarium.perpumpON(3);
+  delay(260 * amount);  // 260 ms equals one drop
+  OpenAquarium.perpumpOFF(1);
+  OpenAquarium.perpumpOFF(2);
+  OpenAquarium.perpumpOFF(3);
+}
 
 void setup() {
   OpenAquarium.init();   //Initialize
@@ -34,7 +42,7 @@ void setup() {
 
 void loop() {
   // temperature
-  temperature = OpenAquarium.readtemperature(); //Read the sensor
+  float temperature = OpenAquarium.readtemperature(); //Read the sensor
   Serial.print("tp "); // tp... temperature
   Serial.println(temperature);
   
@@ -50,6 +58,14 @@ void loop() {
   Serial.print("ec ");
   Serial.println(EC);
 
+
   delay(1000);
 
+
+  // check if there is data to be read
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    int amount = Serial.read() - 48; // get number out of ascii code (0 = 48, 1 = 49, etc)
+    drops(amount);
+  }
 }
