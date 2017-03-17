@@ -42,6 +42,31 @@ p.subscribe('system')
 cachingStarted = 0
 errors = ''
 
+#####################################
+## functions to listen for changes ##
+#####################################
+
+def controlActuators(r, p):
+    for message in p.listen():
+        data = str(message['data'])[2: len(str(message['data']))-1]
+
+        if data.startswith('LED_R'):
+            red = data.split(':')[1]
+            r.hset('system', 'LED_R:' + red)
+            os.system('pigs p 21 ' + red)   # 'p 21' -> GPIO 21
+        elif data.startswith('LED_G'):
+            green = data.split(':')[1]
+            r.hset('system', 'LED_G:' + green)
+            os.system('pigs p 20 ' + green)  # 'p 20' -> GPIO 20
+        elif data.startswith('LED_B'):
+            blue = data.split(':')[1]
+            r.hset('system', 'LED_B:' + blue)
+            os.system('pigs p 16 ' + blue)  # 'p 16' -> GPIO 16
+
+        elif data.startswith('drops'):
+            drops = data.split(':')[1]
+            ser.write(drops)
+
 while True:
     try:
         # save new errors to redis
