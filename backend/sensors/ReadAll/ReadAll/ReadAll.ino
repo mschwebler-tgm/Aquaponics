@@ -25,12 +25,8 @@
 
 void drops(int amount) {
   OpenAquarium.perpumpON(1);
-  OpenAquarium.perpumpON(2);
-  OpenAquarium.perpumpON(3);
   delay(260 * amount);  // 260 ms equals one drop
   OpenAquarium.perpumpOFF(1);
-  OpenAquarium.perpumpOFF(2);
-  OpenAquarium.perpumpOFF(3);
 }
 
 void setup() {
