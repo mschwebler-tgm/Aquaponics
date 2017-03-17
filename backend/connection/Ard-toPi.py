@@ -3,6 +3,7 @@ import serial
 import time
 import os
 import re
+import _thread
 
 
 def getKeyValue(data):
@@ -48,7 +49,8 @@ errors = ''
 
 def controlActuators(r, p):
     for message in p.listen():
-        data = str(message['data'])[2: len(str(message['data']))-1]
+        data = str(message['data'])
+        # remove substring when using python 2
 
         if data.startswith('LED_R'):
             red = data.split(':')[1]
@@ -66,6 +68,8 @@ def controlActuators(r, p):
         elif data.startswith('drops'):
             drops = data.split(':')[1]
             ser.write(drops)
+
+_thread.start_new_thread(controlActuators, (r, p))
 
 while True:
     try:
@@ -97,16 +101,6 @@ while True:
         r.hmset(timestamp, {kv_1[0]: kv_1[1], kv_2[0]: kv_2[1], kv_3[0]: kv_3[1]})
         r.publish('system', 'newData')
 
-
-
-        # control actuators
-        # get published config
-        message = p.get_message()
-        if message:
-            if str(message.get('data')).startswith('light'):
-                pass
-            elif str(message.get('data')).startswith('feeder'):
-                pass
     except serial.SerialException as err:
         print("Serial connection interface broken")
         print(err)
