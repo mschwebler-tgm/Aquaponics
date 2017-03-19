@@ -60,10 +60,10 @@ p.subscribe('system')
 ###################################################
 ## functions to listen for changes for actuators ##
 ###################################################
-# setup boardnumbering and pin
+
+# setup boardnumbering and pins
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(8, GPIO.OUT)
 GPIO.setup(12, GPIO.OUT)
 light = GPIO.PWM(12, 100)
 light.start(0)  # start with intensity: 0
@@ -79,19 +79,17 @@ def controlActuators(r, p):
     for message in p.listen():
         data = str(message['data'])
         # use substring to get data when using python 3 (b'data')
-        if data.startswith('newData'):
-            continue
-        elif data.startswith('LED_R'):
+        if data.startswith('LED_R'):
             red = data.split(':')[1]
-            r.hset('system', 'LED_R:', red)
+            r.hset('system', 'LED_R', red)
             os.system('pigs p 21 ' + red)  # 'p 21' -> GPIO 21
         elif data.startswith('LED_G'):
             green = data.split(':')[1]
-            r.hset('system', 'LED_G:', green)
+            r.hset('system', 'LED_G', green)
             os.system('pigs p 20 ' + green)  # 'p 20' -> GPIO 20
         elif data.startswith('LED_B'):
             blue = data.split(':')[1]
-            r.hset('system', 'LED_B:', blue)
+            r.hset('system', 'LED_B', blue)
             os.system('pigs p 16 ' + blue)  # 'p 16' -> GPIO 16
 
         elif data.startswith('drops'):
@@ -103,10 +101,10 @@ def controlActuators(r, p):
 
         elif data.startswith('feed'):
             timeToFeed = data.split(':')[1]
-            # activate pin 8 for certain amount of time
-            GPIO.output(8, GPIO.HIGH)
+            # activate pin 37 for certain amount of time
+            GPIO.setup(37, GPIO.OUT)
             time.sleep(float(timeToFeed))
-            GPIO.output(8, GPIO.LOW)
+            GPIO.setup(37, GPIO.IN)
 
         elif data.startswith('light'):
             # 'light:20-39,40,90;22-40,20,100'
@@ -115,27 +113,36 @@ def controlActuators(r, p):
             # 90    -> 90 percent intensity
             lightData = data.split(':')[1]
             times = lightData.split(';')
-            for j in range(5):
-                if j >= len(times):
-                    r.hset('system', 'hour' + str(j), None)
-                    r.hset('system', 'minute' + str(j), None)
-                    r.hset('system', 'duration' + str(j), None)
-                    r.hset('system', 'intensity' + str(j), None)
+            for i in range(5):
+                if i >= len(times):
+                    r.hset('system', 'hour' + str(i), None)
+                    r.hset('system', 'minute' + str(i), None)
+                    r.hset('system', 'duration' + str(i), None)
+                    r.hset('system', 'intensity' + str(i), None)
                 else:
-                    params = times[j].split(',')  # (20-39, 40, 90)
-                    r.hset('system', 'hour' + str(j), params[0].split('-')[0])
-                    r.hset('system', 'minute' + str(j), params[0].split('-')[1])
-                    r.hset('system', 'duration' + str(j), params[1])
-                    r.hset('system', 'intensity' + str(j), params[2])
+                    params = times[i].split(',')  # (20-39, 40, 90)
+                    r.hset('system', 'hour' + str(i), params[0].split('-')[0])
+                    r.hset('system', 'minute' + str(i), params[0].split('-')[1])
+                    r.hset('system', 'duration' + str(i), params[1])
+                    r.hset('system', 'intensity' + str(i), params[2])
 
 
 # start thread
 thread.start_new_thread(controlActuators, (r, p))
 
 # init RGB-LED-strip
-if r.hget('system', 'LED_R') != None: os.system('pigs p 21 ' + str(r.hget('system', 'LED_R')))
-if r.hget('system', 'LED_G') != None: os.system('pigs p 20 ' + str(r.hget('system', 'LED_G')))
-if r.hget('system', 'LED_B') != None: os.system('pigs p 16 ' + str(r.hget('system', 'LED_B')))
+if r.hget('system', 'LED_R') != None:
+    os.system('pigs p 21 ' + str(r.hget('system', 'LED_R')))
+else:
+    os.system('pigs p 21 0')
+if r.hget('system', 'LED_G') != None:
+    os.system('pigs p 20 ' + str(r.hget('system', 'LED_G')))
+else:
+    os.system('pigs p 20 0')
+if r.hget('system', 'LED_B') != None:
+    os.system('pigs p 16 ' + str(r.hget('system', 'LED_B')))
+else:
+    os.system('pigs p 16 0')
 
 errors = ''
 while True:
@@ -177,7 +184,7 @@ while True:
             if r.hget('system', 'hour' + str(i)) == str(now.hour) and r.hget('system', 'minute' + str(i)) == str(
                     now.minute):
                 thread.start_new_thread(expose, (
-                light, float(r.hget('system', 'duration' + str(i))), float(r.hget('system', 'intensity' + str(i)))))
+                    light, float(r.hget('system', 'duration' + str(i))), float(r.hget('system', 'intensity' + str(i)))))
     except serial.SerialException as err:
         print("Serial connection broken")
         errors += str(timestamp) + ': No connection to sensors/actuators;'
@@ -190,7 +197,3 @@ while True:
         print("Unknown exception")
         errors += str(timestamp) + ': Unknown error: ' + str(err) + ';'
         continue
-    except:
-        # GPIO.cleanup()
-        # do not clean up, as the lamp will continue to shine
-        sys.exit()
