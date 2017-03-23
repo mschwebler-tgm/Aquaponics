@@ -46,6 +46,18 @@ def expose(lightPWM, duration, intensity):
     lightPWM.ChangeDutyCycle(0)  # turn off the light
 
 
+def feed(duration):
+    """
+    Activates the feeder for a certain amount of time
+    Note: Feeder has to be connected to Pin nr. 37 (BOARD) in order to work properly
+    :param duration: duration of feeding process in seconds
+    :return: None
+    """
+    GPIO.setup(37, GPIO.OUT)
+    time.sleep(float(duration))
+    GPIO.setup(37, GPIO.IN)
+
+
 # init serial
 ser = serial.Serial(
     port='/dev/ttyACM0',
@@ -100,11 +112,22 @@ def controlActuators(r, p):
             ser.write(str(drops))
 
         elif data.startswith('feed'):
-            timeToFeed = data.split(':')[1]
-            # activate pin 37 for certain amount of time
-            GPIO.setup(37, GPIO.OUT)
-            time.sleep(float(timeToFeed))
-            GPIO.setup(37, GPIO.IN)
+            # 'feed:20-39,5;22-30;5'
+            # 20-39     -> time
+            # 5         -> how long feeder gives food
+            feedData = data.split(':')[1]
+            times = feedData.split(';')
+            # maximum of 5 different times per day
+            for i in range(5):
+                if i >= len(times):
+                    r.hset('system', 'feedHour' + str(i), None)
+                    r.hset('system', 'feedMinute' + str(i), None)
+                    r.hset('system', 'feedDuration' + str(i), None)
+                else:
+                    params = times[i].split(',')  # (20-39, 5)
+                    r.hset('system', 'feedHour' + str(i), params[0].split('-')[0])
+                    r.hset('system', 'feedMinute' + str(i), params[0].split('-')[1])
+                    r.hset('system', 'feedDuration' + str(i), params[1])
 
         elif data.startswith('light'):
             # 'light:20-39,40,90;22-40,20,100'
@@ -113,6 +136,7 @@ def controlActuators(r, p):
             # 90    -> 90 percent intensity
             lightData = data.split(':')[1]
             times = lightData.split(';')
+            # maximum of 5 different times per day
             for i in range(5):
                 if i >= len(times):
                     r.hset('system', 'hour' + str(i), None)
@@ -175,16 +199,22 @@ while True:
         r.hmset(timestamp, {kv_1[0]: kv_1[1], kv_2[0]: kv_2[1], kv_3[0]: kv_3[1]})
         r.publish('system', str(timestamp))
 
-        # check if it is time to turn on the light
+        # check if it is time to feed
         now = datetime.datetime.now()
+        for i in range(5):
+            # check if there is a record
+            if r.hget('system', 'feedHour' + str(i)) == "None": break
+            # compare current time with time of light
+            if r.hget('system', 'feedHour' + str(i)) == str(now.hour) and r.hget('system', 'feedMinute' + str(i)) == str(now.minute):
+                thread.start_new_thread(feed, (float(r.hget('system', 'feedDuration' + str(i)))))
+
+        # check if it is time to turn on the light
         for i in range(5):
             # check if there is a record
             if r.hget('system', 'hour' + str(i)) == "None": break
             # compare current time with time of light
-            if r.hget('system', 'hour' + str(i)) == str(now.hour) and r.hget('system', 'minute' + str(i)) == str(
-                    now.minute):
-                thread.start_new_thread(expose, (
-                    light, float(r.hget('system', 'duration' + str(i))), float(r.hget('system', 'intensity' + str(i)))))
+            if r.hget('system', 'hour' + str(i)) == str(now.hour) and r.hget('system', 'minute' + str(i)) == str(now.minute):
+                thread.start_new_thread(expose, (light, float(r.hget('system', 'duration' + str(i))), float(r.hget('system', 'intensity' + str(i)))))
     except serial.SerialException as err:
         print("Serial connection broken")
         errors += str(timestamp) + ': No connection to sensors/actuators;'
