@@ -171,10 +171,6 @@ else:
 errors = ''
 while True:
     try:
-        # save new errors to redis
-        r.hset('system', 'error', errors)
-        errors = ''
-
         # read from serial port
         bytesToRead = ser.inWaiting()
         data = str(ser.read(bytesToRead))
@@ -215,15 +211,22 @@ while True:
             # compare current time with time of light
             if r.hget('system', 'hour' + str(i)) == str(now.hour) and r.hget('system', 'minute' + str(i)) == str(now.minute):
                 thread.start_new_thread(expose, (light, float(r.hget('system', 'duration' + str(i))), float(r.hget('system', 'intensity' + str(i)))))
+
+        # check if pH exceeds boundaries
+        if r.hmget('system', 'ph') < r.hget('system', 'min_ph'):
+            r.publish('system', 'error:pH value not in boundaries\nshould be above ' + r.hget('system', 'min_ph') + ' but is ' + r.hmget('system', 'ph'))
+        elif r.hmget('system', 'ph') > r.hget('system', 'max_ph'):
+            r.publish('system', 'error:pH value not in boundaries\nshould be below ' + r.hget('system', 'max_ph') + ' but is ' + r.hmget('system', 'ph'))
+
     except serial.SerialException as err:
         print("Serial connection broken")
-        errors += str(timestamp) + ': No connection to sensors/actuators;'
+        r.publish('system', 'error:No connection to sensors/actuators')
         continue
     except redis.ConnectionError as err:
         print('Redis server not reachable')
-        errors += str(timestamp) + ': No connection to local database;'
+        # r.publish('system', 'error:No connection to local database')
         continue
     except Exception as err:
         print("Unknown exception")
-        errors += str(timestamp) + ': Unknown error: ' + str(err) + ';'
+        r.publish('system', 'error:Unknown error\n' + str(err))
         continue
