@@ -91,7 +91,11 @@ def controlActuators(r, p):
     for message in p.listen():
         data = str(message['data'])
         # use substring to get data when using python 3 (b'data')
-        if data.startswith('LED_R'):
+
+        if data == 'exit':
+            sys.exit()
+
+        elif data.startswith('LED_R'):
             red = data.split(':')[1]
             r.hset('system', 'LED_R', red)
             os.system('pigs p 21 ' + red)  # 'p 21' -> GPIO 21
