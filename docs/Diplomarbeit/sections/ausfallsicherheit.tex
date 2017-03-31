@@ -1,0 +1,16 @@
+\cfoot{Konrad Kelc}
+Damit das System auch außerhalb des Normbetriebs fehlerfrei funktioniert, wurden entsprechende Vorkehrungen getroffen. Der Fokus liegt dabei auf den Ausfall von der Internetverbindung und Strom, da diese im Vergleich zu einem Ausfall eines \gls{USB}-Kabels um einiges wahrscheinlicher ist. 
+
+\subsubsection{Ausfall der Internetverbindung}
+Sollte die Internetverbindung unterbrochen werden, können die Daten nachträglich übertragen werden, da diese auf dem Raspberry Pi zwischengespeichert werden und jeweils mit einem Zeitstempel gekennzeichnet sind (siehe Kapitel 5.1.3). 
+
+\subsubsection{Ausfall der Stromversorgung}
+Es wurden keine Hardware-Sicherungen wie z.B. eine "`Pi \gls{USV}"' \cite{USV} implementiert, da der selbe Effekt auch mit Hilfe von regelmäßigen Backups erzielt werden kann. Die einzige Instanz, die essentielle Daten beinhaltet ist redis. Da die Gesamtmenge an Daten durch Überschreiben von alten Daten sehr niedrig gehalten wird, erfordert ein Backup zur Laufzeit nur wenig Ressourcen. So werden regelmäßig (alle 30 Minuten) Backups von der Datenbank erstellt und abgespeichert um im Falle eines Stromausfalles, den letzten Status wiederherzustellen. Redis bietet die Möglichkeit, bei einem neuen Backup, nicht ein extra File zu erstellen, sondern die Änderungen an ein bereits bestehendes File anzuhängen (inkrementelles Backup). \\ \mbox{} \\
+Um alle 30 Minuten ein Backup zu erstellen muss folgende Zeile in die Konfigurationsdatei eingetragen werden (\texttt{/etc/redis/redis.conf}):
+\begin{center}
+\texttt{save 1800 1}
+\end{center}
+Statement um inkrementelle Backups zu aktivieren:
+\begin{center}
+\texttt{appendonly yes}
+\end{center}

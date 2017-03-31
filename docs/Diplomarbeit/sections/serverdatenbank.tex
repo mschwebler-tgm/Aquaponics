@@ -1,0 +1,122 @@
+\cfoot{Konrad Kelc}
+In diesem Kapitel wird die serverseitige Datenbank, von den verwendeten Technologien, der Struktur und dessen Beschreibung bis hin zur Umsetzung behandelt.
+
+\subsubsection{Technologien}
+
+Die Technologien, welche für die Datenbank verwendet wurden sind folgende:
+
+\myparagraph{MongoDB}
+Als \gls{DBMS} wurde MongoDB verwendet. Für eine detaillierte Beschreibung von MongoDB siehe Kapitel \ref{sec:mongoDB}
+
+\myparagraph{Mongoose}
+Mongoose ist unter anderem ein Modellierungstool mit dem sich Objekte in MongoDB modellieren lassen.
+
+\myparagraph{TypeScript}
+Die Struktur bzw. die Schemen der Datenbank wurden in Typescript definiert. Die detaillierte Beschreibung von Typescript ist im Kapitel \ref{sec:typescript} nachzulesen.
+
+\newpage
+
+\subsubsection{Struktur}
+
+Zur besseren Veranschaulichung der Datenbankstruktur, wurde ein Diagramm erstellt. Da ein \gls{ERD} Diagramm für \gls{NoSQL} Datenbanken ungeeignet ist, wurde die Struktur mittels \gls{UML} vereinfacht dargestellt. Dieses beinhaltet alle Schemen der Datenbank, dessen Attribute, sowie die Abhängigkeiten zwischen den Schemen. Zwecks besserer Verständnis wurden die Attributnamen ausgeschrieben und einige zusammengefasst. Des Weiteren wurde auf die Datentypen der Attribute verzichtet, da das Diagramm die Struktur nur grob veranschaulichen soll.
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[width=16cm]{images/server_db_diagram}
+	\caption{Server Datenbankstruktur}
+\end{center}
+\end{figure}
+
+\newpage
+
+Wie im Diagramm dargestellt gibt es 8 Schemen, diese werden nun beschrieben, sowie dessen Abhängigkeiten untereinander erläutert.
+
+\myparagraph{User account}
+Dieses Schema ist für das Anlegen des Benutzer Accounts in der Webapp zuständig. Hier werden alle relevanten Daten für die Identifizierung des Benutzers gespeichert. Des Weiteren wird auch die persönliche Systemkonfiguration des Benutzers, welche die Aktoren betreffen gespeichert.
+
+\myparagraph{User profile}
+ In diesem Schema wird die Konfiguration der Aktoren gespeichert, die wie im Diagramm dargestellt in dem Account des Benutzers unter "`System configuration"' gespeichert wird.
+ 
+\myparagraph{Glossary}
+ Dieses Schema ist für den Glossar bzw. das Lexikon in der Webapp, welches die verschiedenen Fisch und Pflanzenarten enthält zuständig.
+
+\myparagraph{Plant/Fish}
+ In diesen Schemen sind die Daten bzw. Informationen über die verschiedenen Fisch und Pflanzenarten (siehe Kapitel \ref{sec:informationsbeschaffung}) gespeichert, welche wie im Diagramm dargestellt in dem Schema "`Glossary"' unter dem jeweiligen Attribut gespeichert werden.
+ 
+\myparagraph{Plant settings/Fish settings}
+ Diese Schemen sind für das Speichern der Einstellung der Aktoren zuständig, welche wie im Diagramm dargestellt in dem Schema "`Standard profile"' unter dem jeweiligen Attribut gespeichert werden.
+
+\myparagraph{Standard profile}
+ Dieses Schema ist für die vordefinierten Fisch und Pflanzen Profile zuständig, welche von den Benutzern in der Webapp ausgewählt werden können und die Aktoren, die in den Profilen definierten Werte bzw. Einstellung übernehmen.
+ 
+ \newpage
+ 
+ \subsubsection{Umsetzung}
+ 
+Die folgenden Codeausschnitte sollen die Erstellung bzw. Programmierung eines solchen Schemas erläutern.
+ 
+Um die Funktionen der Mongoose Library verwenden zu können, muss diese zuerst importiert werden.
+
+\begin{lstlisting}[language=Javascript, caption=Importieren von Mongoose]
+import * as mongoose from 'mongoose';
+\end{lstlisting}
+
+Für das Erstellen eines Schemas, muss zuerst ein Interface für dieses definiert werden. Die Datentypen der Attribute müssen hier klein geschrieben werden. Für das Speichern von Zahlenwerten wird der von Typescript zur verfügung gestellte Datentyp "`number"' verwendet, mit diesen lassen sich sowohl ganzzahlige Werte als auch Dezimalzahlen abspeichern.
+
+\begin{lstlisting}[language=Javascript, caption=Erstellen des Interfaces für das Schema User profile]
+export interface IUserProfile extends mongoose.Document{
+	foodQuantity: number;       //Drehdauer des Futterautomaten
+	foodInterval: number;       //Anzahl der Fuetterungen pro Tag
+	exposureIntensity: number;  //Beleuchtungsintensitaet
+	exposureTime: number;       //Beleuchtungsdauer der Pflanzen
+	exposureInterval: number;   //Beleuchtungsintervall
+};
+\end{lstlisting}
+
+Danach kann das eigentliche Schema erstellt werden. Im Gegensatz zu dem Interface müssen die Datentypen hier groß geschrieben werden.
+
+\begin{lstlisting}[language=Javascript, caption=Erstellen des Schemas]
+var SUserProfile = new mongoose.Schema({
+	foodQuantity: Number, 
+	foodInterval: Number,
+	exposureIntensity: Number,
+	exposureTime: Number, 
+	exposureInterval: Number, 
+});
+\end{lstlisting}
+
+\newpage
+
+Zum Schluss wird die "`mongoose.model"' Methode aufgerufen und das Interface, sowie das Schema übergeben und anschließend exportiert.
+
+\begin{lstlisting}[language=Javascript, caption=Exportieren des Schemas]
+export var UserProfile = mongoose.model<IUserProfile>('UserProfile', SUserProfile);
+\end{lstlisting}
+
+Wie in der Struktur dargestellt, wird das Schema "`User profile"' in dem Schema "`User account"' unter dem Attribut "`systemConfig"' abgespeichert. Um diese Abhängigkeit zu definieren, wird das Interface und das Schema, in den jeweiligen anderen Beiden als ein Array definiert.
+
+\begin{lstlisting}[language=Javascript, caption=Erstellen des Schemas User account]
+export interface IAccount extends mongoose.Document{
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  systemConfig: IUserProfile[];
+};
+
+var SAccount = new mongoose.Schema({
+  username: String,
+  password: String,
+  email: String,
+  firstName: String,
+  lastName: String,
+  systemConfig: [SUserProfile]
+});
+
+export var Account = mongoose.model<IAccount>('Account', SAccount);
+\end{lstlisting}
+
+
+
+

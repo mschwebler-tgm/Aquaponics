@@ -1,0 +1,71 @@
+\cfoot{Konrad Kelc}
+\setcounter{page}{143}
+In diesem Kapitel werden die Aussichten bzw. Verbesserungsmöglichkeiten von Homeponics behandelt.\\Da Homeponics bzw. dessen Hardware für die Zielgruppe möglichst kostengünstig sein soll, wurde darauf geachtet, dass die Kosten möglichst gering entfallen. Allerdings wurden Verbesserungsmöglichkeiten behandelt, welche bei einem höheren Startkapital, oder in Zukunft vom Team realisierbar sind.
+Folgend werden diese kurz vorgestellt.
+
+\subsection{pH Sensor}
+Der pH Sensor, der für den Prototypen verwendet wurde, ist, im Gegensatz zu anderen elektronischen pH Sensoren relativ günstig. Er hat jedoch den Nachteil, dass er regelmäßig gewartet bzw. mit dafür vorgesehenen Kalibrierungskits kalibriert werden muss. Dies belastet den Kunden mit zusätzlichen Kosten und Aufwand. Es kommt hinzu, dass der Sensor relativ ungenau misst. Die Genauigkeit des Sensors ist sehr wichtig, da Fische im Gegensatz zu Pflanzen eine geringe pH Wert Toleranz haben.\\ Da die Hardware von Homeponics ohne größeren Aufwand erweiterbar bzw. Austauschbar ist, könnte durch ein höheres Startkapital ein Sensor eingebaut werden, der einen niedrigen, bis gar keinen Wartungsaufwand und eine hohe Genauigkeit aufweist.
+
+\subsection{Zusätzliche Peristaltikpumpen}
+Da während der Projektphase die finanziellen Mittel nicht zur Verfügung standen, drei Peristaltikpumpen zu realisieren, musste auf die Funktion der Automatischen Regulierung des pH-Wertes aus kostentechnischen Gründen verzichtet werden. Da sowohl die softwaretechnischen Rahmenbedingungen, als auch die Hardwarevoraussetzungen erfüllt sind, steht der nachträglichen Implementierung dieser Funktion nichts im Wege. \\
+Die Implementation würde in einer starken Erhöhung der Userexperience resultieren, da viel Arbeit beim Besetzen des Homeponics Systems dadurch abgenommen wird, dass die Regulierung und Stabilisierung des pH-Wertes automatisch übernommen wird.  
+
+\newpage
+\subsection{Dynamische Beleuchtung}
+Beim Prototypen wurde eine statische Lampe bzw. LED für die Beleuchtung der Pflanzen verwendet. Das bedeutet das sich Intensität, Dauer und Intervalle der Beleuchtung varieren lassen. Diese Parameter allein genügen um optimale Wachtumsbedingungen für die Pflanzen zu schaffen. Außer statischen Lampen gibt es aber auch dynamische, die mehr adaptierbare Parameter besitzen. Diese Parameter beziehen sich auf ein breites Spektrum an Wellenlängen sowohl innerhalb als auch außerhalb des sichtbaren Lichts. Dadurch können verschiedene Eigenschaften der Pflanzen beeinflusst werden. Allerdings sind Lampen mit solchen Funktionen um einiges teurer und deshalb für den Prototypen ungeeignet.
+\\
+Wie auch ein effizienterer pH-Wert Sensor, lässt sich auch eine Lampe mit dynamischer Beleuchtung durch ein höheres Startkapital einbauen. Des Weiteren kann die Ansteuerung und Regelung dieser zusätzlichen Parameter ohne Probleme implementiert werden. Ein Beispiel von Parametern einer dynamischen Beleuchtung sieht wie folgt aus.
+
+\begin{itemize}
+    \item amber
+    \item farRed
+    \item hyperRed
+    \item blue
+    \item red
+    \item green
+    \item uv
+    \item deepBlue
+    \item white
+\end{itemize}
+
+Durch diese Lichtfarben bzw. Wellenlängen lassen sich die Pflanzen nicht nur in ihrer Wachstumsgeschwindgkeit, sondern auch in ihrer Größe, oder sogar in ihrem Geschmack und vielen weiteren Eigenschaften beeinflussen. Jedoch gibt es wenige bis gar keine Quellen, oder Informationen darüber, welche Eigenschaften durch diese Parameter beeinflusst werden und inwiefern sie diese beeinflussen. Deshalb müssten die Kunden bzw. die Benutzer den Einfluss der verschiedenen Parameter selbst testen.
+
+\newpage
+\subsection{Ansteuerbarer Heizstab}
+Für den Protoypen wurde ein Heizstab verwendet, bei dem sich die Temperatur manuell einstellen lässt. Es gibt jedoch auch ansteuerbare Heizstäbe, welche sich automatisch regeln lassen. Diese Variante würde für den Benutzer einen wesentlich geringeren Aufwand bedeuten. Wie auch bei der dynamischen Lampe, kann auch hier die Ansteuerung und Regelung ohne Probleme implementiert werden.
+
+\subsection{Leistungsfähigerer \gls{SBC}}
+Als \gls{SBC} für den Prototypen wurde der Raspberry Pi 3 verwendet. Diese Version ist die neuste Generation der Raspberry Pi Reihe. Jedoch hat sie den Nachteil, dass die Performance unter hoher Belastung leidet und es dadurch zu Verzögerungen am Touchscreen kommen kann. Des Weiteren kann die Temperatur des SBC's unter einer hohen Belastung auf kritische Werte steigen, die der \gls{SBC} auf Dauer nicht standhält. Dies ist jedoch ein weit verbreitetes Problem bei den Rasperry Pi's.\\Die genannten Probleme sind für den Raspberry bzw. für den Prototypen umbedenklich, da es nur selten zu so einer hohen Belastung kommt. Wenn nötig kann der \gls{SBC} aber ohne größeren Aufwand ausgetauscht werden. Als Alternative zu dem Raspberry Pi könnte der Banana Pi BPI-M3 verwendet werden. Dieser ist Leistungsfähiger, jedoch um einiges teurer und deshalb für den Protoypen ungeeignet. Folgend werden einige technisch relevanten Unterschiede zwischen diesen \gls{SBC}'s dargestellt.
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+                   & \multicolumn{1}{c|}{\textbf{Raspberry Pi 3 Model B}}                                                & \multicolumn{1}{c|}{\textbf{Banana Pi BPI-M3}}                                                \\ \hline
+\textbf{Processor} & 1.2GHz 64-bit quad-core ARMv8                                                               & 2GHz octa-core A83TARM                                                              \\ \hline
+\textbf{GPU}       & Broadcom VideoCore IV 300/400 MHz                                                           & PowerVR SGX544MP1                                                                             \\ \hline
+\textbf{RAM}       & 1GB LPDDR2 (900 MHz)                                                                        & 2GB LPDDR3                                                                                    \\ \hline
+\textbf{Ethernet}  & 10/100M Ethernet                                                                            & 10/100/1000Mbps Ethernet                                                                      \\ \hline
+\textbf{WiFi}      & 802.11n                                                                                     & 802.11 b/g/n                                                                                  \\ \hline
+\textbf{GPIO}      & \begin{tabular}[c]{@{}l@{}}40-pin header with 26 -GPIOs,\\ 1x UART, 1x SPI, 2x I2C, PCM/I2S,\\ 2x PWM\end{tabular} & \begin{tabular}[c]{@{}l@{}}40 Pins Header, 28×GPIO, \\ UART, I2C, SPI, PWM, I2S.\end{tabular} \\ \hline
+\textbf{Power}     & 5.1V, 2.5A                                                                                  & 5V, 2A                                                                                        \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\subsection{Serverlastverteilung}
+Die Leistung des Servers reicht zurzeit aus um eine verzögerungsfreie Benutzerinteraktion mit der Webapp zu ermöglichen. Da aber die Webapp von Homeponics in Zukunft von möglichst vielen Personen reibungslos verwendet werden können soll und der derzeitige Server eine hohe Anzahl an Benutzeranfragen nicht ohne Performanceeinbuße verarbeiten kann, ist die Lastverteilung ein wichtiger Aspekt, der nicht außer Acht gelassen werden darf.\\Aus finanziellen Gründen und da für Testzwecke des Prototypen ein Server alleine ausreicht bzw. keine Lastverteilung notwendig ist, wurde dies noch nicht umgesetzt. Jedoch lässt sich auch dies in Zukunft mit einem höheren Kapital umsetzen.
+
+\subsection{Wasserstandsensor}
+Da Homeponics darauf ausgelegt ist für eine längere Dauer ohne Anwesenheit des Benutzers in Betrieb zu sein, ist die Messung des Wasserstandes empfehlenswert. Der höhere Wasserverbrauch ist auf die Einbindung der Nutzpflanzen in den Wasserkreislauf zurückzuführen. \\
+Aus finanziellen Gründen wurde dies bei dem Prototypen nicht umgesetzt, was allerdings nicht eine nachträgliche Implementierung dieses Features ausschließt. 
+
+\subsection{Datenverwaltung}
+Bei dem Prototypen der Webapp lassen sich zurzeit nur die Aquaponikdaten bzw. Informationen anzeigen, welche in der Datenbank gespeichert sind.\\
+Für eine einfachere Verwaltung dieser Daten, soll in Zukunft eine Administrationsseite bzw. Funktion implementiert werden, mit welcher sich Benutzer- und Aquaponikdaten anzeigen lassen. Des Weiteren sollen Informationen oder Profile über Pflanzen und Fische im Glossar verwaltet werden können.
+
+\newpage
+\blankpage
+\blankpage

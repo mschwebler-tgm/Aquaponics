@@ -1,14 +1,14 @@
 \documentclass[12pt]{article}
+%\documentclass[draft,12pt]{article}
 
-\usepackage[english]{babel}
+\usepackage[ngerman]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
-\usepackage{listings}
+\usepackage[final]{listings}
 \usepackage{glossaries}
 \usepackage{placeins}
-\usepackage{fixltx2e}
 \usepackage{pdfpages}
 \usepackage{lastpage}
 \usepackage{enumitem}
@@ -18,19 +18,68 @@
 \usepackage{parskip}
 \usepackage{gensymb}
 \usepackage{hyperref} 
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{todonotes}
+\usepackage{eurosym}
+\usepackage{siunitx}
+\usepackage{afterpage}
+\usepackage{subfigure}
+\usepackage{tabularx}
+\usepackage{chemformula}
+\usepackage{multirow}
+
+\presetkeys%
+{todonotes}%
+{backgroundcolor=orange}{}
 
 \clearscrheadfoot
 \pagestyle{scrheadings}
+
 \usepackage[
-top    = 2.5cm,
+a4paper,
+twoside,
+top    = 3cm,
 bottom = 3cm,
-left   = 3cm,
+left   = 2.5cm,
 right  = 3cm]{geometry}
-\setcounter{secnumdepth}{4}
-\title{Diploma Thesis}
+%\setcounter{secnumdepth}{4}
+%title{Diploma Thesis}
 
+% Custom Commands
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\newcommand{\mysubparagraph}[1]{\subparagraph{#1}\mbox{}\\}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+\makeatletter
+\newcommand\cellwidth{\TX@col@width}
+\makeatother
+\usepackage{verbatimbox} % used for verbatim environments inside tikz
 
-\author{RoboNav}
+% Developed by jakob
+% \userstory{title}{assignee}{description}
+\newcommand{\userstory}[5]{
+\addvbuffer[{0.5\baselineskip}]{
+  \begin{tabularx}{\textwidth}{|X|}
+    \hline
+    {\begin{tabularx}{\cellwidth}{@{}Xr@{}}
+    \textbf{Als} #1 & #2\\ \hline
+    \textbf{Möchte ich} #3 \\ \hline
+    \textbf{Weil} #4 \\ \hline
+    \end{tabularx}}\\
+    \textbf{Akzeptanzkriterien: }#5 \\ \hline
+  \end{tabularx}
+}
+}
+
+\bibliographystyle{ieeetr} 
+
+\author{Homeponics}
 \date{\today}
 
 
@@ -38,24 +87,26 @@ right  = 3cm]{geometry}
 \input{preamble}
 \input{glossaries}
 
-
+             
 \begin{document}
 
+\input{sections/abgrundtiefHaesslichesDeckblatt}
+\afterpage{\blankpage}
 
 \begin{titlepage}
 \begin{center}
 
 % Additional to first page
-\includegraphics[width=0.7\textwidth]{images/logo}\\
-
-\LARGE TGM - HTBLuVA Wien XX \\ IT Abteilung  \\[1.5cm]
+\includegraphics[width=0.6\textwidth]{images/logo}\\
+\LARGE \textcolor{gray}{\fontfamily{lmss}\selectfont H O M E P O N I C S} \\[0.5cm]
+\LARGE TGM - HTBLuVA Wien XX \\ IT Abteilung  \\[1.2cm]
 
 % Title
 \rule{1.0\textwidth}{1mm}
-{ \huge \bfseries \\[0.4cm]  \huge Diplomarbeit \\ \LARGE Urban Green \\[0.4cm] }
+{ \huge \textbf{\\[0.4cm]  \huge Diplomarbeit \\ \LARGE Homeponics} \\ \large by Urban Green \\[0.1cm] }
 \rule{1.0\textwidth}{1mm}
 
-{ \huge Ramin Bahadoorifar \\ Matthias Schwebler \\ Samuel Schober \\ Konrad Kelc \\[0.4cm] }
+{ \LARGE Ramin Bahadoorifar \\ Matthias Schwebler \\ Samuel Schober \\ Konrad Kelc \\[0.4cm] }
 
 
 
@@ -65,7 +116,7 @@ right  = 3cm]{geometry}
 \vfill
 
 % Bottom of the page
-{\small Version: \today ~at  \thistime    }
+%{\small \today}
 \end{center}
 
 %\end{center}
@@ -73,36 +124,50 @@ right  = 3cm]{geometry}
 
 
 %HEADER AND FOOTER
+%\setlength{\headsep}{2cm}
 \pagenumbering{Roman}
 \ohead{\headmark}
+\automark[subsection]{section}
 \ifoot{© Homeponics - 2016/17}
 \ofoot{\pagemark}
 
+\blankpage
+\input{sections/eidesstattliche_erklaerung}
+
+% abstract, kurzfassung, danksagung
+\clearpage\mbox{}\thispagestyle{empty}\clearpage
+\afterpage{\blankpage}
+\input{sections/AbstractEN}
+\clearpage
+\input{sections/AbstractDE}
+\newpage
+\afterpage{\blankpage}
+\input{sections/Ackn}
+
 \newpage %----------------------------------------------------------------------------------------------
+\pagestyle{empty}
 {\small\color{white}.}
-\vspace{-0.7cm}
+\vspace{-1.5cm}
 \tableofcontents
 
 \newpage %----------------------------------------------------------------------------------------------
 % Affirmation
 %\includepdf[scale=1.2,pages=-]{documents/soor}
 %\newpage
-\input{sections/AbstractEN}
-\newpage
-\input{sections/AbstractDE}
-\newpage
-\input{sections/Ackn}
 \label{pageRomanEnd}
 
 \newpage %----------------------------------------------------------------------------------------------
 \pagenumbering{arabic}
-\ofoot{\pagemark}
+%\ofoot{\pagemark}
+\pagestyle{scrheadings}
+
+\blankpage
 
 \section{Einf\"uhrung}
 % Basic Introduction, Goal of the Project and very short description of the system (see section ...)
 \label{sec:introduction}
 
-\subsection{Einleitung}
+%\subsection{Einleitung} \todo{Diese Überschrift streichen}
 \input{sections/einleitung}
 
 \subsection{Aufgabenstellung}
@@ -110,132 +175,106 @@ right  = 3cm]{geometry}
 
 \subsection{Ziele und Zielgruppen}
 \input{sections/ziele}
+\newpage
 
 \subsection{Konzept}
 \input{sections/konzept}
 
-\newpage %----------------------------------------------------------------------------------------------
+\newpage
+\blankpage
+\blankpage
 
 \section{Grundlagen und vorhandene Technologien}
-%\input{}
-
-\newpage %----------------------------------------------------------------------------------------------
-\subsection{Methodiken zur Verbreitung}
-%\input{}
-\newpage
-
-\subsubsection{Citizen Science}
-%\input{}
-
-\newpage
-\subsubsection{Blidungssektor}
-%\input{}
-
 \subsection{Vorhandene Aquaponiksysteme}
-%\input{}
+\input{sections/vorhandeneSysteme}
 
+\input{sections/grundlagen}
+
+\newpage 
+
+\subsection{Verbreitung}
+\input{sections/verbreitungsMethoden}
 \newpage
-\subsubsection{Grove Ecosystem}
-%\input{}
 
-\subsubsection{EcoQube C}
-%\input{}
-
-\subsubsection{Ponix Systems}
-%\input{}
-
+\subsection{Informationsbeschaffung}
+\label{sec:informationsbeschaffung}
+\input{sections/informationsbeschaffung}
+\newpage
 
 
 \newpage %----------------------------------------------------------------------------------------------
 \section{Projektmanagement}
 %\input{}
 
-\subsection{Projektmanagement Methode}
-%\input{}
+\subsection{Projektmanagement Methode - Scrum}
+\input{sections/pmMethode}
 
 \subsection{Teamstruktur}
-%\input{}
-
-\subsection{Aufgabenteilung}
-%\input{}
-
-\subsection{Terminplanung}
-%\input{}
-
-\subsection{User Stories}
-%\input{}
-
-\subsection{Sprint Dokumentation}
-%\input{}
+\input{sections/teamstruktur}
 
 \newpage %----------------------------------------------------------------------------------------------
-\section{Evaluierung der benötigten Technologien und Komponenten}
+\subsection{Aufgabeneinteilung}
+\input{sections/einteilung}
+\newpage %----------------------------------------------------------------------------------------------
+\subsection{Terminplanung}
+\input{sections/terminplanung}
+\newpage
+
+\subsection{User Stories}
+\input{sections/userStories}
+\newpage
+
+%\newpage
+%\subsection{Sprint Dokumentation}
+%\input{sections/SprintDokumentation}
+
+\blankpage
 \input{sections/evaluation}
 
 \newpage %----------------------------------------------------------------------------------------------
 \section{Projekt Umsetzung - Designunterlagen}
-%\input{}
-
-\subsection{Use-Case Diagramm}
-%\input{}
+\input{sections/designunterlagen}
 
 \subsection{Datenakquisition}
-%\input{}
-
-\subsubsection{Technologie}
-%\input{}
-
-\subsubsection{Ablauf}
-%\input{}
+\input{sections/datenakquisition}
 
 \subsection{Datenverarbeitung}
-%\input{}
+\input{sections/datenverarbeitung}
 
-\subsubsection{Technologie}
-%\input{}
-
-\subsubsection{Umsetzung des Ablaufs}
-%\input{}
-
+\newpage
+\subsection{Serverseitige Datenbank}
+\input{sections/serverdatenbank}
 
 \newpage %----------------------------------------------------------------------------------------------
-\section{Zugriff auf das Aquaponik Systems}
-%\input{}
+\subsection{Ausfallsicherheit}
+\input{sections/ausfallsicherheit}
 
-\subsection{Userinterface - Frontend}
-\subsubsection{User Experience}
-\subsubsection{Browserkompatibilität}
-\subsubsection{Technologien}
-\subsubsection{Funktionen}
-\subsubsection{Optimierungen}
-\subsection{Zentralserver}
-\subsubsection{Authentifikation}
-\subsubsection{Kommunikation}
+\newpage %----------------------------------------------------------------------------------------------
+\subsection{Corporate Design}
+\input{sections/corporateDesign}
+
+\newpage %----------------------------------------------------------------------------------------------
+\blankpage
+\blankpage
+\section{Web-Applikation}
+\input{sections/webapp}
+
 %\input{}
 
 \newpage %----------------------------------------------------------------------------------------------
-\section{Ausfallsicherheit und Konsistenzsicherung der Daten}
-%\input{}
-
-\subsection{Zwischenspeicherung beim Aquaponik System}
-%\input{}
-
-\subsubsection{Ausfall der Internetverbindung}
-%\input{}
-
-\subsubsection{Ausfall der Stromversorgung}
-%\input{}
+\blankpage
+\section{Prototyp}
+\input{sections/prototyp}
+\subsection{Aufbau des Prototypen}
+\input{sections/aufbau}
+\newpage %----------------------------------------------------------------------------------------------
 
 \newpage %----------------------------------------------------------------------------------------------
-\section{Prototyp testing}
-\subsection{Hardware}
-\subsection{Prototyp}
-\subsection{Aussichten}
-%\input{}
-
-\newpage %----------------------------------------------------------------------------------------------
+\mbox{}
+\newpage
+\blankpage
 \section{Ausblick}
-%\input{}
+\input{sections/aussichten}
 
 \newpage %----------------------------------------------------------------------------------------------
 \cfoot{}
@@ -243,7 +282,7 @@ right  = 3cm]{geometry}
 \section{Appendix}
 \label{sec:appenix}
 
-\subsection{Glossaries}
+\subsection{Glossar}
 \label{subsec:glossaries}
 \begingroup
 \renewcommand{\section}[2]{}
@@ -253,21 +292,23 @@ right  = 3cm]{geometry}
 
 {\small\color{white}.}
 \vspace{-2cm}
-\subsection{Figures}
+\subsection{Abbildungen}
 \label{subsec:figures}
 \begingroup
 \renewcommand{\section}[2]{}
 \listoffigures
 \endgroup
 
-\subsection{Listings}
+\newpage
+\subsection{Codeausschnitte}
 \label{subsec:listings}
 \begingroup
 \renewcommand{\section}[2]{}
 \lstlistoflistings
 \endgroup
 
-\subsection{Sources}
+\newpage
+\subsection{Quellen}
 \label{subsec:sources}
 \begingroup
 \renewcommand{\section}[2]{}
@@ -275,5 +316,363 @@ right  = 3cm]{geometry}
 \bibliography{sources}
 \endgroup
 
+\newpage
+\blankpage
+\blankpage
+\section{Zeitaufzeichnung}
+\setcounter{page}{13}
+\subsection{Samuel Schober}
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Samuel\\ Schober\end{tabular}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}}  & \textbf{Tätigkeit}                      \\ \cline{2-4} 
+                                                                                   & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 120,5}} & \textbf{}                               \\ \hline
+\multirow{29}{*}{}                                                                 & 14.9.2016                           & 4                                          & Projektplanung; Projektantrag           \\ \cline{2-4} 
+                                                                                   & 15.9.2016                           & 4                                          & Projektantrag                           \\ \cline{2-4} 
+                                                                                   & 17.09.2016                          & 1                                          & Evaluierung - System                    \\ \cline{2-4} 
+                                                                                   & 21.9.2016                           & 2                                          & CD (Firmenname, Firmenfarben)           \\ \cline{2-4} 
+                                                                                   & 28.9.2016                           & 1                                          & Besprechung mit Ponix Systems           \\ \cline{2-4} 
+                                                                                   & 5.10.2016                           & 2                                          & CD (Logo-Entwurf)                       \\ \cline{2-4} 
+                                                                                   & 12.10.2016                          & 1                                          & Besprechung mit Ponix Systems           \\ \cline{2-4} 
+                                                                                   & 14.10.2016                          & 3                                          & CD (Logo-Umsetzung)                     \\ \cline{2-4} 
+                                                                                   & 15.10.2016                          & 3                                          & CD (Logo-Umsetzung)                     \\ \cline{2-4} 
+                                                                                   & 19.10.2016                          & 6                                          & Plakatentwürfe erstellt                 \\ \cline{2-4} 
+                                                                                   & 29.10.2016                          & 3                                          & Businessplan - Executive Summary        \\ \cline{2-4} 
+                                                                                   & 29.10.2016                          & 3                                          & Businessplan - Unternehmen              \\ \cline{2-4} 
+                                                                                   & 26.10.2016                          & 1                                          & Besprechung mit Ponix Systems           \\ \cline{2-4} 
+                                                                                   & 03.11.2016                          & 3                                          & Plakat überarbeitet                     \\ \cline{2-4} 
+                                                                                   & 09.11.2016                          & 2                                          & Facebook-Seite erstellt                 \\ \cline{2-4} 
+                                                                                   & 11.11.2016                          & 2                                          & TdoT - Slideshow erstellt               \\ \cline{2-4} 
+                                                                                   & 04.12.2016                          & 2                                          & Fertigstellung des Mockups              \\ \cline{2-4} 
+                                                                                   & 21.12.2016                          & 1                                          & Besprechung mit Ponix Systems           \\ \cline{2-4} 
+                                                                                   & 30.12.2016                          & 6                                          & Recherche Pflanzen u. Fische            \\ \cline{2-4} 
+                                                                                   & 09.01.2017                          & 5                                          & Präsentation - Video angefange          \\ \cline{2-4} 
+                                                                                   & 10.01.2017                          & 6                                          & Präsentation - Video fertig             \\ \cline{2-4} 
+                                                                                   & 11.01.2017                          & 0,5                                        & Präsentation                            \\ \cline{2-4} 
+                                                                                   & 11.01.2017                          & 2                                          & Dokument Design                         \\ \cline{2-4} 
+                                                                                   & 20.01.2017                          & 1                                          & Besprechung mit Ponix Systems           \\ \cline{2-4} 
+                                                                                   & 24.01.2017                          & 2,5                                        & Arbeitsraum vorbereitet                 \\ \cline{2-4} 
+                                                                                   & 24.01.2017                          & 1,5                                        & Aquarium befüllt                        \\ \cline{2-4} 
+                                                                                   & 26.01.2017                          & 4                                          & DA - Einleitung                         \\ \cline{2-4} 
+                                                                                   & 08.02.2017                          & 1                                          & Besprechung mit Ponix Systems           \\ \cline{2-4} 
+                                                                                   & 01.03.2017                          & 2                                          & Change Requests erstellt und bearbeitet \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Samuel Schober - Teil 1}
+\end{table}
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Samuel\\ Schober\end{tabular}}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}}  & \textbf{Tätigkeit}                     \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                   & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 120,5}} & \textbf{}                              \\ \hline
+\multirow{13}{*}{}                                                                                       & 05.03.2017                          & 2,5                                        & Planung der Aufsatz Modifikationen     \\ \cline{2-4} 
+                                                                                                         & 13.03.2017                          & 3                                          & DA - Verbreitung                       \\ \cline{2-4} 
+                                                                                                         & 14.03.2017                          & 3                                          & DA - Grundlagen                        \\ \cline{2-4} 
+                                                                                                         & 15.03.2017                          & 4                                          & DA - Projektmanagement                 \\ \cline{2-4} 
+                                                                                                         & 15.03.2017                          & 5                                          & Planung und Modifikation des Aufsatzes \\ \cline{2-4} 
+                                                                                                         & 16.03.2017                          & 3                                          & DA - Corporate Design                  \\ \cline{2-4} 
+                                                                                                         & 17.03.2017                          & 2,5                                        & DA - Aufbau                            \\ \cline{2-4} 
+                                                                                                         & 17.03.2017                          & 10                                         & Modifikation des Aufsatzes             \\ \cline{2-4} 
+                                                                                                         & 18.03.2017                          & 5                                          & Weitere Modifikation des Aufsatzes     \\ \cline{2-4} 
+                                                                                                         & 18.03.2017                          & 2                                          & DA - Fotographieren der Aufsatz Teile  \\ \cline{2-4} 
+                                                                                                         & 23.03.2017                          & 2                                          & LED-Boards zusammengelötet             \\ \cline{2-4} 
+                                                                                                         & 23.03.2017                          & 1                                          & Besprechung mit Ponix Systems          \\ \cline{2-4} 
+                                                                                                         & 24.03.2017                          & 2                                          & DA - Überarbeitung/Verbesserung        \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Samuel Schober - Teil 2}
+\end{table}
+
+
+
+\clearpage
+\subsection{Konrad Kelc}
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Konrad\\ Kelc\end{tabular}}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}} & \textbf{Tätigkeit}                                                                                   \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 142}}  & \textbf{}                                                                                            \\ \hline
+\multirow{26}{*}{}                                                                                    & 14.9.2016                           & 4                                         & Projektplanung; Projektantrag                                                                        \\ \cline{2-4} 
+                                                                                                      & 15.9.2016                           & 4                                         & Projektantrag                                                                                        \\ \cline{2-4} 
+                                                                                                      & 17.9.2016                           & 2                                         & \begin{tabular}[c]{@{}l@{}}Grobe Planung des Produkts\\ (Server und Aquaponiksystem)\end{tabular}    \\ \cline{2-4} 
+                                                                                                      & 18.9.2016                           & 3                                         & \begin{tabular}[c]{@{}l@{}}Grobe Planung des Produkts\\ (Server und Aquaponiksystem)\end{tabular}    \\ \cline{2-4} 
+                                                                                                      & 28.9.2016                           & 1                                         & Besprechung mit Ponix Systems                                                                        \\ \cline{2-4} 
+                                                                                                      & 12.10.2016                          & 1                                         & Besprechung mit Ponix Systems                                                                        \\ \cline{2-4} 
+                                                                                                      & 19.10.2016                          & 4                                         & Evaluierung - Datenbankmanagementsystem                                                              \\ \cline{2-4} 
+                                                                                                      & 26.10.2016                          & 1                                         & Besprechung mit Ponix Systems                                                                        \\ \cline{2-4} 
+                                                                                                      & 29.10.2016                          & 3                                         & Businessplan - Marketing                                                                             \\ \cline{2-4} 
+                                                                                                      & 29.10.2016                          & 2                                         & Businessplan - Realisierungsfahrplan                                                                 \\ \cline{2-4} 
+                                                                                                      & 29.10.2016                          & 3                                         & Businessplan - Risiken                                                                               \\ \cline{2-4} 
+                                                                                                      & 29.10.2016                          & 2                                         & Businessplan - Finanzierung                                                                          \\ \cline{2-4} 
+                                                                                                      & 4.11.2016                           & 4                                         & Evaluierung Datenbankmanagementsystem                                                                \\ \cline{2-4} 
+                                                                                                      & 5.11.2016                           & 3                                         & Evaluierung Datenbankmanagementsystem                                                                \\ \cline{2-4} 
+                                                                                                      & 9.11.2016                           & 3                                         & Webauftritt                                                                                          \\ \cline{2-4} 
+                                                                                                      & 11.11.2016                          & 3                                         & \begin{tabular}[c]{@{}l@{}}Tag der offenen Tür - Präsentieren\\ unseres Projektes\end{tabular}       \\ \cline{2-4} 
+                                                                                                      & 23.11.2016                          & 4                                         & \begin{tabular}[c]{@{}l@{}}Aufsetzen von MongoDB und der\\ Datenbank auf dem Server\end{tabular}     \\ \cline{2-4} 
+                                                                                                      & 30.11.2016                          & 1                                         & Besprechung mit Ponix Systems                                                                        \\ \cline{2-4} 
+                                                                                                      & 30.11.2016                          & 4                                         & Erstellung der Datenbankstruktur                                                                     \\ \cline{2-4} 
+                                                                                                      & 7.12.2016                           & 5                                         & Implementierung der Datenbankstruktur                                                                \\ \cline{2-4} 
+                                                                                                      & 21.12.2016                          & 1                                         & Besprechung mit Ponix Systems                                                                        \\ \cline{2-4} 
+                                                                                                      & 30.12.2016                          & 3                                         & Recherche Pflanzen u. Fische                                                                         \\ \cline{2-4} 
+                                                                                                      & 4.1.2017                            & 2                                         & \begin{tabular}[c]{@{}l@{}}Hinzufügen der Beleuchtungsparameter\\ der Datenbankstruktur\end{tabular} \\ \cline{2-4} 
+                                                                                                      & 7.1.2017                            & 3                                         & \begin{tabular}[c]{@{}l@{}}Syntaxfehler in der Datenbankstruktur\\ behoben\end{tabular}              \\ \cline{2-4} 
+                                                                                                      & 10.1.2017                           & 2                                         & Vorbereitung auf Statuspräsentation                                                                  \\ \cline{2-4} 
+                                                                                                      & 18.1.2017                           & 4                                         & Recherche Pflanzen u. Fische                                                                         \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Konrad Kelc - Teil 1}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Konrad\\ Kelc\end{tabular}}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}} & \textbf{Tätigkeit}                                                                         \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 142}}  & \textbf{}                                                                                  \\ \hline
+\multirow{26}{*}{}                                                                                    & 20.1.2017                           & 3                                         & DA - Informationsbeschaffung                                                               \\ \cline{2-4} 
+                                                                                                      & 23.1.2017                           & 4                                         & \begin{tabular}[c]{@{}l@{}}Erstellung der JSON Files für die \\ Informationen\end{tabular} \\ \cline{2-4} 
+                                                                                                      & 25.1.2017                           & 4                                         & Arbeit im Projektraum: Ausräumen                                                           \\ \cline{2-4} 
+                                                                                                      & 1.2.2017                            & 4                                         & \begin{tabular}[c]{@{}l@{}}Arbeit am Projektraum: Einfüllen des \\ Aquariums\end{tabular}  \\ \cline{2-4} 
+                                                                                                      & 8.2.2017                            & 2                                         & Besprechung mit Ponix Systems                                                              \\ \cline{2-4} 
+                                                                                                      & 14.2.2017                           & 4                                         & Recherche Pflanzen u. Fische                                                               \\ \cline{2-4} 
+                                                                                                      & 17.2.2017                           & 3                                         & DA - Nachbesserungen                                                                       \\ \cline{2-4} 
+                                                                                                      & 20.2.2017                           & 5                                         & Überarbeitung der Datenbank                                                                \\ \cline{2-4} 
+                                                                                                      & 22.2.2017                           & 2                                         & \begin{tabular}[c]{@{}l@{}}DA - Ausfallsicherheit und \\ Konsistenzsicherung\end{tabular}  \\ \cline{2-4} 
+                                                                                                      & 28.2.2017                           & 3                                         & Recherche Pflanzen u. Fische                                                               \\ \cline{2-4} 
+                                                                                                      & 2.3.2017                            & 4                                         & Anpassung der JSON Files                                                                   \\ \cline{2-4} 
+                                                                                                      & 5.3.2017                            & 2                                         & DA - Informationsbeschaffung                                                               \\ \cline{2-4} 
+                                                                                                      & 10.3.2017                           & 1                                         & DA - Datenverarbeitung Technologien                                                        \\ \cline{2-4} 
+                                                                                                      & 11.3.2017                           & 3                                         & DA - Datenverarbeitung Umsetzung                                                           \\ \cline{2-4} 
+                                                                                                      & 12.3.2017                           & 2                                         & DA - Überarbeitung Evaluierung                                                             \\ \cline{2-4} 
+                                                                                                      & 18.3.2017                           & 2                                         & \begin{tabular}[c]{@{}l@{}}DA - UML Diagramm \\ Datenbankstruktur\end{tabular}             \\ \cline{2-4} 
+                                                                                                      & 18.3.2017                           & 1                                         & \begin{tabular}[c]{@{}l@{}}DA - Serverseitige Datenbank \\ Technologien\end{tabular}       \\ \cline{2-4} 
+                                                                                                      & 18.3.2017                           & 2                                         & \begin{tabular}[c]{@{}l@{}}DA - Serverseitige Datenbank \\ Struktur\end{tabular}           \\ \cline{2-4} 
+                                                                                                      & 18.3.2017                           & 3                                         & \begin{tabular}[c]{@{}l@{}}DA - Serverseitige Datenbank \\ Umsetzung\end{tabular}          \\ \cline{2-4} 
+                                                                                                      & 19.3.2017                           & 3                                         & \begin{tabular}[c]{@{}l@{}}DA - Datenverarbeitung \\ Umsetzung\end{tabular}                \\ \cline{2-4} 
+                                                                                                      & 20.3.2017                           & 2                                         & DA - Ausblick                                                                              \\ \cline{2-4} 
+                                                                                                      & 21.3.2017                           & 3                                         & DA - Ausblick                                                                              \\ \cline{2-4} 
+                                                                                                      & 22.3.2017                           & 2                                         & DA - Ausblick                                                                              \\ \cline{2-4} 
+                                                                                                      & 23.3.2017                           & 1                                         & Besprechung mit Ponix Systems                                                              \\ \cline{2-4} 
+                                                                                                      & 28.3.2017                           & 3                                         & DA - Nachbesserungen                                                                       \\ \cline{2-4} 
+                                                                                                      & 29.3.2017                           & 2                                         & DA - Nachbesserungen                                                                       \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Konrad Kelc - Teil 1}
+\end{table}
+
+\clearpage
+\subsection{Matthias Schwebler}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Matthias\\ Schwebler\end{tabular}}}} & \multicolumn{1}{c|}{\textbf{Datum}} & \textbf{Dauer (hrs)} & \textbf{Tätigkeit}                                                                                             \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                       & \textbf{}                           & \textbf{Gesamt} \textbf{164}         &                                                                                                \\ \hline
+\multirow{32}{*}{}                                                                                           & 14.9.2016                           & 4                    & Projektplanung; Projektantrag                                                                                  \\ \cline{2-4} 
+                                                                                                             & 15.9.2016                           & 4                    & Projektantrag                                                                                                  \\ \cline{2-4} 
+                                                                                                             & 17.9.2016                           & 1                    & Dokumentenstruktur Evaluierung                                                                                 \\ \cline{2-4} 
+                                                                                                             & 17.9.2016                           & 1                    & Evaluierung - Einführung                                                                                       \\ \cline{2-4} 
+                                                                                                             & 21.9.2016                           & 2                    & Evaluierung - Marktanalyse                                                                                     \\ \cline{2-4} 
+                                                                                                             & 22.9.2016                           & 2                    & Evaluierung - SBC                                                                                              \\ \cline{2-4} 
+                                                                                                             & 28.9.2016                           & 1                    & Besprechung mit Ponix Systems                                                                                  \\ \cline{2-4} 
+                                                                                                             & 28.9.2016                           & 2                    & Evaluierung - SBC                                                                                              \\ \cline{2-4} 
+                                                                                                             & 7.10.2016                           & 2                    & Raspberry Setup                                                                                                \\ \cline{2-4} 
+                                                                                                             & 8.10.2016                           & 2,5                  & \begin{tabular}[c]{@{}l@{}}Raspberry mit Arduino verbinden, \\ Entwicklungsumgebung konfigurieren\end{tabular} \\ \cline{2-4} 
+                                                                                                             & 12.10.2016                          & 1                    & Besprechung mit Ponix Systems                                                                                  \\ \cline{2-4} 
+                                                                                                             & 13.10.2016                          & 3                    & Temperatursensor ansteuern                                                                                     \\ \cline{2-4} 
+                                                                                                             & 14.10.2016                          & 3                    & EC Sensor ansteuern                                                                                            \\ \cline{2-4} 
+                                                                                                             & 17.10.2016                          & 3                    & PH Sensor ansteuern                                                                                            \\ \cline{2-4} 
+                                                                                                             & 18.10.2016                          & 3                    & \begin{tabular}[c]{@{}l@{}}Evaluierung - Format der \\ Datenübertragung\end{tabular}                           \\ \cline{2-4} 
+                                                                                                             & 19.10.2016                          & 2                    & Plakat                                                                                                         \\ \cline{2-4} 
+                                                                                                             & 26.10.2016                          & 1                    & Besprechung mit Ponix Systems                                                                                  \\ \cline{2-4} 
+                                                                                                             & 29.10.2016                          & 4                    & Businessplan - Produktidee                                                                                     \\ \cline{2-4} 
+                                                                                                             & 29.10.2016                          & 3,5                  & Businessplan - Projektteam                                                                                     \\ \cline{2-4} 
+                                                                                                             & 2.11.2016                           & 1                    & PH Sensor ansteuern                                                                                            \\ \cline{2-4} 
+                                                                                                             & 9.11.2016                           & 6                    & Django webframework testen                                                                                     \\ \cline{2-4} 
+                                                                                                             & 14.12.2016                          & 3                    & Evaluierung - Futterautomat                                                                                    \\ \cline{2-4} 
+                                                                                                             & 21.12.2016                          & 3                    & Evaluierung - Wasserpumpe                                                                                      \\ \cline{2-4} 
+                                                                                                             & 21.12.2016                          & 3,5                  & Evaluierung - Mineralienpumpe                                                                                  \\ \cline{2-4} 
+                                                                                                             & 30.11.2016                          & 1                    & Besprechung mit Ponix Systems                                                                                  \\ \cline{2-4} 
+                                                                                                             & 30.11.2016                          & 2,5                  & Sensoren testen                                                                                                \\ \cline{2-4} 
+                                                                                                             & 30.11.2016                          & 1,5                  & Aktoren testen                                                                                                 \\ \cline{2-4} 
+                                                                                                             & 30.11.2016                          & 2                    & \begin{tabular}[c]{@{}l@{}}Evaluierung - Testergebnisse \\ dokumentieren\end{tabular}                                                              \\  \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Matthias Schwebler - Teil 1}
+\end{table}
+
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|l|c|l|}
+\hline
+\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Matthias\\ Schwebler\end{tabular}}} & \multicolumn{1}{c|}{\textbf{Datum}} & \textbf{Dauer (hrs)} & \textbf{Tätigkeit}                                                                                      \\  \cline{2-4} 
+                                                                                       & \textbf{}                           & \textbf{Gesamt}  \textbf{164}         &                                                                                        \\ \hline
+\multirow{33}{*}{}
+& 2.12.2016                           & 5                    & \begin{tabular}[c]{@{}l@{}}Übertragung der Daten vom \\ Arduino zur Datenbank (Pi)\end{tabular}  
+\\ \cline{2-4} & 14.12.2016                          & 2                    & Detaillierte Mockups (HTML,CSS,JS)                           
+\\ \cline{2-4} & 15.12.2016                          & 2                    & Detaillierte Mockups (HTML,CSS,JS)
+
+\\ \cline{2-4} & 19.12.2016                          & 2                    & Detaillierte Mockups (HTML,CSS,JS)                                                                   
+\\ \cline{2-4} & 20.12.2016                          & 2                    & Detaillierte Mockups (HTML,CSS,JS)                                                                      \\ \cline{2-4} 
+                                                                                       & 21.12.2016                          & 1                    & Besprechung mit Ponix Systems                                                                           \\ \cline{2-4} 
+                                                                                       & 30.12.2016                          & 2                    & Recherche Pflanzen u. Fische                                                                            \\ \cline{2-4} 
+                                                                                       & 9.1.2017                            & 4                    & Hitzestrahler                                                                                           \\ \cline{2-4} 
+                                                                                       & 10.1.2017                           & 2                    & Wasserstandsensor                                                                                       \\ \cline{2-4} 
+                                                                                       & 10.1.2017                           & 2                    & Vorbereitung auf Statuspräsentation                                                                     \\ \cline{2-4} 
+                                                                                       & 16.1.2017                           & 1                    & Einteilung der DA auf Teammitglieder                                                                    \\ \cline{2-4} 
+                                                                                       & 17.1.2017                           & 2                    & DA - Kurzfassung                                                                                        \\ \cline{2-4} 
+                                                                                       & 17.1.2017                           & 2                    & DA - Aufgabeneinteilung                                                                                 \\ \cline{2-4} 
+                                                                                       & 21.1.2017                           & 3                    & DA - User Stories                                                                                       \\ \cline{2-4} 
+                                                                                       & 21.1.2017                           & 2                    & DA - SBC: Software                                                                                      \\ \cline{2-4} 
+                                                                                       & 21.1.2017                           & 2                    & DA - Überarbeitung Evaluierung                                                                          \\ \cline{2-4} 
+                                                                                       & 21.1.2017                           & 1                    & DA - Schaltplan Hitzestrahler                                                                           \\ \cline{2-4} 
+                                                                                       & 22.1.2017                           & 6                    & \begin{tabular}[c]{@{}l@{}}Python Script zur Datenakquistion\\  und zwischenspeicherung\end{tabular}    \\ \cline{2-4} 
+                                                                                       & 24.1.2017                           & 2                    & Python Script erweitert: Errorhandling                                                                  \\ \cline{2-4} 
+                                                                                       & 24.1.2017                           & 2                    & \begin{tabular}[c]{@{}l@{}}Probeaufbau aller Sensoren, Aktoren,\\ Arduino und Raspberry Pi\end{tabular} \\ \cline{2-4} 
+                                                                                       & 24.1.2017                           & 1                    & Testen des Python Scripts                                                                               \\ \cline{2-4} 
+                                                                                       & 25.1.2017                           & 4                    & Arbeit im Projektraum: Ausräumen                                                                        \\ \cline{2-4} 
+                                                                                       & 28.1.2017                           & 4                    & DA - Datenakquisition                                                                                   \\ \cline{2-4} 
+                                                                                       & 28.1.2017                           & 2                    & DA - Sequenzdiagram                                                                                     \\ \cline{2-4} 
+                                                                                       & 1.2.2017                            & 4                    & \begin{tabular}[c]{@{}l@{}}Arbeit am Projektraum: Einfüllen\\ des Aquariums\end{tabular}                \\ \cline{2-4} 
+                                                                                       & 8.2.2017                            & 2                    & Besprechung mit Ponix Systems                                                                           \\ \cline{2-4} 
+                                                                                       & 14.2.2017                           & 6                    & DA - Status Quo Probelesen                                                                              \\ \cline{2-4} 
+                                                                                       & 15.2.2017                           & 3                    & DA - Nachbesserungen                                                                                    \\ \cline{2-4} 
+                                                                                       & 1.3.2017                            & 4                    & DA - Use Case Diagram                                                                                   \\ \cline{2-4} 
+                                                                                       & 4.3.2017                            & 2                    & DA                                                                                                      \\ \cline{2-4} 
+                                                                                       & 6.3.2017                            & 2                    & DA                                                                                                      \\ \cline{2-4} 
+                                                                                       & 8.3.2017                            & 3,5                  & DA                                                                                                      \\ \cline{2-4} 
+                                                                                       & 9.3.2017                            & 6                    & RGB-LED-Streifen ansteuern                                                                              \\ \cline{2-4} 
+                                                                                       & 16.3.2017                           & 1                    & Datenübertragung                                                                                        \\ \cline{2-4} 
+                                                                                       & 16.3.2017                           & 1                    & DA - Danksagung                                                                                         \\ \cline{2-4} 
+                                                                                       & 20.3.2017                           & 2                    & DA - Formatierung                                                                                       \\ \cline{2-4} 
+                                                                                       & 22.3.2017                           & 1                    & Deckblatt und Eidesstattliche Erklärung                                                                 \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Matthias Schwebler - Teil 2}
+\end{table}
+
+\clearpage
+\subsection{Ramin Bahadoorifar}
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Ramin\\ Bahadoorifar\end{tabular}}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}} & \textbf{Tätigkeit}                                                                                                                                            \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                       & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 273}}  & \textbf{}                                                                                                                                                     \\ \hline
+\multirow{26}{*}{}
+                                                                                                             & 14.9.2016                           & 4                                         & Projektplanung; Projektantrag                                                                                                                                 \\ \cline{2-4}
+                                                                                                             & 15.9.2016                           & 4                                         & Projektantrag                                                                                                                                                 \\ \cline{2-4}
+                                                                                                             & 17.9.2016                           & 2                                         & \begin{tabular}[c]{@{}l@{}}Grobe Planung des Produkts \\ (Server und Aquaponiksystem)\end{tabular}                                                            \\ \cline{2-4}
+                                                                                                             & 18.9.2016                           & 3                                         & \begin{tabular}[c]{@{}l@{}}Grobe Planung des Produkts\\ (Server und Aquaponiksystem)\end{tabular}                                                             \\ \cline{2-4}
+                                                                                                             & 21.9.2016                           & 2                                         & Evaluierung - Server (Umgebung)                                                                                                                               \\ \cline{2-4}
+                                                                                                             & 22.9.2016                           & 2                                         & \begin{tabular}[c]{@{}l@{}}Evaluierung - Kommunikation \\ zwischen Server u. Aquaponiksystem\end{tabular}                                                     \\ \cline{2-4}
+                                                                                                             & 23.9.2016                           & 4                                         & Erste Tests mit Node.js                                                                                                                                       \\ \cline{2-4}
+                                                                                                             & 24.9.2016                           & 3                                         & \begin{tabular}[c]{@{}l@{}}Weitere Testung von Node.js und\\ Evaluierung von NPM Modulen\end{tabular}                                                         \\ \cline{2-4}
+                                                                                                             & 28.9.2016                           & 1                                         & Besprechung mit Ponix-Systems                                                                                                                                 \\ \cline{2-4}
+                                                                                                             & 7.10.2016                           & 2                                         & Testen von Express.js                                                                                                                                         \\ \cline{2-4}
+                                                                                                             & 17.10.2016                          & 4                                         & Testen von Socket.io                                                                                                                                          \\ \cline{2-4}
+                                                                                                             & 19.10.2016                          & 2                                         & Testen von Redis                                                                                                                                              \\ \cline{2-4}
+                                                                                                             & 29.10.2016                          & 3                                         & Redis API für C                                                                                                                                               \\ \cline{2-4}
+                                                                                                             & 2.11.2016                           & 3                                         & Evaluierung der Datenübermittlung                                                                                                                             \\ \cline{2-4}
+                                                                                                             & 3.11.2016                           & 2                                         & Ausbesserungen des Businessplans                                                                                                                              \\ \cline{2-4}
+                                                                                                             & 5.11.2016                           & 2                                         & Redis API für C                                                                                                                                               \\ \cline{2-4}
+                                                                                                             & 6.11.2016                           & 5                                         & \begin{tabular}[c]{@{}l@{}}Erste Server und Web App\\ Struktur programmiert (Node.js)\end{tabular}                                                            \\ \cline{2-4}
+                                                                                                             & 7.11.2016                           & 6                                         & \begin{tabular}[c]{@{}l@{}}Erste Aquaponiksystem Struktur \\ programmiert (Node.js), \\ Redis API für Node.js\end{tabular}                                    \\ \cline{2-4}
+                                                                                                             & 7.11.2016                           & 1                                         & \begin{tabular}[c]{@{}l@{}}Server - Socket Server für \\ Aquaponiksystem erstellt\end{tabular}                                                                \\ \cline{2-4}
+                                                                                                             & 8.11.2016                           & 2                                         & \begin{tabular}[c]{@{}l@{}}Verbesserungen in \\ Redis API für C und Node.js\end{tabular}                                                                      \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Ramin Bahadoorifar - Teil 1}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Ramin\\ Bahadoorifar\end{tabular}}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}} & \textbf{Tätigkeit}                                                                                                                                           \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                       & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 273}}  & \textbf{}                                                                                                                                                    \\ \hline
+\multirow{26}{*}{}
+                                                                                                             & 9.11.2016                           & 8                                         & \begin{tabular}[c]{@{}l@{}}Server - Authentikation mit\\ JWT realisiert (Längerer Prozess \\ der Programmierung an einem Tag \\ zusammengefügt)\end{tabular} \\ \cline{2-4} 
+                                                                                                             & 9.11.2016                           & 4                                         & \begin{tabular}[c]{@{}l@{}}Web App - Benutzer kann \\ Registrieren und Einloggen \\ (getestet mit einfachem \\ Account Schema)\end{tabular}                  \\ \cline{2-4} 
+                                                                                                             & 12.11.2016                          & 1                                         & \begin{tabular}[c]{@{}l@{}}Aquaponiksystem - Socket Client\\ wurde erstellt\end{tabular}                                                                     \\ \cline{2-4} 
+                                                                                                             & 12.11.2016                          & 3                                         & \begin{tabular}[c]{@{}l@{}}Server - Bugfixes in Authentication, \\ Relay, Socket.io...\end{tabular}                                                          \\ \cline{2-4} 
+                                                                                                             & 14.11.2016                          & 5                                         & \begin{tabular}[c]{@{}l@{}}Evaluierung - Fazit des kompletten \\ Systems und Node.js hinzugefügt\end{tabular}                                                \\ \cline{2-4} 
+                                                                                                             & 15.11.2016                          & 2                                         & Redis API für C - Fehler behoben                                                                                                                             \\ \cline{2-4} 
+                                                                                                             & 16.11.2016                          & 3                                         & \begin{tabular}[c]{@{}l@{}}Evaluierung - Laravel und Art der \\ Datenübermittlung (PI \textless=\textgreater Server)\end{tabular}                            \\ \cline{2-4} 
+                                                                                                             & 16.11.2016                          & 3                                         & \begin{tabular}[c]{@{}l@{}}Aquaponiksystem kann Daten\\ zum Server schicken (Socket)\end{tabular}                                                            \\ \cline{2-4} 
+                                                                                                             & 22.11.2016                          & 4                                         & \begin{tabular}[c]{@{}l@{}}Web App kann Daten in Echtzeit \\ vom Aquaponiksystem erfassen\\  und anzeigen\end{tabular}                                       \\ \cline{2-4} 
+                                                                                                             & 23.11.2016                          & 5                                         & Web App - UI Prototyp                                                                                                                                        \\ \cline{2-4} 
+                                                                                                             & 24.11.2016                          & 7                                         & Web App - UI Prototyp                                                                                                                                        \\ \cline{2-4} 
+                                                                                                             & 25.11.2016                          & 6                                         & Web App - UI Prototyp                                                                                                                                        \\ \cline{2-4} 
+                                                                                                             & 1.12.2016                           & 3                                         & \begin{tabular}[c]{@{}l@{}}Für Angular 2, Bessere Entwicklung\\ und Leichteres Testen Migration \\ von Javascript\\ auf Typescript gestartet\end{tabular}    \\ \cline{2-4} 
+                                                                                                             & 2.12.2016                           & 2                                         & Migration auf Typescript                                                                                                                                     \\ \cline{2-4} 
+                                                                                                             & 4.12.2016                           & 4                                         & Migration auf Typescript                                                                                                                                     \\ \cline{2-4} 
+                                                                                                             & 5.12.2016                           & 2                                         & Migration auf Typescript                                                                                                                                     \\ \cline{2-4} 
+                                                                                                             & 7.12.2016                           & 4                                         & Migration auf Typescript                                                                                                                                     \\ \cline{2-4} 
+                                                                                                             & 10.12.2016                          & 5                                         & Migration auf Typescript                                                                                                                                     \\ \cline{2-4} 
+                                                                                                             & 27.12.2016                          & 5                                         & \begin{tabular}[c]{@{}l@{}}Migration der derzeitigen Webapp\\ auf Angular 2 gestartet\end{tabular}                                                           \\ \cline{2-4} 
+                                                                                                             & 28.12.2016                          & 6                                         & Webapp - Migration zu Angular 2                                                                                                                              \\ \cline{2-4} 
+                                                                                                             & 30.12.2016                          & 4                                         & Webapp - Migration zu Angular 2                                                                                                                              \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Ramin Bahadoorifar - Teil 2}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[hp]
+\centering
+\begin{tabular}{|l|r|c|l|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}Ramin\\ Bahadoorifar\end{tabular}}}} & \multicolumn{1}{l|}{\textbf{Datum}} & \multicolumn{1}{l|}{\textbf{Dauer (hrs)}} & \textbf{Tätigkeit}                                                                              \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                                                                       & \multicolumn{1}{l|}{\textbf{}}      & \multicolumn{1}{l|}{\textbf{Gesamt 273}}  & \textbf{}                                                                                       \\ \hline
+\multirow{26}{*}{}
+                                                                                                             & 2.1.2017                            & 5                                         & Webapp - Migration zu Angular 2                                                                 \\ \cline{2-4} 
+                                                                                                             & 4.1.2017                            & 6                                         & Webapp - Migration zu Angular 2                                                                 \\ \cline{2-4} 
+                                                                                                             & 6.1.2017                            & 5                                         & Webapp - Migration zu Angular 2                                                                 \\ \cline{2-4} 
+                                                                                                             & 8.1.2017                            & 3                                         & Webapp - Migration zu Angular 2                                                                 \\ \cline{2-4} 
+                                                                                                             & 10.1.2017                           & 2                                         & Vorbereitung auf Statuspräsentation                                                             \\ \cline{2-4} 
+                                                                                                             & 14.1.2017                           & 3                                         & Webapp - SocketService                                                                          \\ \cline{2-4} 
+                                                                                                             & 15.1.2017                           & 4                                         & Webapp - Datenanbindung                                                                         \\ \cline{2-4} 
+                                                                                                             & 17.1.2017                           & 2                                         & Webapp - Datenanbindung                                                                         \\ \cline{2-4} 
+                                                                                                             & 19.1.2017                           & 4                                         & DA - Evaluierung                                                                                \\ \cline{2-4} 
+                                                                                                             & 20.1.0201                           & 3                                         & DA - Node.js Überarbeitung                                                                      \\ \cline{2-4} 
+                                                                                                             & 21.1.2017                           & 1                                         & DA - Kleine Verbesserungen                                                                      \\ \cline{2-4} 
+                                                                                                             & 25.1.2017                           & 4                                         & \begin{tabular}[c]{@{}l@{}}Arbeit im Projektraum: \\ Ausräumen\end{tabular}                     \\ \cline{2-4} 
+                                                                                                             & 1.2.2017                            & 4                                         & \begin{tabular}[c]{@{}l@{}}Arbeit am Projektraum: \\ Einfüllen des Aquariums\end{tabular}       \\ \cline{2-4} 
+                                                                                                             & 3.2.2017                            & 3                                         & \begin{tabular}[c]{@{}l@{}}Webapp - Elemente hinzufügen \\ (Aktoren, Sensoren)\end{tabular}     \\ \cline{2-4} 
+                                                                                                             & 4.2.2017                            & 3                                         & \begin{tabular}[c]{@{}l@{}}Webapp - Elemente hinzufügen \\ (Aktoren)\end{tabular}               \\ \cline{2-4} 
+                                                                                                             & 6.2.2017                            & 3                                         & Webapp - Datenanbindung                                                                         \\ \cline{2-4} 
+                                                                                                             & 7.2.2017                            & 2                                         & Anbindung zu Redis                                                                              \\ \cline{2-4} 
+                                                                                                             & 8.2.2017                            & 2                                         & Besprechung mit Ponix Systems                                                                   \\ \cline{2-4} 
+                                                                                                             & 13.2.2017                           & 3                                         & DA - Technologien hinzugefügt                                                                   \\ \cline{2-4} 
+                                                                                                             & 17.2.2017                           & 4                                         & DA - User Experience beschrieben                                                                \\ \cline{2-4} 
+                                                                                                             & 19.2.2017                           & 2                                         & DA - User Experience beschrieben                                                                \\ \cline{2-4} 
+                                                                                                             & 19.2.2017                           & 4                                         & Webapp - Elemente bearbeitet                                                                    \\ \cline{2-4} 
+                                                                                                             & 23.2.2017                           & 3                                         & Raspberry PI - System installieren                                                              \\ \cline{2-4} 
+                                                                                                             & 24.2.2017                           & 4                                         & Raspberry PI - System installieren                                                              \\ \cline{2-4} 
+                                                                                                             & 4.3.2017                            & 3                                         & Webapp - Responsive gemacht                                                                     \\ \cline{2-4} 
+                                                                                                             & 8.3.2017                            & 4                                         & \begin{tabular}[c]{@{}l@{}}Webapp - Datenanbindung erneuert, \\ Bugs behoben\end{tabular}       \\\cline{2-4} 
+                                                                                                             & 14.3.2017                           & 2                                         & DA - Kapiteln bearbeitet                                                                        \\\cline{2-4} 
+                                                                                                             & 16.3.2017                           & 5                                         & DA                                                                                              \\ \cline{2-4} 
+                                                                                                             & 23.3.2017                           & 1                                         & Besprechung mit Ponix Systems                                                                   \\ \cline{2-4} 
+                                                                                                             & 24.3.2017                           & 4                                         & DA - Webapp                                                                                     \\ \cline{2-4} 
+                                                                                                             & 25.3.2017                           & 4                                         & DA - Webapp                                                                                     \\ \cline{2-4} 
+                                                                                                             & 26.3.2017                           & 5                                         & DA - Webapp                                                                                     \\ \cline{2-4} 
+                                                                                                             & 27.3.2017                           & 4                                         & DA - Webapp                                                                                     \\ \cline{2-4} 
+                                                                                                             & 28.3.2017                           & 5                                         & DA - Webapp und Zentralserver                                                                   \\ \cline{2-4}
+                                                                                                             & 29.3.2017                           & 6                                         & DA - Webapp und Zentralserver                                                                   \\ \cline{2-4} 
+                                                                                                             & 30.3.2017                           & 8                                         & \begin{tabular}[c]{@{}l@{}}Zentralserver und Webapp - \\ Dokumentation hinzugefügt\end{tabular} \\ \hline
+\end{tabular}
+\caption{Zeitaufzeichnung Ramin Bahadoorifar - Teil 3}
+\end{table}
 \end{document}

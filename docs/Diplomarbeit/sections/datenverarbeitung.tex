@@ -1,0 +1,240 @@
+\cfoot{Konrad Kelc}
+In dem folgenden Kapitel wird das Thema Datenverarbeitung behandelt. Ausgehend von den verwendeten Technologien, bis hin zur Umsetzung. Dies umfasst sowohl die Verarbeitung der, von den Sensoren erhaltenen Daten, als auch die Verarbeitung der Usereingaben bezüglich Steuerung der Aktoren.
+
+\subsubsection{Technologien}
+\label{sec:technologien}
+Die Technologien, welche für die Datenverarbeitung verwendet wurden sind folgende:
+
+\myparagraph{Java Script Object Notation (JSON)}
+Die Daten bzw. die Informationen über die Fische und Pflanzen, welche sowohl im Lexikon als auch in den Profilen in der Webapp angezeigt werden (siehe 2.3 Informationsbeschaffung), werden in JSON Files gespeichert. 
+
+JSON (JavaScript Object Notation) ist ein schlankes Datenaustauschformat, das für Menschen einfach zu lesen und zu schreiben und für Maschinen einfach zu parsen (Analysieren von Datenstrukturen) und zu generieren ist. \cite{JSON}
+
+\myparagraph{Mongoose}
+Mongoose wurde für die Anbindung an die Datenbank verwendet.
+
+Mongoose ist ein plattformübergreifender Web-Server und Netzwerkbibliothek. \cite{Mongoose}
+
+\myparagraph{TypeScript}
+Die detaillierte Beschreibung ist im Kapitel \ref{sec:typescript} nachzulesen.
+
+\myparagraph{Publish/Subscribe Pattern (Redis)}
+Das Pattern wurde für die nicht blockierende Kommunikation zwischen den Redis Teilnehmern, den Node.js Client und den Raspberry Pi verwendet.
+
+Das Publish/Subscribe Pattern ist ein Entwurfsmuster aus dem Bereich der Softwareentwicklung, bei der sogenannte Publisher Daten veröffentlichen sobald welche vorliegen. Diese Daten können dann bei Bedarf von den Subscribern empfangen werden.
+
+\newpage
+\cfoot{Matthias Schwebler}
+\myparagraph{Steuerung der Aktoren}
+Wenn von Seiten des Users auf der Webapp das Kommando zur Steuerung eines Aktors gegeben wird, wird dies in Form eines \texttt{publish} in Redis realisiert. So kann in einem eigenen Thread auf Nachrichten dieser Art gewartet werden und gegebenenfalls entsprechende Aktionen durchführen. \\
+Push-Notifications haben wie folgt auszusehen:
+\begin{itemize}
+    \item \texttt{drops:8} \\
+    8 Tropfen werden sofort nach Eintreffen der die Nachricht eintrifft in das Aquarium gespeist
+    \item \texttt{feed:5} \\
+    Der Futterautomat gibt sobald die Nachricht eintrifft fünf Sekunden lang Futter aus
+    \item \texttt{light:11-30,120,50} \\
+    Die Pflanzenbeleuchtung wird um 11:30 für 120 Minuten mit einer Intensität von 50\% des Maximums aktiviert
+\end{itemize}
+Das Python-Script wird also, mit Push-Notifications über das Ereignis und dessen Details benachrichtigt.
+\begin{lstlisting}[language=Python, caption=Push-Notification für Aktorensteuerung erhalten]
+def controlActuators(r, p):
+    for message in p.listen():
+        data = str(message['data'])
+        # use substring to get data when using python 3 (b'data')
+\end{lstlisting}
+\vspace{-0.5cm}
+Danach werden je nach Inhalt der Nachricht Steuerungen vorgenommen. Für die Steuerung des \gls{RGB}-\gls{LED}-Streifens wird ein entsprechendes Kommando abgesetzt (Kapitel 4.2.6):
+\begin{lstlisting}[language=Python, caption=Steuern des RGB-LED-Streifens]
+        if data.startswith('LED_R'):
+            red = data.split(':')[1]
+            r.hset('system', 'LED_R:', red)
+            os.system('pigs p 21 ' + red)   # 'p 21' -> GPIO 21
+        elif data.startswith('LED_G'):
+            green = data.split(':')[1]
+            r.hset('system', 'LED_G:', green)
+            os.system('pigs p 20 ' + green)  # 'p 20' -> GPIO 20
+        elif data.startswith('LED_B'):
+            blue = data.split(':')[1]
+            r.hset('system', 'LED_B:', blue)
+            os.system('pigs p 16 ' + blue)  # 'p 16' -> GPIO 16
+\end{lstlisting}
+Um den Futterautomaten zu steuern wird, wie in Kapitel 4.2.3 erklärt wurde, dieser mit 5 Volt aktiviert. Über die Push-Notification von Redis werden die Parameter Zeit und Dauer übergeben. Es können maximal bis zu fünf verschiedene Zeiten gespeichert werden.
+\begin{lstlisting}[language=Python, caption=Steuern des Futterautomaten]
+        elif data.startswith('feed'):
+            # 'feed:20-39,5;22-30;5'
+            # 20-39     -> time
+            # 5         -> how long feeder gives food
+            feedData = data.split(':')[1]
+            times = feedData.split(';')
+            # maximum of 5 different times per day
+            for i in range(5):
+                if i >= len(times):
+                    r.hset('system', 'feedHour' + str(i), None)
+                    r.hset('system', 'feedMinute' + str(i), None)
+                    r.hset('system', 'feedDuration' + str(i), None)
+                else:
+                    params = times[i].split(',')  # (20-39, 5)
+                    r.hset('system', 'feedHour' + str(i), params[0].split('-')[0])
+                    r.hset('system', 'feedMinute' + str(i), params[0].split('-')[1])
+                    r.hset('system', 'feedDuration' + str(i), params[1])
+\end{lstlisting}
+Die Methode \texttt{feed} aktiviert den Futterautomaten für eine gewisse Zeit
+\begin{lstlisting}[language=Python]
+def feed(duration):
+    """
+    Activates the feeder for a certain amount of time
+    Note: Feeder has to be connected to Pin nr. 37 (BOARD) in order to work properly
+    :param duration: duration of feeding process in seconds
+    :return: None
+    """
+    GPIO.setup(37, GPIO.OUT)
+    time.sleep(float(duration))
+    GPIO.setup(37, GPIO.IN)
+\end{lstlisting}
+\newpage
+Bei der Steuerung der Pflanzenbeleuchtung kann der Benutzer mehrere Zeitpunkte mit verschiedener Dauer und Intensität bestimmen zu denen die Lampe aktiviert ist. Daher müssen diese Parameter in Redis gespeichert und zur korrekten Zeit wieder ausgelesen und umgesetzt werden.
+\begin{lstlisting}[language=Python, caption=Speichern der Beleuchtungsparameter]
+        elif data.startswith('light'):
+            # 'light:20-39,40,90;22-40,20,100'
+            # 20-39 -> time
+            # 40    -> for 40 minutes
+            # 90    -> 90 percent intensity
+            lightData = data.split(':')[1]
+            times = lightData.split(';')
+            for i in range(5):
+                if i >= len(times):
+                    r.hset('system', 'hour' + str(i), None)
+                    r.hset('system', 'minute' + str(i), None)
+                    r.hset('system', 'duration' + str(i), None)
+                    r.hset('system', 'intensity' + str(i), None)
+                else:
+                    params = times[i].split(',') # (20-39, 40, 90)
+                    r.hset('system', 'hour' + str(i), params[0].split('-')[0])
+                    r.hset('system', 'minute' + str(i), params[0].split('-')[1])
+                    r.hset('system', 'duration' + str(i), params[1])
+                    r.hset('system', 'intensity' + str(i), params[2])
+\end{lstlisting}
+Das Überschreiben mit \texttt{None}-Werten ist dabei wichtig, da sonst alte Konfigurationen des Benutzers erhalten bleiben, auch wenn er diese auf der Webapp bereits gelöscht hat.
+\newpage
+Wenn die Zeit erreicht ist, bei der das Licht aktiviert werden soll, wird ein neuer Thread mit der Methode \texttt{expose} gestartet.
+\begin{lstlisting}[language=Python, caption=Aktivieren der Pflanzenbeleuchtung]
+        # check if it is time to turn on the light
+        now = datetime.datetime.now()
+        for i in range(5):
+            # check if there is a record
+            if r.hget('system', 'hour'+str(i)) == "None": break
+            # compare current time with time of light
+            if r.hget('system', 'hour'+str(i)) == str(now.hour) and r.hget('system', 'minute'+str(i)) == str(now.minute):
+                Thread.start_new_Thread(expose, (light, float(r.hget('system', 'duration'+str(i))), float(r.hget('system', 'intensity'+str(i)))))
+\end{lstlisting}
+Diese \texttt{expose} Methode erhält als Parameter den \gls{PWM}-Pin, die Belichtungsdauer und die Intensität:
+\begin{lstlisting}[language=Python, caption=Steuern des \gls{PWM} Pins]
+def expose(lightPWM, duration, intensity):
+    """
+    controls the PWM pin, to regulate the intensity of the lamp
+    standard intensity = 0
+    :param lightPWM: pin where the lamp is connected to
+    :param duration: duration of exposure in minutes
+    :param intensity: light-intensity in percent (0-100)
+    :return: None
+    """
+    lightPWM.ChangeDutyCycle(intensity)
+    time.sleep(duration*60)
+    lightPWM.ChangeDutyCycle(0) # turn off the light
+\end{lstlisting}
+\newpage
+Wenn der Benutzer Tropfen, der mit Mineralen angereicherten Flüssigkeit in das Aquarium Pumpen will, wird folgender Code ausgeführt:
+\begin{lstlisting}[language=Python, caption=Ansteuern der Peristaltikpumpe (Pi)]
+        elif data.startswith('drops'):
+            drops = float(data.split(':')[1])
+            while drops > 9:
+                drops -= 9
+                ser.write(str(drops))
+            ser.write(str(drops))
+\end{lstlisting}
+Damit der Arduino die Nachricht erhält und anschließend die Pumpe anzusteuert, muss er darauf warten eine Nachricht zu empfangen indem er überprüft ob welche im Puffer vorliegen. 
+\begin{lstlisting}[language=C, caption=Auf eingehende Nachrichten warten (Arduino)]
+void loop() {
+  // ...
+  // Code zum Senden der Sensordaten
+  
+  // check if there is data to be read
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    int amount = Serial.read() - 48; // get number out of ascii code (0 = 48, 1 = 49, etc)
+    drops(amount);
+  }
+\end{lstlisting}
+Um genau einen Tropfen über die Pumpe in das Aquarium zu leiten, muss diese 260ms ($\pm$ 10ms) aktiv sein. Dafür wird eine Methode implementiert die eine beliebige Anzahl an Tropfen ausgeben kann.
+\begin{lstlisting}[language=C, caption=Steuerung der Peristaltikpumpe (Arduino)]
+void drops(int amount) {
+  OpenAquarium.perpumpON(1);
+  delay(260 * amount);  // 260 ms equals one drop
+  OpenAquarium.perpumpOFF(1);
+}
+\end{lstlisting}
+
+\newpage
+\cfoot{Konrad Kelc}
+
+\myparagraph{Auslesen der Datenbank}
+Wie im Kapitel \ref{sec:technologien} erwähnt, werden die Daten bzw. Informationen, welche über Fische und Pflanzen angezeigt werden, in JSON Files gespeichert. Der folgende Codeausschnitt soll das Auslesen der Datenbank erläutern.
+
+\begin{lstlisting}[language=javascript, caption=Ausgeben der Fische]
+Fish.find({}, function(err, fish) {
+    var fishMap = {};
+    
+    fish.forEach(function(fish) {
+      fishMap[fish._name] = fish;
+    });
+});
+\end{lstlisting}
+
+Ein JSON von einem Fisch, welches ausgelesen wird, sieht wie folgt aus.
+
+\begin{lstlisting}[language=json, caption=Aufbau des JSONs für ein Fisch]
+{
+  "name": "Guppy",
+  "picture": "",
+  "description": "",
+  "origin": ["Brasilien", "Mexiko"],
+  "food": ["Frostfood"],
+  "minWaterTemp": 0,
+  "maxWaterTemp": 35,
+  "minPH": 6,
+  "maxPH": 8.5,
+  "plants": "Ja", 
+  "speciesPool": "Nein",
+}
+\end{lstlisting}
+
+Zwecks Übersichtlichkeit wurde der Pfad von dem Bild und der Inhalt der Beschreibung herausgenommen. Die numerischen Attribute "`waterTemp"', "`PH"', wurden als Minimum und Maximum definiert damit sich diese Werte besser verarbeiten lassen. Die Attribute "`origin"' und "`food"' wurden aus den selbigen Grund als ein String Array definiert.
+
+\newpage
+
+Ein JSON -File von einer Pflanze, sieht wie folgt aus.
+
+\begin{lstlisting}[language=json, caption=Aufbau des JSONs für eine Pflanze]
+{
+  "name": "Erdbeere",
+  "picture": "",
+  "description": "",
+  "minGermination": 7,
+  "maxGermination": 21,
+  "minHarvest": 84,
+  "maxHarvest": 98,
+  "minTemp": 15,
+  "maxTemp": 27,
+  "minExposureTime": 6,
+  "maxExposureTime": 10,
+  "minPH": 5.8,
+  "maxPH": 6.5,
+  "minHeight": 20,
+  "maxHeight": 30,
+}
+\end{lstlisting}
+
+Auch hier wurden alle numerischen Attribute wie z.B. "`germination"', "`harvest"', etc. aus dem selbigen Grund als Minimum und Maximum definiert.
+
+

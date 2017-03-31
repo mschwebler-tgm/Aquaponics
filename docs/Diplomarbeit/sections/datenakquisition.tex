@@ -1,0 +1,162 @@
+\cfoot{Matthias Schwebler}
+\setcounter{page}{63}
+In diesem Kapitel wird der Bereich Datenakquisition, über die Technologien, die zur Anwendung kommen bis hin zur Umsetzung ausführlich behandelt. Zur übersichtlichen Veranschaulichung der Prozesse, wurde ein Sequenzdiagramm erstellt (Abbildung 14). \\
+\begin{figure}[hp]
+	\centering
+	\includegraphics[angle=90,height=20cm]{images/sequencediagram}
+	\caption{Sequenzdiagramm zum Ablauf der Datenakquisition}
+\end{figure}
+\subsubsection{Technologien}
+Zum Ansprechen eines einzelnen Sensors bzw. Aktors wird die Programmiersprache C verwendet. Die C files werden mit dem Arduino-package für Linux in .ino Files umgewandelt und auf den Arduino übertragen (Kapitel 5.2.2). Beim Systemstart muss auf Seite des Raspberry Pi's im Gegensatz zum Arduino, das Script zum Auslesen und Zwischenspeichern der Daten erst gestartet werden (Kapitel 5.2.3). Um die Daten die zum Raspberry Pi geschickt werden ab zu fangen, zwischen zu speichern und an den Server weiter zu leiten wird Python Version 3.5.2 verwendet.
+Die Datenaquisition beginnt also bei den einzelnen Sensoren und endet am zentralen Server.
+\newpage
+\subsubsection{Ablauf}
+Übersichtshalber ist die Reihenfolge der folgenden Unterpunkte, chronologisch angeordnet.
+\myparagraph{Zugriff auf die Sensoren}
+Das Programm das auf den Arduino geladen wird, schickt jeweils drei Daten über die Serielle Schnittstelle. Dabei wird folgendes Key-Value-Format eingehalten:
+\begin{itemize}
+    \item "`tp 23.0"'
+    \item "`ph 6.8"'
+    \item "`ec 20.9"'
+\end{itemize}
+Gleichzeitig ist der Arduino jederzeit dazu bereit Daten zu empfangen, indem er regelmäßig prüft ob Daten im Nachrichtenpuffer vorhanden sind. So kann der Raspberry Pi dem Arduino mitteilen, dass er X Tropfen der mit Mineralen angereicherten Flüssigkeit in das Aquarium speisen soll.  
+\myparagraph{Zwischenspeicherung der Daten}
+Die Daten die kontinuierlich an den Raspberry Pi gesendet werden, werden mit der Python Library "`serial"' ausgelesen. Diese werden entsprechend \textit{geparsed} und über die "`redis"' Library in die lokale Datenbank abgespeichert. Gleichzeitig wird, sobald eine dementsprechende Anweisung in der Datenbank vorhanden ist, ein Signal an den Arduino gesendet, welches die Anzahl an Tropfen beinhaltet, die eingespeist werden sollen.
+
+\myparagraph{Übertragen der Daten an den Server}
+Sobald neue Daten in Redis gespeichert werden, wird ein \texttt{publish} gestartet, welches den (lokalen) Node.js Server dazu auffordert die neuen Daten an den zentralen Server zu senden.
+
+\newpage
+\subsubsection{Umsetzung}
+In diesem Kapitel wird die Umsetzung der Datenakquisition anhand von Codeausschnitten reläutet. Darunter fällt das Init-Script, der Zugriff auf die Sensoren und die Zwischenspeicherung der Daten, sowie der der Umgang mit Fehlern.
+\myparagraph{Init-Script}
+Beim Starten des Systems müssen einige Dienste und Programme erst ausgeführt werden, damit das Python Script zur Ansteuerung der Sensoren und Aktoren korrekt operieren kann. Dazu zählen:
+\begin{description}
+    \item [redis] Datenbank bzw Zwischenspeicher
+    \item [pigpiod] Steuerung der Pins für den LED-Streifen
+\end{description}
+Bei UNIX-Systemen können Scripts, die sich im \texttt{/etc/init.d} Ordner befinden automatisch beim Systemboot ausgeführt werden. Alle in diesem Ordner befindlichen müssen mit Kommandos wie \texttt{start}, \texttt{stop}, \texttt{restart} usw. gesteuert werden können. Daher der essentielle Teil des Scripts, um alle notwendigen Services zu starten wie folgt aus:
+\begin{lstlisting}[language=bash]
+# ...
+
+case "$1" in
+  start)
+  python /home/pi/Ard-to-Pi.py
+  ;;
+  stop)
+  cho -e "import redis\nr = redis.StrictRedis(host='localhost', port=6379, db=0)\nr.publish('system', 'exit')" | python
+  ;;
+
+  restart)
+  cho -e "import redis\nr = redis.StrictRedis(host='localhost', port=6379, db=0)\nr.publish('system', 'exit')" | python
+  python /home/pi/Ard-to-Pi.py
+  ;;
+
+  *)
+  log_action_msg "Usage: /etc/init.d/homeponics {start|stop|restart}" || true
+  exit 1
+esac
+exit 0
+\end{lstlisting}
+Damit der eben erstellte Service beim Systemstart ausgeführt wird, muss das File in den Ordner \texttt{/etc/rc2.d} kopiert werden bzw. ein hardlink erstellt werden.
+\begin{center}
+\texttt{ln /etc/init.d/homeponics /etc/rc2.d/}
+\end{center}
+
+\newpage
+\myparagraph{Zugriff auf die Sensoren}
+Beim Arbeiten mit einem Arduino ist zu beachten, dass zwei essentielle Methoden implementiert werden müssen, damit dieser den Code ausführen kann. 
+\begin{enumerate}
+    \item \textit{setup()} \\
+    wird initial ausgeführt um etwaige Konfigurationen zu treffen
+    \begin{lstlisting} [language=C, caption=Setup Arduino]
+    void setup() {
+      OpenAquarium.init();
+      Serial.begin(115200);
+      OpenAquarium.calibratepH(cal_point_4,cal_point_7,cal_point_10);
+      OpenAquarium.calibrateEC(p_1_cond,p_1_cal,p_2_cond,pt_2_cal);
+    }
+    \end{lstlisting}
+    \item \textit{loop()} \\
+    diese Methode wird in einer Endlosschleife aufgerufen und wird dazu verwendet die Sensordaten immer wieder auszulesen und diese zu übertragen
+    \begin{lstlisting} [language=C, caption=Schleifenmethode um Sensordaten zu senden]
+    void loop() {
+      // temperature
+      temperature = OpenAquarium.readtemperature(); //Read the sensor
+      Serial.print(F("tp "));
+      Serial.println(temperature);
+      // ph
+      int mvpH = OpenAquarium.readpH(); //Value in mV of pH
+      float pH = OpenAquarium.pHConversion(mvpH); //Calculate pH value
+      Serial.print(F("ph "));
+      Serial.println(pH);
+      // ec
+      float resistanceEC = OpenAquarium.readResistanceEC();
+      float EC = OpenAquarium.ECConversion(resistanceEC); //EC Value
+      Serial.print(F("ec "));
+      Serial.println(EC);
+      delay(2000); //Wait 2 seconds
+    }
+    \end{lstlisting}
+\end{enumerate}
+\newpage
+\myparagraph{Zwischenspeicherung der Daten}
+Damit der Arduino Daten sendet, muss das Programm (.ino File) einmal kompiliert und hochgeladen werden. Dieser Schritt wird mit der Arduino IDE erledigt. Wenn das File einmal hochgeladen ist, wird es automatisch beim Start des Arduinos ausgeführt. \\ \mbox{} \\
+Die Daten die zum Raspberry Pi gesendet werden, werden mithilfe der Library pySerial für Python, ausgelesen. Der unten stehende Code liest alle verfügbaren Informationen aus der seriellen Schnittstelle aus:
+\begin{lstlisting} [language=Python, caption=Anwendung von pySerial (Daten auslesen)]
+# init serial
+ser = serial.Serial(
+    port='/dev/ttyACM0',
+    baudrate=115200
+)
+
+# read from serial port
+bytesToRead = ser.inWaiting()
+data = str(ser.read(bytesToRead))
+\end{lstlisting}
+Da die Vollständigkeit der Daten, die ausgelesen werden, vom Zeitpunkt des Starts, des kontinuierlichen Auslesens abhängt muss der Lesevorgang entsprechend synchronisiert werden. Wenn beispielsweise ein langes Wort wie "`temperature"' übertragen wird, kann es passieren, dass zuerst "`temp"' und im nächsten Schritt "`erature"' ausgelesen wird. Dieses Problem wird mit einer Überprüfung der Länge der übertragenen Daten gelöst. Falls der übertragene String zu kurz bzw. zu lang ist, wird er ignoriert und 100 Millisekunden gewartet, bevor das nächste mal ausgelesen wird. 
+\begin{lstlisting} [language=Python, caption=Synchronisation der Datenübertragung zwischen Pi und Ardiuno]
+if len(data) != 15 and len(data) != 16:
+    time.sleep(0.1)
+    continue
+\end{lstlisting}
+\newpage
+Da die Daten auf dem zentralen Server einen Zeitstempel für die Statistik benötigten, muss dieser entweder auf dem Server oder direkt am Raspebrry Pi erzeugt werden. Wenn das Internet im Netzwerk, indem sich das Aquaponik System befindet, ausfällt, müssen ohnehin die Zeitstempel zu den nicht übermittelten Paketen hinzugefügt werden. Es ist also von Vorteil, alle Daten bereits auf dem Raspberry Pi mit Zeitstempel zu versehen. \\ \mbox{} \\
+Da der Zeitpunkt des Startes der Datenübertragung zufällig ist, kann es passieren, dass das Daten-triple Temperatur-pH-EC nicht in der selben Sekunde übertragen wird und somit die einzelnen Daten einen unterschiedlichen Zeitstempel benötigen würden. Diese Zeitdifferenz von 1 Sekunde ist allerdings so gering, dass sie kaum Einfluss auf die Statistik hat. Das Daten-tripel wird mit einem Zeitstempel zusammengefasst. \\ \mbox{} \\
+Nachdem die Daten in Redis gespeichert wurden, wird die Methode \texttt{publish} aufgerufen. Diese ermöglicht es anderen Komponenten (wie z.B. Node.js), die auf Redis zugreifen, auf eine solche Nachricht zu warten und anschließend weitere Aktionen durchzuführen (wie z.B. bei der Aktorensteuerung: Kapitel 5.2.3). Die Nachricht beinhaltet den Zeitstempel, mit dem später das Daten-tripel identifiziert werden kann. 
+\begin{lstlisting} [language=Python, caption=Zwischenspeicherung der Sensordaten]
+# get all 3 kinds of data (temp, ph, ec)
+kv_1 = getKeyValue(data)
+time.sleep(0.1)
+data = str(ser.read(bytesToRead))
+kv_2 = getKeyValue(data)
+time.sleep(0.1)
+data = str(ser.read(bytesToRead))
+kv_3 = getKeyValue(data)
+
+# save to redisDB with timestamp
+r.hmset(timestamp, {kv_1[0]: kv_1[1], kv_2[0]: kv_2[1], kv_3[0]: kv_3[1]})
+r.publish('system', timestamp)
+\end{lstlisting}
+\vspace{-0.5cm}
+Die \texttt{getKeyValue} Methode, verarbeitet die Rohdaten vom Arduino und filtert die essentiellen Daten - Key und Value.
+
+\begin{lstlisting} [language=Python, caption=Key-Value Trennung]
+def getKeyValue(data):
+    # depending on the python version, this part has to be executed
+    # extrude essential data: b'temperature 24.62\r\n' -> temperature 24.62
+    data = re.sub("['brn\\\]", "", data)
+    # split key and value
+    return data.split()
+\end{lstlisting}
+
+\newpage
+Im Falle eines Fehlers, wird dieser mithilfe der pub-sub Funktion von Redis veröffentlicht. Wenn beispielsweise die Verbindung zum Arduino fehlschlägt ist folgender Code zuständig:
+\begin{lstlisting}[language=Python]
+    except serial.SerialException as err:
+        print("Serial connection broken")
+        r.publish('system', 'error:No connection to sensors/actuators')
+        continue
+\end{lstlisting}
+Die Fehlermeldungen werden immer im Format \texttt{publish('system', 'error:ErrorA')} veröffentlicht.
+\newpage
